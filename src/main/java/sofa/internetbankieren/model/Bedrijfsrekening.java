@@ -1,7 +1,7 @@
 package sofa.internetbankieren.model;
 
 /**
- * @WichertTjerkstra 7 dec aangemaakt
+ * @author WichertTjerkstra 7 dec aangemaakt
  */
 
 public class Bedrijfsrekening extends Rekening {
