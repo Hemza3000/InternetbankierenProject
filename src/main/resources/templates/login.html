@@ -1,11 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Welkom bij de SOFA Bank</title>
+    <title>Inloggen</title>
 </head>
 <body>
-<h1>Loginpagina</h1>
-<p>blablabla</p>
+
+<h1><p style="font-family:verdana">Log in met uw Sofa-account</p></h1>
+<form action="inloggen" method="post">
+    <table>
+        <tr>
+            <td><p style="font-family:verdana"><label for=>Gebruikersnaam:</label></p></td>
+            <td><input type="text" name="gebruikersnaam"/></td>
+        </tr>
+        <tr>
+            <td><p style="font-family:verdana"><label for=>Wachtwoord:</label></p></td>
+            <td><input type="wachtwoord" name="wachtwoord"/></td>
+        </tr>
+        <tr>
+            <td><input type="submit" name="OK" value="OK"></td>
+        </tr>
+    </table>
+</form>
 </body>
 </html>
