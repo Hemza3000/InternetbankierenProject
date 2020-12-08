@@ -16,9 +16,13 @@ public class HomeController {
         return "home";
     }
 
-    @GetMapping("/inloggen")
+    @GetMapping("/login")
     public String inlogHandler() {
-        return "inloggen";
+        return "login";
     }
 
+    @GetMapping("/registeren")
+    public String registerHandler() {
+        return "register";
+    }
 }
