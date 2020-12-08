@@ -23,6 +23,8 @@ public class Medewerker {
     private Rol rol;
     private List<Bedrijf> bedrijven; // Bedrijven waarvoor de medewerker accountmanager is
 
+    public Medewerker() { super(); }
+
     public Medewerker(String voornaam, String tussenvoegsels, String achternaam, Rol rol) {
         super();
         this.voornaam = voornaam;
@@ -38,9 +40,37 @@ public class Medewerker {
     public void voegBedrijfToe(Bedrijf bedrijf){
         if(rol == Rol.ACCOUNT_MANAGER) {
             if (bedrijven == null)
-                bedrijven = new ArrayList<>(); // TODO Hier of in attribuutdeclaratie of in constructor? Alleen voor accountmanagers
+                bedrijven = new ArrayList<>();
             bedrijven.add(bedrijf);
         }
         // TODO else foutafhandeling
+    }
+
+    public String getVoornaam() {
+        return voornaam;
+    }
+    public void setVoornaam(String voornaam) {
+        this.voornaam = voornaam;
+    }
+
+    public String getTussenvoegsels() {
+        return tussenvoegsels;
+    }
+    public void setTussenvoegsels(String tussenvoegsels) {
+        this.tussenvoegsels = tussenvoegsels;
+    }
+
+    public String getAchternaam() {
+        return achternaam;
+    }
+    public void setAchternaam(String achternaam) {
+        this.achternaam = achternaam;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 }
