@@ -11,11 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
-    @GetMapping("/") // http://localhost:8080/
+    @GetMapping("/")
     public String homeHandler() {
         return "home";
     }
 
-
+    @GetMapping("/inloggen")
+    public String inlogHandler() {
+        return "inloggen";
+    }
 
 }
