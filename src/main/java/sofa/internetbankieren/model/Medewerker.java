@@ -25,12 +25,17 @@ public class Medewerker {
 
     public Medewerker() { super(); }
 
-    public Medewerker(String voornaam, String tussenvoegsels, String achternaam, Rol rol) {
+    public Medewerker(int persooneelsnummer, String voornaam, String tussenvoegsels, String achternaam, Rol rol) {
         super();
+        this.persooneelsnummer = persooneelsnummer;
         this.voornaam = voornaam;
         this.tussenvoegsels = tussenvoegsels;
         this.achternaam = achternaam;
         this.rol = rol;
+    }
+
+    public Medewerker(String voornaam, String tussenvoegsels, String achternaam, Rol rol) {
+        this(0, voornaam, tussenvoegsels, achternaam, rol);
     }
 
     public Medewerker(String voornaam, String achternaam, Rol rol) {
@@ -45,6 +50,14 @@ public class Medewerker {
         }
         // TODO else foutafhandeling
     }
+
+    public int getPersooneelsnummer() {
+        return persooneelsnummer;
+    }
+    public void setPersooneelsnummer(int persooneelsnummer) {
+        this.persooneelsnummer = persooneelsnummer;
+    }
+
 
     public String getVoornaam() {
         return voornaam;
@@ -72,5 +85,12 @@ public class Medewerker {
     }
     public void setRol(Rol rol) {
         this.rol = rol;
+    }
+
+    public List<Bedrijf> getBedrijven() {
+        return bedrijven;
+    }
+    public void setBedrijven(List<Bedrijf> bedrijven) {
+        this.bedrijven = bedrijven;
     }
 }
