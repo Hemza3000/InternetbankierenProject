@@ -36,7 +36,7 @@ public class BedrijfsrekeningDAO implements GenericDAO<Bedrijfsrekening> {
     }
 
     // get One by Id
-    public Bedrijfsrekening getOneById(int idBedrijfsrekening){
+    public Bedrijfsrekening getOneByID(int idBedrijfsrekening){
         final String sql = "SELECT * FROM Bedrijfsrekening WHERE idBedrijfsrekening=?";
             return jdbcTemplate.queryForObject(sql, new BedrijfsrekeningRowMapper(), idBedrijfsrekening);
     }

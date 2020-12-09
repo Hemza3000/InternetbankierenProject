@@ -36,7 +36,7 @@ public class MedewerkerDAO implements GenericDAO<Medewerker>{
     }
 
     @Override
-    public Medewerker getOneById(int personeelsnummer) {
+    public Medewerker getOneByID(int personeelsnummer) {
         String sql = "select * from medewerker where personeelsnummer=?";
         return jdbcTemplate.queryForObject(sql, new MedewerkerRowMapper(), personeelsnummer);
     }

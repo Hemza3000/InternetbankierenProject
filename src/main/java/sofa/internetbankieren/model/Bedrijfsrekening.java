@@ -1,5 +1,8 @@
 package sofa.internetbankieren.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author WichertTjerkstra 7 dec aangemaakt
  * review: Wendy Ellens, 8 dec
@@ -9,6 +12,7 @@ public class Bedrijfsrekening extends Rekening {
 
     private Particulier contactpersoon;
     private Bedrijf rekeninghouder;
+    private List<Transactie> transactiesHistorie;
 
     public Bedrijfsrekening() { super(); }
 
@@ -21,6 +25,12 @@ public class Bedrijfsrekening extends Rekening {
     public Bedrijfsrekening(String IBAN, double saldo, Particulier contactpersoon, Bedrijf rekeninghouder) {
         this(0, IBAN, saldo, contactpersoon, rekeninghouder);
     }
+
+    public void voegTransactieToe() {
+        if (this.transactiesHistorie == null) {
+            transactiesHistorie = new ArrayList<>();
+        }
+    } // TODO NOG VERDER AF TE MAKEN IN VOLGENDE SPRINT
 
     public Particulier getContactpersoon() {
         return contactpersoon;

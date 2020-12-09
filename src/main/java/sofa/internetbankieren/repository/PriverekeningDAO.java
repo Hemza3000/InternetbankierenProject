@@ -33,7 +33,7 @@ public class PriverekeningDAO implements GenericDAO<Priverekening> {
     }
 
         // get One by Id
-    public Priverekening getOneById(int idPriverekening){
+    public Priverekening getOneByID(int idPriverekening){
         final String sql = "SELECT * FROM priverekening WHERE idPriverekening=?";
         return jdbcTemplate.queryForObject(sql, new PriverekeningRowMapper(), idPriverekening);
     }

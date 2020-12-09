@@ -5,6 +5,7 @@ package sofa.internetbankieren.model;
  * review: Wendy Ellens, 8 dec
  */
 
+import java.util.ArrayList;
 import java.util.List;
 
 abstract class Rekening {

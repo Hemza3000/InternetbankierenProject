@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface GenericDAO<T> {
     List<T> getAll();
-    T getOneById(int id);
+    T getOneByID(int id);
     void storeOne(T type);
     int updateOne(T type);
     int deleteOne(T type);
