@@ -1,7 +1,5 @@
 package sofa.internetbankieren.repository;
 
-import sofa.internetbankieren.model.Medewerker;
-
 import java.util.List;
 
 /**
@@ -13,6 +11,6 @@ public interface GenericDAO<T> {
     List<T> getAll();
     T getOneByID(int id);
     void storeOne(T type);
-    int updateOne(T type);
-    int deleteOne(T type);
+    void updateOne(T type);
+    void deleteOne(T type);
 }

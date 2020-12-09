@@ -60,8 +60,8 @@ public class MedewerkerDAO implements GenericDAO<Medewerker>{
     }
 
     @Override
-    public int updateOne(Medewerker medewerker) {
-        return jdbcTemplate.update("update medewerker set voornaam=?, tussenvoegsels=?, achternaam=?, rol=? " +
+    public void updateOne(Medewerker medewerker) {
+        jdbcTemplate.update("update medewerker set voornaam=?, tussenvoegsels=?, achternaam=?, rol=? " +
                         "where personeelsnummer=?",
                 medewerker.getVoornaam(),
                 medewerker.getTussenvoegsels(),
@@ -71,8 +71,8 @@ public class MedewerkerDAO implements GenericDAO<Medewerker>{
     }
 
     @Override
-    public int deleteOne(Medewerker medewerker) {
-        return jdbcTemplate.update("delete from medewerker where personeelsnummer = ?",
+    public void deleteOne(Medewerker medewerker) {
+        jdbcTemplate.update("delete from medewerker where personeelsnummer = ?",
                 medewerker.getPersooneelsnummer());
     }
 
