@@ -1,14 +1,20 @@
 package sofa.internetbankieren.model;
 
+
+/**
+ * @author Taco Jongkind & Hemza Lasri, 07-12-2020
+ *
+ * */
+
 public abstract class Klant {
 
     private int idKlant;
     private String straatnaam;
-    private String huisnummer;
+    private int huisnummer;
     private String postcode;
     private String woonplaats;
 
-    public Klant(int idKlant, String straatnaam, String huisnummer, String postcode, String woonplaats) {
+    public Klant(int idKlant, String straatnaam, int huisnummer, String postcode, String woonplaats) {
         this.idKlant = idKlant;
         this.straatnaam = straatnaam;
         this.huisnummer = huisnummer;
@@ -35,11 +41,11 @@ public abstract class Klant {
         this.straatnaam = straatnaam;
     }
 
-    public String getHuisnummer() {
+    public int getHuisnummer() {
         return huisnummer;
     }
 
-    public void setHuisnummer(String huisnummer) {
+    public void setHuisnummer(int huisnummer) {
         this.huisnummer = huisnummer;
     }
 

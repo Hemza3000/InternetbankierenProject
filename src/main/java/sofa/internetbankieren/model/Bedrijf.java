@@ -1,5 +1,11 @@
 package sofa.internetbankieren.model;
 
+
+/**
+ * @author Taco Jongkind & Hemza Lasri, 07-12-2020
+ *
+ * */
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +20,7 @@ public class Bedrijf extends Klant {
     //moet dit niet bedrijfsrekeningen zijn?
     private List<Bedrijfsrekening> rekeningen = new ArrayList<>();
 
-    public Bedrijf(int idKlant, String straatnaam, String huisnummer, String postcode, String woonplaats, String bedrijfsnaam,
+    public Bedrijf(int idKlant, String straatnaam, int huisnummer, String postcode, String woonplaats, String bedrijfsnaam,
                    int KVKNummer, String sector, String BTWNummer, Medewerker accountmanager, List<Bedrijfsrekening> rekeningen) {
         super(idKlant, straatnaam, huisnummer, postcode, woonplaats);
         this.bedrijfsnaam = bedrijfsnaam;
