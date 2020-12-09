@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
+    public HomeController() {
+        super();
+    }
+
     @GetMapping("/")
     public String homeHandler() {
         return "home";
@@ -21,7 +25,7 @@ public class HomeController {
         return "login";
     }
 
-    @GetMapping("/registeren")
+    @GetMapping("/register")
     public String registerHandler() {
         return "register";
     }

@@ -7,4 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class LoginController {
 
 
+    @GetMapping("/home")
+    public String terugHandler(){
+        return "home";
+    }
+
 }
