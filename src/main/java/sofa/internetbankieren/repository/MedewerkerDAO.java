@@ -56,7 +56,7 @@ public class MedewerkerDAO implements GenericDAO<Medewerker>{
                 return ps;
             }
         }, keyHolder);
-        medewerker.setPersooneelsnummer((Integer) keyHolder.getKey());
+        medewerker.setPersooneelsnummer(keyHolder.getKey().intValue());
     }
 
     @Override

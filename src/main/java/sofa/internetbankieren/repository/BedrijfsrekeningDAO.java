@@ -25,7 +25,7 @@ import java.util.List;
 
 @Repository
 @Primary
-public class BedrijfsrekeningDAO {
+public class BedrijfsrekeningDAO implements GenericDAO<Bedrijfsrekening> {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

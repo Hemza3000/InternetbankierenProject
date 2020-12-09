@@ -41,7 +41,7 @@ public class Medewerker {
     }
 
     public Medewerker(String voornaam, String achternaam, Rol rol) {
-        new Medewerker(voornaam, "", achternaam, rol);
+        this(voornaam, "", achternaam, rol);
     }
 
     public void voegBedrijfToe(Bedrijf bedrijf){
