@@ -6,6 +6,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import sofa.internetbankieren.model.Bedrijf;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Repository
 @Primary
 public class BedrijfsDAO {
@@ -17,6 +20,10 @@ public class BedrijfsDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    // todo
+    public List<Bedrijf> getAllByIdAccountmanager(int personeelsnummer) { return new ArrayList<>(); }
+
+    // todo
     public Bedrijf getOneByID(int idBedrijf){
         return null;
     }
