@@ -16,7 +16,7 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String homeHandler() {
+    public String startHandler() {
         return "home";
     }
 
@@ -27,6 +27,6 @@ public class HomeController {
 
     @GetMapping("/register")
     public String registerHandler() {
-        return "register";
+        return "register_page_1";
     }
 }

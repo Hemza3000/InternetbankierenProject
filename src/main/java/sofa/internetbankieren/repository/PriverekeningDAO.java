@@ -74,7 +74,7 @@ public class PriverekeningDAO implements GenericDAO<Priverekening> {
                 return ps;
             }
         }, keyHolder);
-        priverekening.setIdRekening((Integer) keyHolder.getKey());
+        priverekening.setIdRekening(keyHolder.getKey().intValue());
     }
 
     // delete One

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="confirm" method="post" th:object="${login}">
+    <table>
+        <tr>
+            <td><label for="user_name">Gebruikersnaam</label></td>
+            <td><input type="text" name="user_name"/></td>
+        </tr>
+        <tr>
+            <td><label for="password">Password</label></td>
+            <td><input type="password" name="password"/></td>
+        </tr>
+            <td><input type="submit" name="OK" value="OK"><input type="reset" name="reset" value="Reset"></td>
+
+        </tr>
+    </table>
+</form>
+</body>
+</html>

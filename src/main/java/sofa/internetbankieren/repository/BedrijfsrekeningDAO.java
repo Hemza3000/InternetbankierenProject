@@ -85,8 +85,9 @@ public class BedrijfsrekeningDAO implements GenericDAO<Bedrijfsrekening> {
                 return ps;
             }
         }, keyHolder);
-        bedrijfsrekening.setIdRekening((Integer) keyHolder.getKey());
+        bedrijfsrekening.setIdRekening(keyHolder.getKey().intValue());   // TODO wil jij dit uitleggen wat dit doet?
     }
+
 
     // delete One
     public int deleteOne(Bedrijfsrekening bedrijfsrekening) {
