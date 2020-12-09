@@ -5,7 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.test.context.web.WebDelegatingSmartContextLoader;
 import sofa.internetbankieren.model.Medewerker;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,25 +19,27 @@ class MedewerkerDAOTest {
     MedewerkerDAO medewerkerDAO;
 
     @Test
-    void storeOne() {
+    void medewerkerDAOtest() {
+        // test storeOne
         Medewerker Wendy = new Medewerker("Wendy", "Ellens", Medewerker.Rol.ACCOUNT_MANAGER);
         medewerkerDAO.storeOne(Wendy);
         assertNotEquals(0, Wendy.getPersooneelsnummer());
-    }
 
-    @Test
-    void getAll() {
-    }
+        // test getAll
+        List<Medewerker> medewerkers = medewerkerDAO.getAll();
+        assertEquals(Wendy.getPersooneelsnummer(), medewerkers.get(medewerkers.size() - 1).getPersooneelsnummer());
 
-    @Test
-    void getOneByID() {
-    }
+        // test getOneByID
+        assertNotNull(medewerkerDAO.getOneByID(Wendy.getPersooneelsnummer()));
 
-    @Test
-    void updateOne() {
-    }
+        // test updateOne
+        Wendy.setRol(Medewerker.Rol.HOOFD_MKB);
+        medewerkerDAO.updateOne(Wendy);
+        assertEquals(Medewerker.Rol.HOOFD_MKB, medewerkerDAO.getOneByID(Wendy.getPersooneelsnummer()).getRol());
 
-    @Test
-    void deleteOne() {
+        // test deleteOne
+        medewerkerDAO.deleteOne(Wendy);
+        medewerkers = medewerkerDAO.getAll();
+        assertNotEquals(Wendy.getPersooneelsnummer(), medewerkers.get(medewerkers.size() - 1).getPersooneelsnummer());
     }
 }
