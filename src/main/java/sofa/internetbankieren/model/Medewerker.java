@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Medewerker {
 
-    private enum Rol {
+    public enum Rol {
         HOOFD_PARTICULIEREN,
         HOOFD_MKB,
         ACCOUNT_MANAGER
