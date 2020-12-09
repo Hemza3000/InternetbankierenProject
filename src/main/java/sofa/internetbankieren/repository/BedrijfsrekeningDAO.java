@@ -1,5 +1,9 @@
 package sofa.internetbankieren.repository;
 
+/**
+ * @Author Wichert Tjerkstra aangemaakt op 8 dec
+ */
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -67,32 +71,27 @@ public class BedrijfsrekeningDAO {
 
     // store One
 /*    public Number storeOne(Bedrijfsrekening bedrijfsrekening) {
-        ParticulierDAO particulierDAO = new ParticulierDAO(jdbcTemplate);
-        BedrijfsDAO bedrijfsDAO = new BedrijfsDAO(jdbcTemplate);
-        Bedrijf bedrijf = bedrijfsDAO.getOneByID(bedrijfsrekening.getRekeninghouder().getIdKlant());
-        Particulier particulier = particulierDAO.getOneByID(bedrijfsrekening.getContactpersoon().getIdKlant());
-
         final String sql = "INSERT INTO bedrijfsrekening (idBedrijf, idContactpersoon, Saldo, IBAN) values (?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 PreparedStatement ps = connection.prepareStatement(sql, new String[]{"idBedrijfsrekening"});
-                ps.setInt(1, bedrijf.getIdKlant());
-                ps.setInt(2, particulier.getIdKlant());
+                ps.setInt(1, bedrijfsrekening.getRekeninghouder().getIdKlant());
+                ps.setInt(2, bedrijfsrekening.getContactpersoon().getIdKlant());
                 ps.setDouble(3, bedrijfsrekening.getSaldo());
                 ps.setString(4, bedrijfsrekening.getIBAN());
                 return ps;
             }
         }, KeyHolder);
         return KeyHolder.getKey();
-    }*/
+    }
 
     // delete One
     public int deleteOne(Bedrijfsrekening bedrijfsrekening) {
         return jdbcTemplate.update("DELETE FROM bedrijfsrekening WHERE idRekening=?",
                 bedrijfsrekening.getIdRekening());
-    }
+    }*/
 
 }
 

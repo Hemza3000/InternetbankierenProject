@@ -1,13 +1,22 @@
 package sofa.internetbankieren.repository;
 
+/**
+ * @Author Wichert Tjerkstra aangemaakt op 9 dec
+ */
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import sofa.internetbankieren.model.Particulier;
 import sofa.internetbankieren.model.Priverekening;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -53,28 +62,24 @@ public class PriverekeningDAO {
                 priverekening.getIdRekening());
     }
 
-//    // store One
-//    public Number storeOne(Bedrijfsrekening bedrijfsrekening) {
-//        ParticulierDAO particulierDAO = new ParticulierDAO(JdbcTemplate jdbcTemplate);
-//        BedrijfsDAO bedrijfsDAO = new BedrijfsDAO(JdbcTemplate jdbcTemplate);
-//        Bedrijf bedrijf = new Bedrijf(bedrijfsDAO.getOneByID(bedrijfsrekening.getRekeninghouder()));
-//        Particulier particulier = new Particulier(particulierDAO.getOneByID(bedrijfsrekening.getContactpersoon());
-//
-//        final String sql = "INSERT INTO bedrijfsrekening (idBedrijf, idContactpersoon, Saldo, IBAN) values (?,?,?,?)";
-//        KeyHolder keyHolder = new GeneratedKeyHolder();
-//        jdbcTemplate.update(new PreparedStatementCreator() {
-//            @Override
-//            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-//                PreparedStatement ps = connection.prepareStatement(sql, new String[]{"idBedrijfsrekening"});
-//                ps.setInt(1, bedrijf.getIdKlant());
-//                ps.setInt(2, particulier.getIdKlant());
-//                ps.setDouble(3, bedrijfsrekening.getSaldo());
-//                ps.setString(4, bedrijfsrekening.getIBAN());
-//                return ps;
-//            }
-//        }, KeyHolder);
-//        return KeyHolder.getKey();
-//    }
+    // store One
+/*
+    public Number storeOne(Priverekening priverekening) {
+        final String sql = "INSERT INTO priverekening (idRekeninghouder, Saldo, IBAN) values (?,?,?,?)";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement(sql, new String[]{"idBedrijfsrekening"});
+                ps.setInt(1, priverekening.getRekeninghouder().getIdKlant());
+                ps.setDouble(2, priverekening.getSaldo());
+                ps.setString(3, priverekening.getIBAN());
+                return ps;
+            }
+        }, KeyHolder);
+        return KeyHolder.getKey();
+    }
+*/
 
     // delete One
     public int deleteOne(Priverekening priverekening) {
@@ -83,7 +88,6 @@ public class PriverekeningDAO {
     }
 
 }
-
 
 class PriverekeningRowMapper implements RowMapper<Priverekening> {
 
