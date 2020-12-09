@@ -25,17 +25,19 @@ public class Medewerker {
 
     public Medewerker() { super(); }
 
-    public Medewerker(int persooneelsnummer, String voornaam, String tussenvoegsels, String achternaam, Rol rol) {
+    public Medewerker(int persooneelsnummer, String voornaam, String tussenvoegsels, String achternaam, Rol rol,
+                      List<Bedrijf> bedrijven) {
         super();
         this.persooneelsnummer = persooneelsnummer;
         this.voornaam = voornaam;
         this.tussenvoegsels = tussenvoegsels;
         this.achternaam = achternaam;
         this.rol = rol;
+        this.bedrijven = bedrijven;
     }
 
     public Medewerker(String voornaam, String tussenvoegsels, String achternaam, Rol rol) {
-        this(0, voornaam, tussenvoegsels, achternaam, rol);
+        this(0, voornaam, tussenvoegsels, achternaam, rol, new ArrayList<>());
     }
 
     public Medewerker(String voornaam, String achternaam, Rol rol) {
