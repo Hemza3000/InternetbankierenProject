@@ -14,6 +14,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import sofa.internetbankieren.model.Bedrijf;
 import sofa.internetbankieren.model.Bedrijfsrekening;
+import sofa.internetbankieren.model.Medewerker;
 import sofa.internetbankieren.model.Particulier;
 
 import java.sql.Connection;
@@ -70,7 +71,7 @@ public class BedrijfsrekeningDAO {
     }
 
     // store One
-/*    public Number storeOne(Bedrijfsrekening bedrijfsrekening) {
+    public void storeOne(Bedrijfsrekening bedrijfsrekening) {
         final String sql = "INSERT INTO bedrijfsrekening (idBedrijf, idContactpersoon, Saldo, IBAN) values (?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
@@ -83,15 +84,15 @@ public class BedrijfsrekeningDAO {
                 ps.setString(4, bedrijfsrekening.getIBAN());
                 return ps;
             }
-        }, KeyHolder);
-        return KeyHolder.getKey();
+        }, keyHolder);
+        bedrijfsrekening.setIdRekening((Integer) keyHolder.getKey());
     }
 
     // delete One
     public int deleteOne(Bedrijfsrekening bedrijfsrekening) {
         return jdbcTemplate.update("DELETE FROM bedrijfsrekening WHERE idRekening=?",
                 bedrijfsrekening.getIdRekening());
-    }*/
+    }
 
 }
 

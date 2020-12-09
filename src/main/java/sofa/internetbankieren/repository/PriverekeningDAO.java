@@ -63,8 +63,7 @@ public class PriverekeningDAO {
     }
 
     // store One
-/*
-    public Number storeOne(Priverekening priverekening) {
+    public void storeOne(Priverekening priverekening) {
         final String sql = "INSERT INTO priverekening (idRekeninghouder, Saldo, IBAN) values (?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
@@ -76,10 +75,9 @@ public class PriverekeningDAO {
                 ps.setString(3, priverekening.getIBAN());
                 return ps;
             }
-        }, KeyHolder);
-        return KeyHolder.getKey();
+        }, keyHolder);
+        priverekening.setIdRekening((Integer) keyHolder.getKey());
     }
-*/
 
     // delete One
     public int deleteOne(Priverekening priverekening) {
