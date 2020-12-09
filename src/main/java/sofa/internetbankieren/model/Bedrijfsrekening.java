@@ -22,6 +22,22 @@ public class Bedrijfsrekening extends Rekening {
         this(0, IBAN, saldo, contactpersoon, rekeninghouder);
     }
 
+    public Particulier getContactpersoon() {
+        return contactpersoon;
+    }
+
+    public void setContactpersoon(Particulier contactpersoon) {
+        this.contactpersoon = contactpersoon;
+    }
+
+    public Bedrijf getRekeninghouder() {
+        return rekeninghouder;
+    }
+
+    public void setRekeninghouder(Bedrijf rekeninghouder) {
+        this.rekeninghouder = rekeninghouder;
+    }
+
     // TODO 7/12 wat hebben we nodig in de toString?
     @Override
     public String toString() {
