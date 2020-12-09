@@ -10,8 +10,8 @@ import java.util.List;
  * Alle DAO's implementeren onderstaande methodes
  */
 public interface GenericDAO<T> {
-    List<Medewerker> getAll();
-    T getOneById(int id);
+    List<T> getAll();
+    T getOneByID(int id);
     void storeOne(T type);
     int updateOne(T type);
     int deleteOne(T type);

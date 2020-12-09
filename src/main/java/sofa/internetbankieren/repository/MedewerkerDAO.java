@@ -36,7 +36,7 @@ public class MedewerkerDAO implements GenericDAO<Medewerker>{
     }
 
     @Override
-    public Medewerker getOneById(int personeelsnummer) {
+    public Medewerker getOneByID(int personeelsnummer) {
         String sql = "select * from medewerker where personeelsnummer=?";
         return jdbcTemplate.queryForObject(sql, new MedewerkerRowMapper(), personeelsnummer);
     }
@@ -79,12 +79,16 @@ public class MedewerkerDAO implements GenericDAO<Medewerker>{
     private class MedewerkerRowMapper implements RowMapper<Medewerker> {
         @Override
         public Medewerker mapRow(ResultSet resultSet, int i) throws SQLException {
-            return new Medewerker(resultSet.getInt("personeelsnummer"),
+            BedrijfsDAO bedrijfsDAO = new BedrijfsDAO(jdbcTemplate);
+            return new Medewerker(
+                    resultSet.getInt("personeelsnummer"),
                     resultSet.getString("voornaam"),
                     resultSet.getString("tussenvoegsels"),
                     resultSet.getString("achternaam"),
-                    Medewerker.Rol.valueOf(resultSet.getString("rol")));
+                    Medewerker.Rol.valueOf(resultSet.getString("rol")),
                     // TODO IllegalArgumentException afvangen?
+                    bedrijfsDAO.getAllByIdAccountmanager(resultSet.getInt("personeelsnummer"))
+            );
         }
     }
 }
