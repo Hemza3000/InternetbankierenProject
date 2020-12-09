@@ -12,7 +12,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import sofa.internetbankieren.model.Particulier;
 import sofa.internetbankieren.model.Priverekening;
 
 import java.sql.Connection;
@@ -23,7 +22,7 @@ import java.util.List;
 
 @Repository
 @Primary
-public class PriverekeningDAO {
+public class PriverekeningDAO implements GenericDAO<Priverekening> {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -34,7 +33,7 @@ public class PriverekeningDAO {
     }
 
         // get One by Id
-    public Priverekening getOneByID(int idPriverekening){
+    public Priverekening getOneById(int idPriverekening){
         final String sql = "SELECT * FROM priverekening WHERE idPriverekening=?";
         return jdbcTemplate.queryForObject(sql, new PriverekeningRowMapper(), idPriverekening);
     }
@@ -50,7 +49,6 @@ public class PriverekeningDAO {
         final String sql = "SELECT * FROM priverekening WHERE idRekeninghouder=?";
         return jdbcTemplate.query(sql, new PriverekeningRowMapper(), idRekeninghouder);
     }
-
 
     // update One
     public int updateOne(Priverekening priverekening) {

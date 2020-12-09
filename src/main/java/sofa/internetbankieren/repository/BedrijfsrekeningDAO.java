@@ -25,7 +25,7 @@ import java.util.List;
 
 @Repository
 @Primary
-public class BedrijfsrekeningDAO {
+public class BedrijfsrekeningDAO implements GenericDAO<Bedrijfsrekening> {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -36,7 +36,7 @@ public class BedrijfsrekeningDAO {
     }
 
     // get One by Id
-    public Bedrijfsrekening getOneByID(int idBedrijfsrekening){
+    public Bedrijfsrekening getOneById(int idBedrijfsrekening){
         final String sql = "SELECT * FROM Bedrijfsrekening WHERE idBedrijfsrekening=?";
             return jdbcTemplate.queryForObject(sql, new BedrijfsrekeningRowMapper(), idBedrijfsrekening);
     }
