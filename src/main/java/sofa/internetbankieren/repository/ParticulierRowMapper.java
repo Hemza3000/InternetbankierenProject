@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ParticulierRowMapper implements RowMapper<Particulier> {
+
     @Override
     public Particulier mapRow(ResultSet resultSet, int i) throws SQLException {
         return new Particulier(resultSet.getInt("idKlant"),
