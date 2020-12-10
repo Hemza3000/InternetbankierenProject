@@ -5,7 +5,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import sofa.internetbankieren.model.Klant;
 import sofa.internetbankieren.model.Particulier;
 import sofa.internetbankieren.repository.ParticulierDAO;
 
@@ -34,15 +33,22 @@ public class LoginController {
         List<Particulier> klanten = particulierDAO.getOneByOneGebruikersnaamWachtwoord(gebruikersnaam, wachtwoord);
         if(klanten.size() == 0){ // Geen klant met deze inloggegevens
             System.out.println("onbestaande logingegevens");
-            return "error_page_login";
+            return "error";
         }
         else{
         model.addAttribute("ingelogde", klanten.get(0));
             System.out.println("ingelogd!");
             return "overview";
         }
-
     }
 
+    @GetMapping("/error")
+    public String loginErrorHandler() {
+        return "error";
+    }
 
+    @GetMapping("/overview")
+    public String overviewHandler() {
+        return "overview";
+    }
 }
