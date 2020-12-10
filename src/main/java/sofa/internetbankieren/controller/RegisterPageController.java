@@ -84,17 +84,18 @@ public class RegisterPageController {
     @PostMapping("/confirmParticulier")
     public String confirmHandler(@ModelAttribute(name="particulier") Particulier confirmedMember, Model model)
     {
-
         model.addAttribute("particulier", confirmedMember);
         return "register_page_3";
     }
 
     @PostMapping("/confirmBedrijf")
-    public String confirmBedrijfHandler(@ModelAttribute(name="bedrijf") Bedrijf confirmedMember)
+    public String confirmBedrijfHandler(@ModelAttribute(name="bedrijf") Bedrijf confirmedMember, Model model)
     {
+        model.addAttribute("bedrijf", confirmedMember);
         return "register_page_3";
     }
 
+    // todo Ook laten werken voor een Bedrijf
     @PostMapping("/confirm")
     public String confirm(@RequestParam String user_name,
                           @RequestParam String password,
