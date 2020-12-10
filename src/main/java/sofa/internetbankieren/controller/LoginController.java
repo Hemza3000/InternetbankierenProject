@@ -26,14 +26,14 @@ public class LoginController {
         return "login";
     }
 
-    @PostMapping("/login")
+    @PostMapping("/inloggen")
     public String postInlogForm(Model model, @RequestParam String gebruikersnaam, @RequestParam String wachtwoord){
         // todo ook bedrijven doorzoeken
         System.out.println("inloggen");
         List<Particulier> klanten = particulierDAO.getOneByOneGebruikersnaamWachtwoord(gebruikersnaam, wachtwoord);
         if(klanten.size() == 0){ // Geen klant met deze inloggegevens
             System.out.println("onbestaande logingegevens");
-            return "error";
+            return "foutingelogd";
         }
         else{
         model.addAttribute("ingelogde", klanten.get(0));
@@ -44,7 +44,7 @@ public class LoginController {
 
     @GetMapping("/error")
     public String loginErrorHandler() {
-        return "error";
+        return "foutingelogd";
     }
 
     @GetMapping("/overview")
