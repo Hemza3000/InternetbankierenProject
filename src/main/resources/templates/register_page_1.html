@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Welkom bij de SOFA BANK</title>
@@ -11,10 +11,13 @@
 <p>Wordt je een particuliere of zakelijke klant?</p>
 <P>Maak een keuze en klik op verder</P>
         <form action="/register_Zakelijk_Particulier" method="post">
-            <input type="radio" id="particulier" name="zakelijkOfParticulier" value="particulier">
-            <label for="particulier">particulier</label><br>
-            <input type="radio" id="zakelijk" name="zakelijkOfParticulier" value="zakelijk">
+
+            <input type="radio" name="zakelijkOfParticulier" id="particulier" value="0" th:checked="*{isNew}">
+            <label th:for="particulier">particulier</label><br>
+
+            <input type="radio" name="zakelijkOfParticulier" id="zakelijk" value="1" th:checked="*{isNew}">
             <label for="zakelijk">zakelijk</label><br>
+
             <input type="submit" name="verder" value="verder">
 </form>
 <p>Terug naar de <a href="/home">homepage</a></p> </p>
