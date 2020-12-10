@@ -19,6 +19,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Hemza Lasri, 10-12-2020
+ *
+ * */
+
 @Repository
 @Primary
 public class BedrijfsDAO implements GenericDAO<Bedrijf> {
@@ -99,6 +104,7 @@ public class BedrijfsDAO implements GenericDAO<Bedrijf> {
 
 
     //Rowmapper
+
     class BedrijfsMapper implements RowMapper<Bedrijf> {
 
         @Autowired
