@@ -21,8 +21,8 @@ public class Bedrijf extends Klant {
     private List<Bedrijfsrekening> rekeningen = new ArrayList<>();
 
     public Bedrijf(int idKlant, String gebruikersnaam, String wachtwoord, String straatnaam, int huisnummer,
-                   String postcode, String woonplaats, String bedrijfsnaam, int KVKNummer, String sector, String BTWNummer,
-                   Medewerker accountmanager, List<Bedrijfsrekening> rekeningen) {
+                   String postcode, String woonplaats, String bedrijfsnaam, int KVKNummer, String sector,
+                   String BTWNummer, Medewerker accountmanager, List<Bedrijfsrekening> rekeningen) {
         super(idKlant, gebruikersnaam, wachtwoord, straatnaam, huisnummer, postcode, woonplaats);
         this.bedrijfsnaam = bedrijfsnaam;
         this.KVKNummer = KVKNummer;
@@ -31,7 +31,6 @@ public class Bedrijf extends Klant {
         this.accountmanager = accountmanager;
         this.rekeningen = rekeningen;
     }
-
 
     public Bedrijf(){
 
