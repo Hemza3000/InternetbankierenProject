@@ -76,8 +76,9 @@ public class RegisterPageController {
         particulier.setGebruikersnaam(user_name);
         particulier.setWachtwoord(password);
         System.out.println(particulier);  // TODO <- onnodig
+        System.out.println(particulier.getGeboortedatum());
         particulierDAO.storeOne(particulier);
-        return "home";
+        return "register_completed";
     }
 
 }

@@ -31,8 +31,7 @@ CREATE TABLE IF NOT EXISTS `Internet_Bankieren`.`Particulier` (
   `postcode` VARCHAR(45) NOT NULL,
   `woonplaats` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idParticulier`))
-ENGINE = InnoDB;
-
+ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- -----------------------------------------------------
 -- Table `Internet_Bankieren`.`Medewerker`
@@ -44,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `Internet_Bankieren`.`Medewerker` (
   `tussenvoegsels` VARCHAR(45) NULL,
   `achternaam` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`personeelsnummer`))
-ENGINE = InnoDB;
+ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
 -- -----------------------------------------------------
@@ -70,8 +69,7 @@ CREATE TABLE IF NOT EXISTS `Internet_Bankieren`.`Bedrijf` (
     REFERENCES `Internet_Bankieren`.`Medewerker` (`personeelsnummer`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
+ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- -----------------------------------------------------
 -- Table `Internet_Bankieren`.`Bedrijfsrekening`
@@ -95,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `Internet_Bankieren`.`Bedrijfsrekening` (
     REFERENCES `Internet_Bankieren`.`Particulier` (`idParticulier`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
 -- -----------------------------------------------------
@@ -113,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `Internet_Bankieren`.`Priverekening` (
     REFERENCES `Internet_Bankieren`.`Particulier` (`idParticulier`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
 -- -----------------------------------------------------
@@ -140,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `Internet_Bankieren`.`Transactie` (
     REFERENCES `Internet_Bankieren`.`Priverekening` (`idPriverekening`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
