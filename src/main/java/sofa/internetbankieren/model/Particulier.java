@@ -38,6 +38,11 @@ public class Particulier extends Klant {
     public Particulier() {
             }
 
+    public Particulier(String voornaam, String voorvoegsels, String achternaam, Date geboortedatum, int bsn, String straatnaam,
+                       int huisnummer, String postcode, String woonplaats) {
+     this(0,"", "", straatnaam, huisnummer, postcode, woonplaats, voornaam,
+             voorvoegsels, achternaam, geboortedatum, bsn, new ArrayList<>(), new ArrayList<>());
+    }
 
 
     public void addParticulier(){

@@ -8,12 +8,16 @@ package sofa.internetbankieren.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import sofa.internetbankieren.model.Bedrijf;
 import sofa.internetbankieren.model.Particulier;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.zip.DataFormatException;
 
 @Controller
 public class RegisterPageController {
@@ -35,12 +39,12 @@ public class RegisterPageController {
         return null;
     }
 
-    /*@PostMapping("/register_particulier")
+    @PostMapping("/register_particulier")
     public String newParticulierHandler(
             @RequestParam(name="First_name") String voornaam,
             @RequestParam(name="Prefix") String voorvoegsels,
             @RequestParam(name="Last_name") String achternaam,
-            @RequestParam(name="Birtday") Date geboortedatum, // TODO parse?!
+            @RequestParam(name="Birthday") Date geboortedatum, // TODO parse?!
             @RequestParam(name="BSN") int BSN,
             @RequestParam(name="Street") String straatnaam,
             @RequestParam(name="House_number") int huisnummer,
@@ -49,13 +53,14 @@ public class RegisterPageController {
             Model model) {
         Particulier newParticulier = new Particulier(voornaam, voorvoegsels, achternaam,
                 geboortedatum, BSN, straatnaam, huisnummer, postcode, woonplaats);
-
         model.addAttribute("particulier", newParticulier);
-
         return "confirmationParticulier";
-    }*/
+    }
 
-
-
+    @PostMapping("/confirmParticulier")
+    public String confirmHandler(@ModelAttribute(name="particulier") Particulier confirmedMember)
+    {
+        return "register_page_3";
+    }
 
 }
