@@ -16,6 +16,10 @@ import sofa.internetbankieren.model.Medewerker;
 import sofa.internetbankieren.model.Particulier;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Repository
@@ -75,7 +79,9 @@ public class ParticulierDAO {
                 ps.setString(4, particulier.getTussenvoegsels());
                 ps.setString(5, particulier.getAchternaam());
                 ps.setInt(6, particulier.getBSN());
-                ps.setDate(7, (Date) particulier.getGeboortedatum());
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                ps.setDate(7, LocalDate.parse(particulier.getGeboortedatum(), "yyyy-MM-dd");
+                //ps.setDate(7, (Date) particulier.getGeboortedatum());
                 ps.setString(8, particulier.getStraatnaam());
                 ps.setInt(9, particulier.getHuisnummer());
                 ps.setString(10, particulier.getPostcode());
@@ -83,7 +89,7 @@ public class ParticulierDAO {
                 return ps;
             }
         }, keyHolder);
-        particulier.setIdKlant((Integer) keyHolder.getKey());
+        particulier.setIdKlant(keyHolder.getKey().intValue());
     }
     //update one
     public int updateOne(Particulier particulier) {
