@@ -26,7 +26,7 @@ public class LoginController {
         return "login";
     }
 
-    @PostMapping("/login")
+    @PostMapping("/inloggen")
     public String postInlogForm(Model model, @RequestParam String gebruikersnaam, @RequestParam String wachtwoord){
         // todo ook bedrijven doorzoeken
         System.out.println("inloggen");
