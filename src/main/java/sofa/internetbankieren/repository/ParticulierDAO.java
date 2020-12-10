@@ -31,10 +31,17 @@ public class ParticulierDAO {
         final String sql = "select * from particulier";
         return jdbcTemplate.query(sql, new ParticulierRowMapper(), null);
     }
+
     // get One by Id
     public Particulier getOneByID(int idKlant){
         final String sql = "select * from particulier where idKlant=?";
         return jdbcTemplate.queryForObject(sql, new ParticulierRowMapper(), idKlant);
+    }
+
+    // get One by gebruikersnaam en wachtwoord
+    public List<Particulier> getOneByOneGebruikersnaamWachtwoord(String gebruikersnaam, String wachtwoord){
+        final String sql = "select * from particulier where gebruikersnaam=? and wachtwoord=?";
+        return jdbcTemplate.query(sql, new ParticulierRowMapper(), null);
     }
 
     //get All by naam
@@ -124,8 +131,5 @@ public class ParticulierDAO {
                     bedrijfsrekeningDAO.getAllByContactpersoon(resultSet.getInt("idContactpersoon")));
 
         }
-    }
-    public Particulier getOneByOneGebruikersnaamWachtwoord(String gebruikersnaam, String wachtwoord){
-        return null;
     }
 }
