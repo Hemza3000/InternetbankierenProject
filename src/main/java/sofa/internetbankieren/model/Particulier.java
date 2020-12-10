@@ -21,24 +21,10 @@ public class Particulier extends Klant {
     private List<Bedrijfsrekening> bedrijfsrekeningen = new ArrayList<>();
 
 
-    public Particulier(int idKlant, String straatnaam, int huisnummer, String postcode, String woonplaats, String voornaam, String tussenvoegsels, String achternaam, Date geboortedatum, int BSN) {
-        super(idKlant, straatnaam, huisnummer, postcode, woonplaats);
-        this.voornaam = voornaam;
-        this.tussenvoegsels = tussenvoegsels;
-        this.achternaam = achternaam;
-        this.geboortedatum = geboortedatum;
-        this.BSN = BSN;
-    }
-
-    public Particulier() {
-            }
-
-
-
-    public Particulier(int idKlant, String straatnaam, int huisnummer, String postcode, String woonplaats, String voornaam,
-                       String tussenvoegsels, String achternaam, Date geboortedatum,
-                       int BSN, List<Priverekening> priverekeningen, List<Bedrijfsrekening> bedrijfsrekeningen) {
-        super(idKlant, straatnaam, huisnummer, postcode, woonplaats);
+    public Particulier(int idKlant, String gebruikersnaam, String wachtwoord, String straatnaam, int huisnummer,
+                       String postcode, String woonplaats, String voornaam, String tussenvoegsels, String achternaam,
+                       Date geboortedatum, int BSN, List<Priverekening> priverekeningen, List<Bedrijfsrekening> bedrijfsrekeningen) {
+        super(idKlant, gebruikersnaam, wachtwoord, straatnaam, huisnummer, postcode, woonplaats);
         this.voornaam = voornaam;
         this.tussenvoegsels = tussenvoegsels;
         this.achternaam = achternaam;
@@ -47,6 +33,13 @@ public class Particulier extends Klant {
         this.priverekeningen = priverekeningen;
         this.bedrijfsrekeningen = bedrijfsrekeningen;
     }
+
+
+    public Particulier() {
+            }
+
+
+
     public void addParticulier(){
 
     }
