@@ -79,9 +79,7 @@ public class ParticulierDAO {
                 ps.setString(4, particulier.getTussenvoegsels());
                 ps.setString(5, particulier.getAchternaam());
                 ps.setInt(6, particulier.getBSN());
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                ps.setDate(7, LocalDate.parse(particulier.getGeboortedatum(), "yyyy-MM-dd");
-                //ps.setDate(7, (Date) particulier.getGeboortedatum());
+                ps.setDate(7, (Date) particulier.getGeboortedatum());
                 ps.setString(8, particulier.getStraatnaam());
                 ps.setInt(9, particulier.getHuisnummer());
                 ps.setString(10, particulier.getPostcode());
