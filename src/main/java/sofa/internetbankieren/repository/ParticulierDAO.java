@@ -127,8 +127,8 @@ public class ParticulierDAO {
                     resultSet.getString("achternaam"),
                     resultSet.getDate("geboortedatum"),
                     resultSet.getInt("BSN"),
-                    priverekeningDAO.getAllByRekeninghouder(resultSet.getInt("idRekeninghouder")),
-                    bedrijfsrekeningDAO.getAllByContactpersoon(resultSet.getInt("idContactpersoon")));
+                    priverekeningDAO.getAllByRekeninghouder(resultSet.getInt("idParticulier")),
+                    bedrijfsrekeningDAO.getAllByContactpersoon(resultSet.getInt("idParticulier")));
 
         }
     }
