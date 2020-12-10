@@ -87,4 +87,17 @@ public abstract class Klant {
     public void setWoonplaats(String woonplaats) {
         this.woonplaats = woonplaats;
     }
+
+    @Override
+    public String toString() {
+        return "Klant{" +
+                "idKlant=" + idKlant +
+                ", gebruikersnaam='" + gebruikersnaam + '\'' +
+                ", wachtwoord='" + wachtwoord + '\'' +
+                ", straatnaam='" + straatnaam + '\'' +
+                ", huisnummer=" + huisnummer +
+                ", postcode='" + postcode + '\'' +
+                ", woonplaats='" + woonplaats + '\'' +
+                '}';
+    }
 }

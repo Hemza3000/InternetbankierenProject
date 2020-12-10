@@ -105,4 +105,17 @@ public class Particulier extends Klant {
     public void setBedrijfsrekeningen(List<Bedrijfsrekening> bedrijfsrekeningen) {
         this.bedrijfsrekeningen = bedrijfsrekeningen;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + " " + "Particulier{" +
+                "voornaam='" + voornaam + '\'' +
+                ", tussenvoegsels='" + tussenvoegsels + '\'' +
+                ", achternaam='" + achternaam + '\'' +
+                ", geboortedatum=" + geboortedatum +
+                ", BSN=" + BSN +
+                ", priverekeningen=" + priverekeningen +
+                ", bedrijfsrekeningen=" + bedrijfsrekeningen +
+                '}';
+    }
 }
