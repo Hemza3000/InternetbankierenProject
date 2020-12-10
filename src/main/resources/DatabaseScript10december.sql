@@ -18,18 +18,20 @@ USE `Internet_Bankieren` ;
 -- Table `Internet_Bankieren`.`Particulier`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Internet_Bankieren`.`Particulier` (
+  `idParticulier` INT NOT NULL,
+  `gebruikersnaam` VARCHAR(45) NOT NULL,
+  `wachtwoord` VARCHAR(45) NOT NULL,
   `voornaam` VARCHAR(45) NOT NULL,
   `tussenvoegsels` VARCHAR(45) NULL,
   `achternaam` VARCHAR(45) NOT NULL,
   `BSN` INT NOT NULL,
   `geboortedatum` DATE NOT NULL,
-  `idRekeninghouder` INT NOT NULL,
   `straat` VARCHAR(45) NOT NULL,
-  `huisnummer` VARCHAR(45) NOT NULL,
+  `huisnummer` INT NOT NULL,
   `postcode` VARCHAR(45) NOT NULL,
   `woonplaats` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idRekeninghouder`))
-ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  PRIMARY KEY (`idParticulier`))
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -42,21 +44,23 @@ CREATE TABLE IF NOT EXISTS `Internet_Bankieren`.`Medewerker` (
   `tussenvoegsels` VARCHAR(45) NULL,
   `achternaam` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`personeelsnummer`))
-ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `Internet_Bankieren`.`Bedrijf`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Internet_Bankieren`.`Bedrijf` (
+  `idBedrijf` INT NOT NULL,
+  `idAccountmanager` INT NOT NULL,
+  `gebruikersnaam` VARCHAR(45) NOT NULL,
+  `wachtwoord` VARCHAR(45) NOT NULL,
   `bedrijfsnaam` VARCHAR(45) NOT NULL,
   `KVKnummer` INT NOT NULL,
   `sector` VARCHAR(45) NOT NULL,
   `BTWnummer` VARCHAR(45) NOT NULL,
-  `idBedrijf` INT NOT NULL,
-  `idAccountmanager` INT NOT NULL,
   `straat` VARCHAR(45) NOT NULL,
-  `huisnummer` VARCHAR(45) NOT NULL,
+  `huisnummer` INT NOT NULL,
   `postcode` VARCHAR(45) NOT NULL,
   `woonplaats` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idBedrijf`),
@@ -66,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `Internet_Bankieren`.`Bedrijf` (
     REFERENCES `Internet_Bankieren`.`Medewerker` (`personeelsnummer`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -88,10 +92,10 @@ CREATE TABLE IF NOT EXISTS `Internet_Bankieren`.`Bedrijfsrekening` (
     ON UPDATE NO ACTION,
   CONSTRAINT `verzinzelf10`
     FOREIGN KEY (`idContactpersoon`)
-    REFERENCES `Internet_Bankieren`.`Particulier` (`idRekeninghouder`)
+    REFERENCES `Internet_Bankieren`.`Particulier` (`idParticulier`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -106,10 +110,10 @@ CREATE TABLE IF NOT EXISTS `Internet_Bankieren`.`Priverekening` (
   INDEX `verzinzelf6_idx` (`idRekeninghouder` ASC) VISIBLE,
   CONSTRAINT `verzinzelf6`
     FOREIGN KEY (`idRekeninghouder`)
-    REFERENCES `Internet_Bankieren`.`Particulier` (`idRekeninghouder`)
+    REFERENCES `Internet_Bankieren`.`Particulier` (`idParticulier`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -136,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `Internet_Bankieren`.`Transactie` (
     REFERENCES `Internet_Bankieren`.`Priverekening` (`idPriverekening`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
