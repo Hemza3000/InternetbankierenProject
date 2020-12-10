@@ -119,20 +119,20 @@ public class ParticulierDAO {
         public Particulier mapRow(ResultSet resultSet, int i) throws SQLException {
             PriverekeningDAO priverekeningDAO = new PriverekeningDAO(jdbcTemplate);
             BedrijfsrekeningDAO bedrijfsrekeningDAO = new BedrijfsrekeningDAO(jdbcTemplate);
-            return new Particulier(resultSet.getInt("idKlant"),
+            return new Particulier(resultSet.getInt("idParticulier"),
                     resultSet.getString("gebruikersnaam"),
                     resultSet.getString("wachtwoord"),
-                    resultSet.getString("straatnaam"),
+                    resultSet.getString("straat"),
                     resultSet.getInt("huisnummer"),
                     resultSet.getString("postcode"),
                     resultSet.getString("woonplaats"),
                     resultSet.getString("voornaam"),
-                    resultSet.getString("tussenvoegsel"),
+                    resultSet.getString("tussenvoegsels"),
                     resultSet.getString("achternaam"),
                     resultSet.getDate("geboortedatum"),
                     resultSet.getInt("BSN"),
-                    priverekeningDAO.getAllByRekeninghouder(resultSet.getInt("idRekeninghouder")),
-                    bedrijfsrekeningDAO.getAllByContactpersoon(resultSet.getInt("idContactpersoon")));
+                    priverekeningDAO.getAllByRekeninghouder(resultSet.getInt("idParticulier")),
+                    bedrijfsrekeningDAO.getAllByContactpersoon(resultSet.getInt("idParticulier")));
 
         }
     }

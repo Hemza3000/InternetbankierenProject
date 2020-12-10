@@ -24,9 +24,4 @@ public class HomeController {
     public String homeHandler(){
         return "home";
     }
-
-    @GetMapping("/register")
-    public String registerHandler() {
-        return "register_page_1";
-    }
 }

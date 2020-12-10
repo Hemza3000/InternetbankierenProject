@@ -32,6 +32,13 @@ public class Bedrijf extends Klant {
         this.rekeningen = rekeningen;
     }
 
+    public Bedrijf(String straatnaam, int huisnummer, String postcode, String woonplaats,
+                   String bedrijfsnaam, int KVKNummer, String sector, String BTWNummer) {
+        this(0, "", "", straatnaam, huisnummer, postcode, woonplaats, bedrijfsnaam,
+                KVKNummer, sector, BTWNummer, null, new ArrayList<>());
+    }
+
+
     public Bedrijf(){
 
     }

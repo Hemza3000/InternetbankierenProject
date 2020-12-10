@@ -27,6 +27,11 @@ public class RegisterPageController {
         this.particulierDAO = particulierDAO;
     }
 
+    @GetMapping("/register")
+    public String registerHandler() {
+        return "register_page_1";
+    }
+
     @PostMapping("/register_Zakelijk_Particulier")
     public String choiceHanlder(@RequestParam(name="zakelijkOfParticulier") int value, Model model){
         if (value == 0 ) {
@@ -59,15 +64,38 @@ public class RegisterPageController {
         return "confirmationParticulier";
     }
 
+    @PostMapping("/register_zakelijk")
+    public String newBedrijfsHandler(
+            @RequestParam(name="Company_name") String bedrijfsnaam,
+            @RequestParam(name="Branch") String sector,
+            @RequestParam(name="KVK_number") int KVKNummer,
+            @RequestParam(name="BTW_number") String BTWNummer,
+            @RequestParam(name="Street") String straatnaam,
+            @RequestParam(name="House_number") int huisnummer,
+            @RequestParam(name="Postal_code") String postcode,
+            @RequestParam(name="City") String woonplaats,
+            Model model) {
+        Bedrijf newBedrijf = new Bedrijf(straatnaam, huisnummer, postcode,
+                woonplaats, bedrijfsnaam, KVKNummer, sector, BTWNummer);
+        model.addAttribute("bedrijf", newBedrijf);
+        return "confirmationBedrijf";
+    }
+
     @PostMapping("/confirmParticulier")
     public String confirmHandler(@ModelAttribute(name="particulier") Particulier confirmedMember, Model model)
     {
-
         model.addAttribute("particulier", confirmedMember);
         return "register_page_3";
     }
 
+    @PostMapping("/confirmBedrijf")
+    public String confirmBedrijfHandler(@ModelAttribute(name="bedrijf") Bedrijf confirmedMember, Model model)
+    {
+        model.addAttribute("bedrijf", confirmedMember);
+        return "register_page_3";
+    }
 
+    // todo Ook laten werken voor een Bedrijf
     @PostMapping("/confirm")
     public String confirm(@RequestParam String user_name,
                           @RequestParam String password,
