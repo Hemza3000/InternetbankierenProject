@@ -33,7 +33,7 @@ public class LoginController {
         List<Particulier> klanten = particulierDAO.getOneByOneGebruikersnaamWachtwoord(gebruikersnaam, wachtwoord);
         if(klanten.size() == 0){ // Geen klant met deze inloggegevens
             System.out.println("onbestaande logingegevens");
-            return "error";
+            return "foutingelogd";
         }
         else{
         model.addAttribute("ingelogde", klanten.get(0));
@@ -44,7 +44,7 @@ public class LoginController {
 
     @GetMapping("/error")
     public String loginErrorHandler() {
-        return "error";
+        return "foutingelogd";
     }
 
     @GetMapping("/overview")

@@ -40,8 +40,8 @@ public class ParticulierDAO {
 
     // get One by gebruikersnaam en wachtwoord
     public List<Particulier> getOneByOneGebruikersnaamWachtwoord(String gebruikersnaam, String wachtwoord){
-        final String sql = "select * from particulier where gebruikersnaam=? and wachtwoord=?";
-        return jdbcTemplate.query(sql, new ParticulierRowMapper(), null);
+        final String sql = "select * from Particulier where gebruikersnaam=? and wachtwoord=?";
+        return jdbcTemplate.query(sql, new ParticulierRowMapper(), gebruikersnaam, wachtwoord);
     }
 
     //get All by naam

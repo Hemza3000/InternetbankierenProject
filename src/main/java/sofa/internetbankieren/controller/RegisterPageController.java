@@ -5,25 +5,26 @@ package sofa.internetbankieren.controller;
  * aangemaakt op 9 dec
  */
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import sofa.internetbankieren.model.Bedrijf;
 import sofa.internetbankieren.model.Particulier;
+import sofa.internetbankieren.repository.ParticulierDAO;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
-import java.util.zip.DataFormatException;
 
+@SessionAttributes("particulier")
 @Controller
 public class RegisterPageController {
 
-    public RegisterPageController() {
+    ParticulierDAO particulierDAO;
+
+    public RegisterPageController(ParticulierDAO particulierDAO) {
         super();
+        this.particulierDAO = particulierDAO;
     }
 
     @GetMapping("/register")
@@ -47,9 +48,9 @@ public class RegisterPageController {
     @PostMapping("/register_particulier")
     public String newParticulierHandler(
             @RequestParam(name="First_name") String voornaam,
-            @RequestParam(name="Prefix") String voorvoegsels,
+            @RequestParam(name="Prefix", required = false) String voorvoegsels,
             @RequestParam(name="Last_name") String achternaam,
-            @RequestParam(name="Birthday") Date geboortedatum, // TODO parse?!
+            @RequestParam(name="Birthday") @DateTimeFormat(pattern="yyyy-MM-dd") Date geboortedatum,
             @RequestParam(name="BSN") int BSN,
             @RequestParam(name="Street") String straatnaam,
             @RequestParam(name="House_number") int huisnummer,
@@ -59,6 +60,7 @@ public class RegisterPageController {
         Particulier newParticulier = new Particulier(voornaam, voorvoegsels, achternaam,
                 geboortedatum, BSN, straatnaam, huisnummer, postcode, woonplaats);
         model.addAttribute("particulier", newParticulier);
+        System.out.println(newParticulier);
         return "confirmationParticulier";
     }
 
@@ -80,8 +82,10 @@ public class RegisterPageController {
     }
 
     @PostMapping("/confirmParticulier")
-    public String confirmHandler(@ModelAttribute(name="particulier") Particulier confirmedMember)
+    public String confirmHandler(@ModelAttribute(name="particulier") Particulier confirmedMember, Model model)
     {
+
+        model.addAttribute("particulier", confirmedMember);
         return "register_page_3";
     }
 
@@ -90,4 +94,17 @@ public class RegisterPageController {
     {
         return "register_page_3";
     }
+
+    @PostMapping("/confirm")
+    public String confirm(@RequestParam String user_name,
+                          @RequestParam String password,
+                          HttpSession httpSession){
+        Particulier particulier = (Particulier) httpSession.getAttribute("particulier");
+        particulier.setGebruikersnaam(user_name);
+        particulier.setWachtwoord(password);
+        System.out.println(particulier);  // TODO <- onnodig
+        particulierDAO.storeOne(particulier);
+        return "home";
+    }
+
 }
