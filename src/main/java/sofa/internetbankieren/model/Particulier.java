@@ -47,6 +47,8 @@ public class Particulier extends Klant {
         this.priverekeningen = priverekeningen;
         this.bedrijfsrekeningen = bedrijfsrekeningen;
     }
+
+
     public void addParticulier(){
 
     }
