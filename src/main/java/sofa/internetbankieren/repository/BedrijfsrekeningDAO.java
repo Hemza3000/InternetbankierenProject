@@ -60,8 +60,8 @@ public class BedrijfsrekeningDAO implements GenericDAO<Bedrijfsrekening> {
     }
 
     // update One
-    public int updateOne(Bedrijfsrekening bedrijfsrekening) {
-        return jdbcTemplate.update("UPDATE bedrijfsrekening SET idBedrijf=?, " +
+    public void updateOne(Bedrijfsrekening bedrijfsrekening) {
+         jdbcTemplate.update("UPDATE bedrijfsrekening SET idBedrijf=?, " +
                 " idContactpersoon=?, saldo=?, IBAN=? WHERE idBedrijfsrekening=?",
                 bedrijfsrekening.getRekeninghouder().getIdKlant(),
                 bedrijfsrekening.getContactpersoon().getIdKlant(),
@@ -90,8 +90,8 @@ public class BedrijfsrekeningDAO implements GenericDAO<Bedrijfsrekening> {
 
 
     // delete One
-    public int deleteOne(Bedrijfsrekening bedrijfsrekening) {
-        return jdbcTemplate.update("DELETE FROM bedrijfsrekening WHERE idRekening=?",
+    public void deleteOne(Bedrijfsrekening bedrijfsrekening) {
+        jdbcTemplate.update("DELETE FROM bedrijfsrekening WHERE idRekening=?",
                 bedrijfsrekening.getIdRekening());
     }
 

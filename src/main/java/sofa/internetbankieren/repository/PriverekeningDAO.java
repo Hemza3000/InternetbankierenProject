@@ -51,8 +51,8 @@ public class PriverekeningDAO implements GenericDAO<Priverekening> {
     }
 
     // update One
-    public int updateOne(Priverekening priverekening) {
-        return jdbcTemplate.update("UPDATE priverekening SET idRekeninghouder=?, " +
+    public void updateOne(Priverekening priverekening) {
+         jdbcTemplate.update("UPDATE priverekening SET idRekeninghouder=?, " +
                         " saldo=?, IBAN=? WHERE idPriverekening=?",
                 priverekening.getRekeninghouder().getIdKlant(),
                 priverekening.getSaldo(),
@@ -78,8 +78,8 @@ public class PriverekeningDAO implements GenericDAO<Priverekening> {
     }
 
     // delete One
-    public int deleteOne(Priverekening priverekening) {
-        return jdbcTemplate.update("DELETE FROM Priverekening WHERE idRekening=?",
+    public void deleteOne(Priverekening priverekening) {
+        jdbcTemplate.update("DELETE FROM Priverekening WHERE idRekening=?",
                 priverekening.getIdRekening());
     }
 
