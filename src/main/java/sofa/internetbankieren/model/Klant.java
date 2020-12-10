@@ -9,20 +9,43 @@ package sofa.internetbankieren.model;
 public abstract class Klant {
 
     private int idKlant;
+    private String gebruikersnaam;
+    private String wachtwoord;
     private String straatnaam;
     private int huisnummer;
     private String postcode;
     private String woonplaats;
 
-    public Klant(int idKlant, String straatnaam, int huisnummer, String postcode, String woonplaats) {
+
+    public Klant(int idKlant, String gebruikersnaam, String wachtwoord, String straatnaam, int huisnummer,
+                 String postcode, String woonplaats) {
         this.idKlant = idKlant;
+        this.gebruikersnaam = gebruikersnaam;
+        this.wachtwoord = wachtwoord;
         this.straatnaam = straatnaam;
         this.huisnummer = huisnummer;
         this.postcode = postcode;
         this.woonplaats = woonplaats;
     }
 
+
     public Klant() {
+    }
+
+    public String getGebruikersnaam() {
+        return gebruikersnaam;
+    }
+
+    public void setGebruikersnaam(String gebruikersnaam) {
+        this.gebruikersnaam = gebruikersnaam;
+    }
+
+    public String getWachtwoord() {
+        return wachtwoord;
+    }
+
+    public void setWachtwoord(String wachtwoord) {
+        this.wachtwoord = wachtwoord;
     }
 
     public int getIdKlant() {

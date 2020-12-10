@@ -54,22 +54,25 @@ public class ParticulierDAO {
 
     // store One
     public void storeOne(Particulier particulier) {
-        final String sql = "INSERT INTO particulier(voornaam, tussenvoegsels, achternaam, BSN, geboortedatum," +
-                "straat, huisnummer, postcode, woonplaats ) values (?,?,?,?,?,?,?,?,?)";
+        final String sql = "INSERT INTO particulier(gebruikersnaam, wachtwoord, voornaam, tussenvoegsels, achternaam, " +
+                "BSN, geboortedatum," +
+                "straat, huisnummer, postcode, woonplaats ) values (?,?,?,?,?,?,?,?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 PreparedStatement ps = connection.prepareStatement(sql, new String[]{"idKlant"});
-                ps.setString(1, particulier.getVoornaam());
-                ps.setString(2, particulier.getTussenvoegsels());
-                ps.setString(3, particulier.getAchternaam());
-                ps.setInt(4, particulier.getBSN());
-                ps.setDate(5, (Date) particulier.getGeboortedatum());
-                ps.setString(6, particulier.getStraatnaam());
-                ps.setInt(8, particulier.getHuisnummer());
-                ps.setString(9, particulier.getPostcode());
-                ps.setString(10, particulier.getWoonplaats());
+                ps.setString(1, particulier.getGebruikersnaam());
+                ps.setString(2, particulier.getWachtwoord());
+                ps.setString(3, particulier.getVoornaam());
+                ps.setString(4, particulier.getTussenvoegsels());
+                ps.setString(5, particulier.getAchternaam());
+                ps.setInt(6, particulier.getBSN());
+                ps.setDate(7, (Date) particulier.getGeboortedatum());
+                ps.setString(8, particulier.getStraatnaam());
+                ps.setInt(9, particulier.getHuisnummer());
+                ps.setString(10, particulier.getPostcode());
+                ps.setString(11, particulier.getWoonplaats());
                 return ps;
             }
         }, keyHolder);
@@ -77,7 +80,7 @@ public class ParticulierDAO {
     }
     //update one
     public int updateOne(Particulier particulier) {
-        return jdbcTemplate.update("update particulier set voornaam=?, tussenvoegsels=?, achternaam=?, BSN=?," +
+        return jdbcTemplate.update("update particulier set gebruikersnaam=?, wachtwoord=?, voornaam=?, tussenvoegsels=?, achternaam=?, BSN=?," +
                         "geboortedatum=?, straatnaam=?, huisnummer=?, postcode=?, woonplaats=? " +
                         "where idKlant=?",
                 particulier.getVoornaam(),
@@ -103,7 +106,11 @@ public class ParticulierDAO {
 
         @Override
         public Particulier mapRow(ResultSet resultSet, int i) throws SQLException {
+            PriverekeningDAO priverekeningDAO = new PriverekeningDAO(jdbcTemplate);
+            BedrijfsrekeningDAO bedrijfsrekeningDAO = new BedrijfsrekeningDAO(jdbcTemplate);
             return new Particulier(resultSet.getInt("idKlant"),
+                    resultSet.getString("gebruikersnaam"),
+                    resultSet.getString("wachtwoord"),
                     resultSet.getString("straatnaam"),
                     resultSet.getInt("huisnummer"),
                     resultSet.getString("postcode"),
@@ -112,7 +119,10 @@ public class ParticulierDAO {
                     resultSet.getString("tussenvoegsel"),
                     resultSet.getString("achternaam"),
                     resultSet.getDate("geboortedatum"),
-                    resultSet.getInt("BSN"));
+                    resultSet.getInt("BSN"),
+                    priverekeningDAO.getAllByRekeninghouder(resultSet.getInt("idRekeninghouder")),
+                    bedrijfsrekeningDAO.getAllByContactpersoon(resultSet.getInt("idContactpersoon")));
+
         }
     }
 
