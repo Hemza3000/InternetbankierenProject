@@ -20,9 +20,9 @@ public class HomeController {
         return "home";
     }
 
-    @GetMapping("/login")
-    public String inlogHandler() {
-        return "login";
+    @GetMapping("/home")
+    public String homeHandler(){
+        return "home";
     }
 
     @GetMapping("/register")

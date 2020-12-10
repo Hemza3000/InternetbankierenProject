@@ -125,5 +125,7 @@ public class ParticulierDAO {
 
         }
     }
-
+    public Particulier getOneByOneGebruikersnaamWachtwoord(String gebruikersnaam, String wachtwoord){
+        return null;
+    }
 }
