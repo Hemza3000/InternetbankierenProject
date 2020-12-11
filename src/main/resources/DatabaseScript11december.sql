@@ -142,6 +142,8 @@ create table if not exists `internet_bankieren`.`transactie` (
     on update no action)
 engine = innodb default charset=utf8mb4 collate=utf8mb4_general_ci;
 
+INSERT INTO `internet_bankieren`.`medewerker` (`rol`, `voornaam`, `tussenvoegsels`, `achternaam`) VALUES ('HOOFD_PARTICULIEREN', 'Huub', 'van', 'Thienen');
+INSERT INTO `internet_bankieren`.`medewerker` (`rol`, `voornaam`, `achternaam`) VALUES ('HOOFD_MKB', 'Michel', 'Oei');
 
 set sql_mode=@old_sql_mode;
 set foreign_key_checks=@old_foreign_key_checks;

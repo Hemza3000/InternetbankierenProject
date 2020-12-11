@@ -16,7 +16,7 @@ public class Medewerker {
         ACCOUNT_MANAGER
     }
 
-    private int persooneelsnummer;
+    private int personeelsnummer;
     private String voornaam;
     private String tussenvoegsels;
     private String achternaam;
@@ -25,10 +25,10 @@ public class Medewerker {
 
     public Medewerker() { super(); }
 
-    public Medewerker(int persooneelsnummer, String voornaam, String tussenvoegsels, String achternaam, Rol rol,
+    public Medewerker(int personeelsnummer, String voornaam, String tussenvoegsels, String achternaam, Rol rol,
                       List<Bedrijf> bedrijven) {
         super();
-        this.persooneelsnummer = persooneelsnummer;
+        this.personeelsnummer = personeelsnummer;
         this.voornaam = voornaam;
         this.tussenvoegsels = tussenvoegsels;
         this.achternaam = achternaam;
@@ -45,7 +45,7 @@ public class Medewerker {
     }
 
     public void voegBedrijfToe(Bedrijf bedrijf){
-        if(rol == Rol.ACCOUNT_MANAGER) {
+        if(rol == Rol.ACCOUNT_MANAGER || rol == Rol.HOOFD_MKB) {
             if (bedrijven == null)
                 bedrijven = new ArrayList<>();
             bedrijven.add(bedrijf);
@@ -53,11 +53,11 @@ public class Medewerker {
         // TODO else foutafhandeling
     }
 
-    public int getPersooneelsnummer() {
-        return persooneelsnummer;
+    public int getPersoneelsnummer() {
+        return personeelsnummer;
     }
-    public void setPersooneelsnummer(int persooneelsnummer) {
-        this.persooneelsnummer = persooneelsnummer;
+    public void setPersoneelsnummer(int personeelsnummer) {
+        this.personeelsnummer = personeelsnummer;
     }
 
 

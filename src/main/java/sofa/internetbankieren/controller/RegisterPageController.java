@@ -3,6 +3,8 @@ package sofa.internetbankieren.controller;
 /**
  * @Author Wichert Tjerkstra
  * aangemaakt op 9 dec
+ *
+ * Aangevuld door Wendy om de zakelijke registratie mogelijk te maken
  */
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -13,6 +15,7 @@ import sofa.internetbankieren.model.Bedrijf;
 import sofa.internetbankieren.model.Klant;
 import sofa.internetbankieren.model.Particulier;
 import sofa.internetbankieren.repository.BedrijfDAO;
+import sofa.internetbankieren.repository.MedewerkerDAO;
 import sofa.internetbankieren.repository.ParticulierDAO;
 
 import javax.servlet.http.HttpSession;
@@ -22,13 +25,18 @@ import java.time.LocalDate;
 @Controller
 public class RegisterPageController {
 
+    // Zoals aangegeven door de PO, is het hoofd MKB (medewerker 2) altijd de accountmanager.
+    public final static int ID_ACCOUNTMANAGER = 2;
+
     ParticulierDAO particulierDAO;
     BedrijfDAO bedrijfDAO;
+    MedewerkerDAO medewerkerDAO;
 
-    public RegisterPageController(ParticulierDAO particulierDAO, BedrijfDAO bedrijfDAO) {
+    public RegisterPageController(ParticulierDAO particulierDAO, BedrijfDAO bedrijfDAO, MedewerkerDAO medewerkerDAO) {
         super();
         this.particulierDAO = particulierDAO;
         this.bedrijfDAO = bedrijfDAO;
+        this.medewerkerDAO = medewerkerDAO;
     }
 
     @GetMapping("/register")
@@ -80,7 +88,7 @@ public class RegisterPageController {
             @RequestParam(name="City") String woonplaats,
             Model model) {
         Bedrijf newBedrijf = new Bedrijf(straatnaam, huisnummer, postcode,
-                woonplaats, bedrijfsnaam, KVKNummer, sector, BTWNummer);
+                woonplaats, bedrijfsnaam, KVKNummer, sector, BTWNummer, medewerkerDAO.getOneByID(ID_ACCOUNTMANAGER));
         model.addAttribute("klant", newBedrijf);
         return "confirmationBedrijf";
     }

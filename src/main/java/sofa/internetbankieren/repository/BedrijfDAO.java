@@ -9,14 +9,11 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import sofa.internetbankieren.model.Bedrijf;
-import sofa.internetbankieren.model.Bedrijfsrekening;
-import sofa.internetbankieren.model.Medewerker;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,7 +42,7 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
     // Retrieves all corporate customers by accountmanager ID
     public List<Bedrijf> getAllByIdAccountmanager(int idAccountmanager) {
         final String sql = "SELECT * FROM bedrijf WHERE idaccountmanager=?";
-        return jdbcTemplate.query(sql, new BedrijfsMapper());
+        return jdbcTemplate.query(sql, new BedrijfsMapper(), idAccountmanager);
     }
 
     // Retrieves one corporate customer by ID
@@ -58,7 +55,8 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
 
     //Stores new customer in database
     public void storeOne(Bedrijf bedrijf) {
-        String sql = "insert into bedrijf (gebruikersnaam, wachtwoord, straat, huisnummer, postcode, woonplaats, bedrijfsnaam, kvknummer, sector, btwnummer) values (?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into bedrijf (gebruikersnaam, wachtwoord, straat, huisnummer, postcode, woonplaats, " +
+                "bedrijfsnaam, kvknummer, sector, btwnummer, idaccountmanager) values (?,?,?,?,?,?,?,?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
@@ -74,6 +72,7 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
                 ps.setInt(8, bedrijf.getKVKNummer());
                 ps.setString(9, bedrijf.getSector());
                 ps.setString(10, bedrijf.getBTWNummer());
+                ps.setInt(11, bedrijf.getAccountmanager().getPersoneelsnummer());
                 return ps;
             }
         }, keyHolder);
