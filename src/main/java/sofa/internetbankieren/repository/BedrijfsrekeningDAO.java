@@ -37,7 +37,7 @@ public class BedrijfsrekeningDAO implements GenericDAO<Bedrijfsrekening> {
 
     // get One by Id
     public Bedrijfsrekening getOneByID(int idBedrijfsrekening){
-        final String sql = "SELECT * FROM bedrijfsrekening WHERE idBedrijfsrekening=?";
+        final String sql = "SELECT * FROM bedrijfsrekening WHERE idbedrijfsrekening=?";
             return jdbcTemplate.queryForObject(sql, new BedrijfsrekeningRowMapper(), idBedrijfsrekening);
     }
 
@@ -49,20 +49,20 @@ public class BedrijfsrekeningDAO implements GenericDAO<Bedrijfsrekening> {
 
     // get All By Rekeninghouder (Bedrijf)
     public List<Bedrijfsrekening> getAllByBedrijf(int idRekeninghouder) {
-        final String sql = "SELECT * FROM bedrijfsrekening WHERE idBedrijf=?";
+        final String sql = "SELECT * FROM bedrijfsrekening WHERE idbedrijf=?";
         return jdbcTemplate.query(sql, new BedrijfsrekeningRowMapper(), idRekeninghouder);
     }
 
     // get All By Contactpersoon (Contactpersoon)
     public List<Bedrijfsrekening> getAllByContactpersoon(int idContactpersoon) {
-        final String sql = "SELECT * FROM bedrijfsrekening WHERE idContactpersoon=?";
+        final String sql = "SELECT * FROM bedrijfsrekening WHERE idcontactpersoon=?";
         return jdbcTemplate.query(sql, new BedrijfsrekeningRowMapper(), idContactpersoon);
     }
 
     // update One
     public void updateOne(Bedrijfsrekening bedrijfsrekening) {
-         jdbcTemplate.update("UPDATE bedrijfsrekening SET idBedrijf=?, " +
-                " idContactpersoon=?, saldo=?, IBAN=? WHERE idBedrijfsrekening=?",
+         jdbcTemplate.update("UPDATE bedrijfsrekening SET idbedrijf=?, " +
+                " idcontactpersoon=?, saldo=?, IBAN=? WHERE idbedrijfsrekening=?",
                 bedrijfsrekening.getRekeninghouder().getIdKlant(),
                 bedrijfsrekening.getContactpersoon().getIdKlant(),
                 bedrijfsrekening.getSaldo(),
@@ -72,12 +72,12 @@ public class BedrijfsrekeningDAO implements GenericDAO<Bedrijfsrekening> {
 
     // store One
     public void storeOne(Bedrijfsrekening bedrijfsrekening) {
-        final String sql = "INSERT INTO bedrijfsrekening (idBedrijf, idContactpersoon, Saldo, IBAN) values (?,?,?,?)";
+        final String sql = "INSERT INTO bedrijfsrekening (idbedrijf, idcontactpersoon, saldo, iban) values (?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement(sql, new String[]{"idBedrijfsrekening"});
+                PreparedStatement ps = connection.prepareStatement(sql, new String[]{"idbedrijfsrekening"});
                 ps.setInt(1, bedrijfsrekening.getRekeninghouder().getIdKlant());
                 ps.setInt(2, bedrijfsrekening.getContactpersoon().getIdKlant());
                 ps.setDouble(3, bedrijfsrekening.getSaldo());
@@ -91,7 +91,7 @@ public class BedrijfsrekeningDAO implements GenericDAO<Bedrijfsrekening> {
 
     // delete One
     public void deleteOne(Bedrijfsrekening bedrijfsrekening) {
-        jdbcTemplate.update("DELETE FROM bedrijfsrekening WHERE idRekening=?",
+        jdbcTemplate.update("DELETE FROM bedrijfsrekening WHERE idrekening=?",
                 bedrijfsrekening.getIdRekening());
     }
 
@@ -107,10 +107,10 @@ class BedrijfsrekeningRowMapper implements RowMapper<Bedrijfsrekening> {
     public Bedrijfsrekening mapRow(ResultSet resultSet, int i) throws SQLException {
         ParticulierDAO particulierDAO = new ParticulierDAO(jdbcTemplate);
         BedrijfsDAO bedrijfsDAO = new BedrijfsDAO(jdbcTemplate);
-        return new Bedrijfsrekening(resultSet.getInt("idBedrijfsrekening"),
-                                    resultSet.getString("IBAN"),
+        return new Bedrijfsrekening(resultSet.getInt("idbedrijfsrekening"),
+                                    resultSet.getString("iban"),
                                     resultSet.getDouble("saldo"),
-                (particulierDAO.getOneByID(resultSet.getInt("idContactpersoon"))),
-                    (bedrijfsDAO.getOneByID(resultSet.getInt("idBedrijf"))));
+                (particulierDAO.getOneByID(resultSet.getInt("idcontactpersoon"))),
+                    (bedrijfsDAO.getOneByID(resultSet.getInt("idbedrijf"))));
     }
 }

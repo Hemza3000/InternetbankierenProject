@@ -34,7 +34,7 @@ public class PriverekeningDAO implements GenericDAO<Priverekening> {
 
         // get One by Id
     public Priverekening getOneByID(int idPriverekening){
-        final String sql = "SELECT * FROM priverekening WHERE idPriverekening=?";
+        final String sql = "SELECT * FROM priverekening WHERE idpriverekening=?";
         return jdbcTemplate.queryForObject(sql, new PriverekeningRowMapper(), idPriverekening);
     }
 
@@ -46,14 +46,14 @@ public class PriverekeningDAO implements GenericDAO<Priverekening> {
 
     // get All By Rekeninghouder
     public List<Priverekening> getAllByRekeninghouder(int idRekeninghouder) {
-        final String sql = "SELECT * FROM priverekening WHERE idRekeninghouder=?";
+        final String sql = "SELECT * FROM priverekening WHERE idrekeninghouder=?";
         return jdbcTemplate.query(sql, new PriverekeningRowMapper(), idRekeninghouder);
     }
 
     // update One
     public void updateOne(Priverekening priverekening) {
-         jdbcTemplate.update("UPDATE priverekening SET idRekeninghouder=?, " +
-                        " saldo=?, IBAN=? WHERE idPriverekening=?",
+         jdbcTemplate.update("UPDATE priverekening SET idrekeninghouder=?, " +
+                        " saldo=?, iban=? WHERE idpriverekening=?",
                 priverekening.getRekeninghouder().getIdKlant(),
                 priverekening.getSaldo(),
                 priverekening.getIBAN(),
@@ -62,12 +62,12 @@ public class PriverekeningDAO implements GenericDAO<Priverekening> {
 
     // store One
     public void storeOne(Priverekening priverekening) {
-        final String sql = "INSERT INTO priverekening (idRekeninghouder, Saldo, IBAN) values (?,?,?,?)";
+        final String sql = "INSERT INTO priverekening (idrekeninghouder, saldo, iban) values (?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement(sql, new String[]{"idBedrijfsrekening"});
+                PreparedStatement ps = connection.prepareStatement(sql, new String[]{"idpriverekening"});
                 ps.setInt(1, priverekening.getRekeninghouder().getIdKlant());
                 ps.setDouble(2, priverekening.getSaldo());
                 ps.setString(3, priverekening.getIBAN());
@@ -79,7 +79,7 @@ public class PriverekeningDAO implements GenericDAO<Priverekening> {
 
     // delete One
     public void deleteOne(Priverekening priverekening) {
-        jdbcTemplate.update("DELETE FROM priverekening WHERE idRekening=?",
+        jdbcTemplate.update("DELETE FROM priverekening WHERE idrekening=?",
                 priverekening.getIdRekening());
     }
 

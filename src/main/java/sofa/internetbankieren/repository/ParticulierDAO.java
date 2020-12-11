@@ -51,7 +51,7 @@ public class ParticulierDAO {
     }
     //get All by BSN
     public Particulier getByBSN(int BSN) {
-        final String sql = "select * from particulier where BSN=?";
+        final String sql = "select * from particulier where bsn=?";
         return jdbcTemplate
                 .queryForObject(sql,
                         new ParticulierRowMapper(), BSN);
@@ -60,13 +60,13 @@ public class ParticulierDAO {
     // store One
     public void storeOne(Particulier particulier) {
         final String sql = "INSERT INTO particulier(gebruikersnaam, wachtwoord, voornaam, tussenvoegsels, achternaam, " +
-                "BSN, geboortedatum," +
+                "bsn, geboortedatum," +
                 "straat, huisnummer, postcode, woonplaats ) values (?,?,?,?,?,?,?,?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement(sql, new String[]{"idKlant"});
+                PreparedStatement ps = connection.prepareStatement(sql, new String[]{"idparticulier"});
                 ps.setString(1, particulier.getGebruikersnaam());
                 ps.setString(2, particulier.getWachtwoord());
                 ps.setString(3, particulier.getVoornaam());
@@ -85,9 +85,9 @@ public class ParticulierDAO {
     }
     //update one
     public int updateOne(Particulier particulier) {
-        return jdbcTemplate.update("update particulier set gebruikersnaam=?, wachtwoord=?, voornaam=?, tussenvoegsels=?, achternaam=?, BSN=?," +
+        return jdbcTemplate.update("update particulier set gebruikersnaam=?, wachtwoord=?, voornaam=?, tussenvoegsels=?, achternaam=?, bsn=?," +
                         "geboortedatum=?, straatnaam=?, huisnummer=?, postcode=?, woonplaats=? " +
-                        "where idKlant=?",
+                        "where idparticulier=?",
                 particulier.getVoornaam(),
                 particulier.getTussenvoegsels(),
                 particulier.getAchternaam(),

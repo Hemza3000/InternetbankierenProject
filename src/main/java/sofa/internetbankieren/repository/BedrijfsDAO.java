@@ -44,13 +44,13 @@ public class BedrijfsDAO implements GenericDAO<Bedrijf> {
 
     // Retrieves all corporate customers by accountmanager ID
     public List<Bedrijf> getAllByIdAccountmanager(int idAccountmanager) {
-        final String sql = "SELECT * FROM bedrijf WHERE idAccountmanager=?";
+        final String sql = "SELECT * FROM bedrijf WHERE idaccountmanager=?";
         return jdbcTemplate.query(sql, new BedrijfsMapper());
     }
 
     // Retrieves one corporate customer by ID
     public Bedrijf getOneByID(int idBedrijf) {
-        final String sql = "SELECT * FROM bedrijf WHERE idBedrijf=?";
+        final String sql = "SELECT * FROM bedrijf WHERE idbedrijf=?";
         return jdbcTemplate.queryForObject(sql, new BedrijfsMapper(), idBedrijf);
     }
 
@@ -58,7 +58,7 @@ public class BedrijfsDAO implements GenericDAO<Bedrijf> {
 
     //Stores new customer in database
     public void storeOne(Bedrijf bedrijf) {
-        String sql = "insert into bedrijf (gebruikersnaam, wachtwoord, straatnaam, huisnummer, postcode, woonplaats, bedrijfsnaam, KVKnummer, sector, BTWnummer) values (?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into bedrijf (gebruikersnaam, wachtwoord, straatnaam, huisnummer, postcode, woonplaats, bedrijfsnaam, kvknummer, sector, btwnummer) values (?,?,?,?,?,?,?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
@@ -83,7 +83,7 @@ public class BedrijfsDAO implements GenericDAO<Bedrijf> {
     //Updates customer in database by ID
     @Override
     public void updateOne(Bedrijf bedrijf) {
-        jdbcTemplate.update("update bedrijf set gebruikersnaam=?, wachtwoord=?, straatnaam=?, huisnummer=?, postcode=?, woonplaats=?, bedrijfsnaam=?, KVKnummer=?, sector=?, BTWnummer=? + where idBedrijf=?",
+        jdbcTemplate.update("update bedrijf set gebruikersnaam=?, wachtwoord=?, straatnaam=?, huisnummer=?, postcode=?, woonplaats=?, bedrijfsnaam=?, kvknummer=?, sector=?, btwnummer=? + where idbedrijf=?",
                 bedrijf.getGebruikersnaam(),
                 bedrijf.getWachtwoord(),
                 bedrijf.getStraatnaam(),
