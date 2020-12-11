@@ -58,7 +58,7 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
 
     //Stores new customer in database
     public void storeOne(Bedrijf bedrijf) {
-        String sql = "insert into bedrijf (gebruikersnaam, wachtwoord, straatnaam, huisnummer, postcode, woonplaats, bedrijfsnaam, KVKnummer, sector, BTWnummer) values (?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into bedrijf (gebruikersnaam, wachtwoord, straat, huisnummer, postcode, woonplaats, bedrijfsnaam, KVKnummer, sector, BTWnummer) values (?,?,?,?,?,?,?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
@@ -83,7 +83,7 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
     //Updates customer in database by ID
     @Override
     public void updateOne(Bedrijf bedrijf) {
-        jdbcTemplate.update("update bedrijf set gebruikersnaam=?, wachtwoord=?, straatnaam=?, huisnummer=?, postcode=?, woonplaats=?, bedrijfsnaam=?, KVKnummer=?, sector=?, BTWnummer=? + where idBedrijf=?",
+        jdbcTemplate.update("update bedrijf set gebruikersnaam=?, wachtwoord=?, straat=?, huisnummer=?, postcode=?, woonplaats=?, bedrijfsnaam=?, KVKnummer=?, sector=?, BTWnummer=? + where idBedrijf=?",
                 bedrijf.getGebruikersnaam(),
                 bedrijf.getWachtwoord(),
                 bedrijf.getStraatnaam(),
@@ -118,7 +118,7 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
                     resultSet.getInt("idBedrijf"),
                     resultSet.getString("gebruikersnaam"),
                     resultSet.getString("wachtwoord"),
-                    resultSet.getString("straatnaam"),
+                    resultSet.getString("straat"),
                     resultSet.getInt("huisnummer"),
                     resultSet.getString("postcode"),
                     resultSet.getString("woonplaats"),
