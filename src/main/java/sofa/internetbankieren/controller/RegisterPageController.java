@@ -10,23 +10,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sofa.internetbankieren.model.Bedrijf;
+import sofa.internetbankieren.model.Klant;
 import sofa.internetbankieren.model.Particulier;
+import sofa.internetbankieren.repository.BedrijfDAO;
 import sofa.internetbankieren.repository.ParticulierDAO;
 
 import javax.servlet.http.HttpSession;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
-@SessionAttributes("particulier")
+@SessionAttributes("klant")
 @Controller
 public class RegisterPageController {
 
     ParticulierDAO particulierDAO;
+    BedrijfDAO bedrijfDAO;
 
-    public RegisterPageController(ParticulierDAO particulierDAO) {
+    public RegisterPageController(ParticulierDAO particulierDAO, BedrijfDAO bedrijfDAO) {
         super();
         this.particulierDAO = particulierDAO;
+        this.bedrijfDAO = bedrijfDAO;
     }
 
     @GetMapping("/register")
@@ -37,11 +39,11 @@ public class RegisterPageController {
     @PostMapping("/register_Zakelijk_Particulier")
     public String choiceHanlder(@RequestParam(name="zakelijkOfParticulier") int value, Model model){
         if (value == 0 ) {
-            model.addAttribute("particulier", new Particulier());
+            model.addAttribute("klant", new Particulier());
             return "register_page_2_particulier";
         }
         else if (value == 1) {
-            model.addAttribute("bedrijf", new Bedrijf());
+            model.addAttribute("klant", new Bedrijf());
             return "register_page_2_zakelijk";
         }
         return null;
@@ -61,7 +63,7 @@ public class RegisterPageController {
             Model model) {
         Particulier newParticulier = new Particulier(voornaam, voorvoegsels, achternaam,
                 geboortedatum, BSN, straatnaam, huisnummer, postcode, woonplaats);
-        model.addAttribute("particulier", newParticulier);
+        model.addAttribute("klant", newParticulier);
         System.out.println(newParticulier);
         return "confirmationParticulier";
     }
@@ -79,21 +81,21 @@ public class RegisterPageController {
             Model model) {
         Bedrijf newBedrijf = new Bedrijf(straatnaam, huisnummer, postcode,
                 woonplaats, bedrijfsnaam, KVKNummer, sector, BTWNummer);
-        model.addAttribute("bedrijf", newBedrijf);
+        model.addAttribute("klant", newBedrijf);
         return "confirmationBedrijf";
     }
 
     @PostMapping("/confirmParticulier")
-    public String confirmHandler(@ModelAttribute(name="particulier") Particulier confirmedMember, Model model)
+    public String confirmHandler(@ModelAttribute(name="klant") Particulier confirmedMember, Model model)
     {
-        model.addAttribute("particulier", confirmedMember);
+        model.addAttribute("klant", confirmedMember);
         return "register_page_3";
     }
 
     @PostMapping("/confirmBedrijf")
-    public String confirmBedrijfHandler(@ModelAttribute(name="bedrijf") Bedrijf confirmedMember, Model model)
+    public String confirmBedrijfHandler(@ModelAttribute(name="klant") Bedrijf confirmedMember, Model model)
     {
-        model.addAttribute("bedrijf", confirmedMember);
+        model.addAttribute("klant", confirmedMember);
         return "register_page_3";
     }
 
@@ -102,12 +104,19 @@ public class RegisterPageController {
     public String confirm(@RequestParam String user_name,
                           @RequestParam String password,
                           HttpSession httpSession){
-        Particulier particulier = (Particulier) httpSession.getAttribute("particulier");
+        Klant klant = (Klant) httpSession.getAttribute("klant");
+        klant.setGebruikersnaam(user_name);
+        klant.setWachtwoord(password);
+        if (klant instanceof Particulier)
+            particulierDAO.storeOne((Particulier) klant);
+        else
+            bedrijfDAO.storeOne((Bedrijf) klant);
+/*        Particulier particulier = (Particulier) httpSession.getAttribute("klant");
         particulier.setGebruikersnaam(user_name);
         particulier.setWachtwoord(password);
         System.out.println(particulier);  // TODO <- onnodig
         System.out.println(particulier.getGeboortedatum());
-        particulierDAO.storeOne(particulier);
+        particulierDAO.storeOne(particulier);*/
         return "register_completed";
     }
 

@@ -26,12 +26,12 @@ import java.util.List;
 
 @Repository
 @Primary
-public class BedrijfsDAO implements GenericDAO<Bedrijf> {
+public class BedrijfDAO implements GenericDAO<Bedrijf> {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public BedrijfsDAO(JdbcTemplate jdbcTemplate) {
+    public BedrijfDAO(JdbcTemplate jdbcTemplate) {
         super();
         this.jdbcTemplate = jdbcTemplate;
     }

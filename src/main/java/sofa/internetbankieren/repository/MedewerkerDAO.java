@@ -79,7 +79,7 @@ public class MedewerkerDAO implements GenericDAO<Medewerker>{
     private class MedewerkerRowMapper implements RowMapper<Medewerker> {
         @Override
         public Medewerker mapRow(ResultSet resultSet, int i) throws SQLException {
-            BedrijfsDAO bedrijfsDAO = new BedrijfsDAO(jdbcTemplate);
+            BedrijfDAO bedrijfDAO = new BedrijfDAO(jdbcTemplate);
             return new Medewerker(
                     resultSet.getInt("personeelsnummer"),
                     resultSet.getString("voornaam"),
@@ -87,7 +87,7 @@ public class MedewerkerDAO implements GenericDAO<Medewerker>{
                     resultSet.getString("achternaam"),
                     Medewerker.Rol.valueOf(resultSet.getString("rol")),
                     // TODO IllegalArgumentException afvangen?
-                    bedrijfsDAO.getAllByIdAccountmanager(resultSet.getInt("personeelsnummer"))
+                    bedrijfDAO.getAllByIdAccountmanager(resultSet.getInt("personeelsnummer"))
             );
         }
     }
