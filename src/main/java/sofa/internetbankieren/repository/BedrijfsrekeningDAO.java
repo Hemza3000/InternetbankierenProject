@@ -37,25 +37,25 @@ public class BedrijfsrekeningDAO implements GenericDAO<Bedrijfsrekening> {
 
     // get One by Id
     public Bedrijfsrekening getOneByID(int idBedrijfsrekening){
-        final String sql = "SELECT * FROM Bedrijfsrekening WHERE idBedrijfsrekening=?";
+        final String sql = "SELECT * FROM bedrijfsrekening WHERE idBedrijfsrekening=?";
             return jdbcTemplate.queryForObject(sql, new BedrijfsrekeningRowMapper(), idBedrijfsrekening);
     }
 
     // get All
     public List<Bedrijfsrekening> getAll() {
-        final String sql = "SELECT * FROM Bedrijfsrekening";
+        final String sql = "SELECT * FROM bedrijfsrekening";
         return jdbcTemplate.query(sql, new BedrijfsrekeningRowMapper(), null);
     }
 
     // get All By Rekeninghouder (Bedrijf)
     public List<Bedrijfsrekening> getAllByBedrijf(int idRekeninghouder) {
-        final String sql = "SELECT * FROM Bedrijfsrekening WHERE idBedrijf=?";
+        final String sql = "SELECT * FROM bedrijfsrekening WHERE idBedrijf=?";
         return jdbcTemplate.query(sql, new BedrijfsrekeningRowMapper(), idRekeninghouder);
     }
 
     // get All By Contactpersoon (Contactpersoon)
     public List<Bedrijfsrekening> getAllByContactpersoon(int idContactpersoon) {
-        final String sql = "SELECT * FROM Bedrijfsrekening WHERE idContactpersoon=?";
+        final String sql = "SELECT * FROM bedrijfsrekening WHERE idContactpersoon=?";
         return jdbcTemplate.query(sql, new BedrijfsrekeningRowMapper(), idContactpersoon);
     }
 

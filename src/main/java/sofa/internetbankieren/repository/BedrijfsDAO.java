@@ -38,19 +38,19 @@ public class BedrijfsDAO implements GenericDAO<Bedrijf> {
 
     // Retrieves all customers
     public List<Bedrijf> getAll() {
-        final String sql = "SELECT * FROM Bedrijf";
+        final String sql = "SELECT * FROM bedrijf";
         return jdbcTemplate.query(sql, new BedrijfsMapper());
     }
 
     // Retrieves all corporate customers by accountmanager ID
     public List<Bedrijf> getAllByIdAccountmanager(int idAccountmanager) {
-        final String sql = "SELECT * FROM Bedrijf WHERE idAccountmanager=?";
+        final String sql = "SELECT * FROM bedrijf WHERE idAccountmanager=?";
         return jdbcTemplate.query(sql, new BedrijfsMapper());
     }
 
     // Retrieves one corporate customer by ID
     public Bedrijf getOneByID(int idBedrijf) {
-        final String sql = "SELECT * FROM Bedrijf WHERE idBedrijf=?";
+        final String sql = "SELECT * FROM bedrijf WHERE idBedrijf=?";
         return jdbcTemplate.queryForObject(sql, new BedrijfsMapper(), idBedrijf);
     }
 
@@ -58,7 +58,7 @@ public class BedrijfsDAO implements GenericDAO<Bedrijf> {
 
     //Stores new customer in database
     public void storeOne(Bedrijf bedrijf) {
-        String sql = "insert into Bedrijf (gebruikersnaam, wachtwoord, straatnaam, huisnummer, postcode, woonplaats, bedrijfsnaam, KVKnummer, sector, BTWnummer) values (?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into bedrijf (gebruikersnaam, wachtwoord, straatnaam, huisnummer, postcode, woonplaats, bedrijfsnaam, KVKnummer, sector, BTWnummer) values (?,?,?,?,?,?,?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
@@ -98,7 +98,7 @@ public class BedrijfsDAO implements GenericDAO<Bedrijf> {
 
     //Deletes customer by ID
     public void deleteOne(Bedrijf bedrijf) {
-         jdbcTemplate.update("DELETE FROM Bedrijf WHERE idBedrijf=?",
+         jdbcTemplate.update("DELETE FROM bedrijf WHERE idBedrijf=?",
                 bedrijf.getIdKlant());
     }
 

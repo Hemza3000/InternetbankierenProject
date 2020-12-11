@@ -79,7 +79,7 @@ public class PriverekeningDAO implements GenericDAO<Priverekening> {
 
     // delete One
     public void deleteOne(Priverekening priverekening) {
-        jdbcTemplate.update("DELETE FROM Priverekening WHERE idRekening=?",
+        jdbcTemplate.update("DELETE FROM priverekening WHERE idRekening=?",
                 priverekening.getIdRekening());
     }
 
