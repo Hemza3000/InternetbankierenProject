@@ -99,7 +99,6 @@ public class RegisterPageController {
         return "register_page_3";
     }
 
-    // todo Ook laten werken voor een Bedrijf
     @PostMapping("/confirm")
     public String confirm(@RequestParam String user_name,
                           @RequestParam String password,
@@ -111,12 +110,6 @@ public class RegisterPageController {
             particulierDAO.storeOne((Particulier) klant);
         else
             bedrijfDAO.storeOne((Bedrijf) klant);
-/*        Particulier particulier = (Particulier) httpSession.getAttribute("klant");
-        particulier.setGebruikersnaam(user_name);
-        particulier.setWachtwoord(password);
-        System.out.println(particulier);  // TODO <- onnodig
-        System.out.println(particulier.getGeboortedatum());
-        particulierDAO.storeOne(particulier);*/
         return "register_completed";
     }
 
