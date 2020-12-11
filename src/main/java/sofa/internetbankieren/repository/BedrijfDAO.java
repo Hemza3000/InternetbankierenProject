@@ -26,12 +26,12 @@ import java.util.List;
 
 @Repository
 @Primary
-public class BedrijfsDAO implements GenericDAO<Bedrijf> {
+public class BedrijfDAO implements GenericDAO<Bedrijf> {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public BedrijfsDAO(JdbcTemplate jdbcTemplate) {
+    public BedrijfDAO(JdbcTemplate jdbcTemplate) {
         super();
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -58,7 +58,7 @@ public class BedrijfsDAO implements GenericDAO<Bedrijf> {
 
     //Stores new customer in database
     public void storeOne(Bedrijf bedrijf) {
-        String sql = "insert into bedrijf (gebruikersnaam, wachtwoord, straatnaam, huisnummer, postcode, woonplaats, bedrijfsnaam, kvknummer, sector, btwnummer) values (?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into bedrijf (gebruikersnaam, wachtwoord, straat, huisnummer, postcode, woonplaats, bedrijfsnaam, kvknummer, sector, btwnummer) values (?,?,?,?,?,?,?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
@@ -83,7 +83,7 @@ public class BedrijfsDAO implements GenericDAO<Bedrijf> {
     //Updates customer in database by ID
     @Override
     public void updateOne(Bedrijf bedrijf) {
-        jdbcTemplate.update("update bedrijf set gebruikersnaam=?, wachtwoord=?, straatnaam=?, huisnummer=?, postcode=?, woonplaats=?, bedrijfsnaam=?, kvknummer=?, sector=?, btwnummer=? + where idbedrijf=?",
+        jdbcTemplate.update("update bedrijf set gebruikersnaam=?, wachtwoord=?, straatnaam=?, huisnummer=?, postcode=?, woonplaats=?, bedrijfsnaam=?, KVKnummer=?, sector=?, BTWnummer=? + where idBedrijf=?",
                 bedrijf.getGebruikersnaam(),
                 bedrijf.getWachtwoord(),
                 bedrijf.getStraatnaam(),

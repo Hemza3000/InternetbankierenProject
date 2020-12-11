@@ -12,10 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import sofa.internetbankieren.model.Bedrijf;
 import sofa.internetbankieren.model.Bedrijfsrekening;
-import sofa.internetbankieren.model.Medewerker;
-import sofa.internetbankieren.model.Particulier;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -106,11 +103,11 @@ class BedrijfsrekeningRowMapper implements RowMapper<Bedrijfsrekening> {
     @Override
     public Bedrijfsrekening mapRow(ResultSet resultSet, int i) throws SQLException {
         ParticulierDAO particulierDAO = new ParticulierDAO(jdbcTemplate);
-        BedrijfsDAO bedrijfsDAO = new BedrijfsDAO(jdbcTemplate);
+        BedrijfDAO bedrijfDAO = new BedrijfDAO(jdbcTemplate);
         return new Bedrijfsrekening(resultSet.getInt("idbedrijfsrekening"),
                                     resultSet.getString("iban"),
                                     resultSet.getDouble("saldo"),
                 (particulierDAO.getOneByID(resultSet.getInt("idcontactpersoon"))),
-                    (bedrijfsDAO.getOneByID(resultSet.getInt("idbedrijf"))));
+                    (bedrijfDAO.getOneByID(resultSet.getInt("idbedrijf"))));
     }
 }
