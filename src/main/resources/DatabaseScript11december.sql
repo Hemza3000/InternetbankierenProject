@@ -1,3 +1,5 @@
+drop schema internet_bankieren;
+
 -- mysql workbench forward engineering
 
 set @old_unique_checks=@@unique_checks, unique_checks=0;
@@ -18,7 +20,7 @@ use `internet_bankieren` ;
 -- table `internet_bankieren`.`particulier`
 -- -----------------------------------------------------
 create table if not exists `internet_bankieren`.`particulier` (
-  `idparticulier` int not null,
+  `idparticulier` int not null auto_increment,
   `gebruikersnaam` varchar(45) not null,
   `wachtwoord` varchar(45) not null,
   `voornaam` varchar(45) not null,
@@ -50,7 +52,7 @@ engine = innodb default charset=utf8mb4 collate=utf8mb4_general_ci;
 -- table `internet_bankieren`.`bedrijf`
 -- -----------------------------------------------------
 create table if not exists `internet_bankieren`.`bedrijf` (
-  `idbedrijf` int not null,
+  `idbedrijf` int not null auto_increment,
   `idaccountmanager` int not null,
   `gebruikersnaam` varchar(45) not null,
   `wachtwoord` varchar(45) not null,
