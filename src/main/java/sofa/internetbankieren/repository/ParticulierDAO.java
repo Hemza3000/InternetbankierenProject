@@ -11,15 +11,9 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import sofa.internetbankieren.model.Bedrijfsrekening;
-import sofa.internetbankieren.model.Medewerker;
 import sofa.internetbankieren.model.Particulier;
 
 import java.sql.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Repository
@@ -44,7 +38,7 @@ public class ParticulierDAO {
 
     // get One by gebruikersnaam en wachtwoord
     public List<Particulier> getOneByOneGebruikersnaamWachtwoord(String gebruikersnaam, String wachtwoord){
-        final String sql = "select * from Particulier where gebruikersnaam=? and wachtwoord=?";
+        final String sql = "select * from particulier where gebruikersnaam=? and wachtwoord=?";
         return jdbcTemplate.query(sql, new ParticulierRowMapper(), gebruikersnaam, wachtwoord);
     }
 
@@ -79,7 +73,7 @@ public class ParticulierDAO {
                 ps.setString(4, particulier.getTussenvoegsels());
                 ps.setString(5, particulier.getAchternaam());
                 ps.setInt(6, particulier.getBSN());
-                ps.setDate(7, (Date) particulier.getGeboortedatum());
+                ps.setDate(7, Date.valueOf(particulier.getGeboortedatum()));
                 ps.setString(8, particulier.getStraatnaam());
                 ps.setInt(9, particulier.getHuisnummer());
                 ps.setString(10, particulier.getPostcode());
@@ -129,7 +123,7 @@ public class ParticulierDAO {
                     resultSet.getString("voornaam"),
                     resultSet.getString("tussenvoegsels"),
                     resultSet.getString("achternaam"),
-                    resultSet.getDate("geboortedatum"),
+                    resultSet.getDate("geboortedatum").toLocalDate(),
                     resultSet.getInt("BSN"),
                     priverekeningDAO.getAllByRekeninghouder(resultSet.getInt("idParticulier")),
                     bedrijfsrekeningDAO.getAllByContactpersoon(resultSet.getInt("idParticulier")));

@@ -14,7 +14,9 @@ import sofa.internetbankieren.model.Particulier;
 import sofa.internetbankieren.repository.ParticulierDAO;
 
 import javax.servlet.http.HttpSession;
-import java.util.Date;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 @SessionAttributes("particulier")
 @Controller
@@ -50,7 +52,7 @@ public class RegisterPageController {
             @RequestParam(name="First_name") String voornaam,
             @RequestParam(name="Prefix", required = false) String voorvoegsels,
             @RequestParam(name="Last_name") String achternaam,
-            @RequestParam(name="Birthday") @DateTimeFormat(pattern="yyyy-MM-dd") Date geboortedatum,
+            @RequestParam(name="Birthday") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate geboortedatum,
             @RequestParam(name="BSN") int BSN,
             @RequestParam(name="Street") String straatnaam,
             @RequestParam(name="House_number") int huisnummer,

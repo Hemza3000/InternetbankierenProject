@@ -6,15 +6,16 @@ package sofa.internetbankieren.model;
  * */
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.time.LocalDate;
+//import java.sql.Date;
 
 public class Particulier extends Klant {
 
     private String voornaam;
     private String tussenvoegsels;
     private String achternaam;
-    private Date geboortedatum;
+    private LocalDate geboortedatum;
     private int BSN;
 
     private List<Priverekening> priverekeningen = new ArrayList<>();
@@ -23,7 +24,7 @@ public class Particulier extends Klant {
 
     public Particulier(int idKlant, String gebruikersnaam, String wachtwoord, String straatnaam, int huisnummer,
                        String postcode, String woonplaats, String voornaam, String tussenvoegsels, String achternaam,
-                       Date geboortedatum, int BSN, List<Priverekening> priverekeningen, List<Bedrijfsrekening> bedrijfsrekeningen) {
+                       LocalDate geboortedatum, int BSN, List<Priverekening> priverekeningen, List<Bedrijfsrekening> bedrijfsrekeningen) {
         super(idKlant, gebruikersnaam, wachtwoord, straatnaam, huisnummer, postcode, woonplaats);
         this.voornaam = voornaam;
         this.tussenvoegsels = tussenvoegsels;
@@ -38,7 +39,7 @@ public class Particulier extends Klant {
     public Particulier() {
             }
 
-    public Particulier(String voornaam, String voorvoegsels, String achternaam, Date geboortedatum, int bsn, String straatnaam,
+    public Particulier(String voornaam, String voorvoegsels, String achternaam, LocalDate geboortedatum, int bsn, String straatnaam,
                        int huisnummer, String postcode, String woonplaats) {
      this(0,"", "", straatnaam, huisnummer, postcode, woonplaats, voornaam,
              voorvoegsels, achternaam, geboortedatum, bsn, new ArrayList<>(), new ArrayList<>());
@@ -74,11 +75,11 @@ public class Particulier extends Klant {
         this.achternaam = achternaam;
     }
 
-    public Date getGeboortedatum() {
+    public LocalDate getGeboortedatum() {
         return geboortedatum;
     }
 
-    public void setGeboortedatum(Date geboortedatum) {
+    public void setGeboortedatum(LocalDate geboortedatum) {
         this.geboortedatum = geboortedatum;
     }
 
