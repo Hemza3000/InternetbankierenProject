@@ -56,7 +56,7 @@ public class MedewerkerDAO implements GenericDAO<Medewerker>{
                 return ps;
             }
         }, keyHolder);
-        medewerker.setPersooneelsnummer(keyHolder.getKey().intValue());
+        medewerker.setPersoneelsnummer(keyHolder.getKey().intValue());
     }
 
     @Override
@@ -67,13 +67,13 @@ public class MedewerkerDAO implements GenericDAO<Medewerker>{
                 medewerker.getTussenvoegsels(),
                 medewerker.getAchternaam(),
                 medewerker.getRol().name(),
-                medewerker.getPersooneelsnummer());
+                medewerker.getPersoneelsnummer());
     }
 
     @Override
     public void deleteOne(Medewerker medewerker) {
         jdbcTemplate.update("delete from medewerker where personeelsnummer = ?",
-                medewerker.getPersooneelsnummer());
+                medewerker.getPersoneelsnummer());
     }
 
     private class MedewerkerRowMapper implements RowMapper<Medewerker> {
