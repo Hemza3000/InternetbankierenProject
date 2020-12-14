@@ -3,8 +3,10 @@ package sofa.internetbankieren.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import sofa.internetbankieren.backing_bean.LoginFormBackingBean;
 import sofa.internetbankieren.model.Particulier;
 import sofa.internetbankieren.repository.ParticulierDAO;
 
@@ -22,15 +24,18 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-    public String inlogHandler() {
-        return "login";
+    public String inlogHandler(Model model) {
+      LoginFormBackingBean userDummy = new LoginFormBackingBean("Username a.u.b.", "en password please");
+      model.addAttribute("backingBean", userDummy);
+      return "login";
     }
 
     @PostMapping("/inloggen")
-    public String postInlogForm(Model model, @RequestParam String gebruikersnaam, @RequestParam String wachtwoord){
+    public String postInlogForm(Model model, @ModelAttribute LoginFormBackingBean dummy) {
         // todo ook bedrijven doorzoeken
         System.out.println("inloggen");
-        List<Particulier> klanten = particulierDAO.getOneByOneGebruikersnaamWachtwoord(gebruikersnaam, wachtwoord);
+        List<Particulier> klanten =
+            particulierDAO.getOneByOneGebruikersnaamWachtwoord(dummy.getUserName(), dummy.getPassword());
         if(klanten.size() == 0){ // Geen klant met deze inloggegevens
             System.out.println("onbestaande logingegevens");
             return "foutingelogd";

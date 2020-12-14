@@ -22,12 +22,11 @@ import java.util.List;
  * */
 
 @Repository
-@Primary
 public class BedrijfDAO implements GenericDAO<Bedrijf> {
 
-    @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
     public BedrijfDAO(JdbcTemplate jdbcTemplate) {
         super();
         this.jdbcTemplate = jdbcTemplate;
@@ -104,10 +103,7 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
 
     //Rowmapper
 
-    class BedrijfsMapper implements RowMapper<Bedrijf> {
-
-        @Autowired
-        private JdbcTemplate jdbcTemplate;
+    private final class BedrijfsMapper implements RowMapper<Bedrijf> {
 
         @Override
         public Bedrijf mapRow(ResultSet resultSet, int i) throws SQLException {
