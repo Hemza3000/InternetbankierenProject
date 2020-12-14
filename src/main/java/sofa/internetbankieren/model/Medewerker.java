@@ -7,6 +7,7 @@ import java.util.List;
  * @author Wendy Ellens
  *
  * Modelleert een bankmedewerker.
+ * Reviewed by Wichert 11-12
  */
 public class Medewerker {
 

@@ -21,12 +21,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-@Primary
 public class PriverekeningDAO implements GenericDAO<Priverekening> {
 
-    @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
     public PriverekeningDAO(JdbcTemplate jdbcTemplate) {
         super();
         this.jdbcTemplate = jdbcTemplate;
@@ -85,7 +84,7 @@ public class PriverekeningDAO implements GenericDAO<Priverekening> {
 
 }
 
-class PriverekeningRowMapper implements RowMapper<Priverekening> {
+final class PriverekeningRowMapper implements RowMapper<Priverekening> {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Overzichtspagina</title>
 </head>
 <body>
-<h1>Hier komt jouw rekeningoverzichtspagina</h1>
+<h1>Welkom < naam gebruiker > </h1>
+<h2>Dit is het overzichtspaginga</h2>
+<object action="overview" th:action="@{/overview}" th:object="${Rekening}" method="get">
+    <p>ik wil dat hier iets staat </p>
+<!--    <p>Voornaam: <input type="text" th:field="*{voornaam}" /></p>-->
+<!--    <p>Achternaam: <input type="text" th:field="*{achternaam}" /></p>-->
+</object>
 <p>Terug naar de <a href="/home">homepage</a></p> </p>
 </body>
 </html>
