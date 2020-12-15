@@ -82,6 +82,8 @@ public class MedewerkerDAO implements GenericDAO<Medewerker>{
             BedrijfDAO bedrijfDAO = new BedrijfDAO(jdbcTemplate);
             return new Medewerker(
                     resultSet.getInt("personeelsnummer"),
+                    resultSet.getString("gebruikersnaam"),
+                    resultSet.getString("wachtwoord"),
                     resultSet.getString("voornaam"),
                     resultSet.getString("tussenvoegsels"),
                     resultSet.getString("achternaam"),
