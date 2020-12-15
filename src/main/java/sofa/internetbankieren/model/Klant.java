@@ -11,18 +11,18 @@ public abstract class Klant {
     private int idKlant;
     private String gebruikersnaam;
     private String wachtwoord;
-    private String straatnaam;
+    private String straat;
     private int huisnummer;
     private String postcode;
     private String woonplaats;
 
 
-    public Klant(int idKlant, String gebruikersnaam, String wachtwoord, String straatnaam, int huisnummer,
+    public Klant(int idKlant, String gebruikersnaam, String wachtwoord, String straat, int huisnummer,
                  String postcode, String woonplaats) {
         this.idKlant = idKlant;
         this.gebruikersnaam = gebruikersnaam;
         this.wachtwoord = wachtwoord;
-        this.straatnaam = straatnaam;
+        this.straat = straat;
         this.huisnummer = huisnummer;
         this.postcode = postcode;
         this.woonplaats = woonplaats;
@@ -56,12 +56,12 @@ public abstract class Klant {
         this.idKlant = idKlant;
     }
 
-    public String getStraatnaam() {
-        return straatnaam;
+    public String getStraat() {
+        return straat;
     }
 
-    public void setStraatnaam(String straatnaam) {
-        this.straatnaam = straatnaam;
+    public void setStraat (String straat) {
+        this.straat = straat;
     }
 
     public int getHuisnummer() {
@@ -94,7 +94,7 @@ public abstract class Klant {
                 "idKlant=" + idKlant +
                 ", gebruikersnaam='" + gebruikersnaam + '\'' +
                 ", wachtwoord='" + wachtwoord + '\'' +
-                ", straatnaam='" + straatnaam + '\'' +
+                ", straat='" + straat + '\'' +
                 ", huisnummer=" + huisnummer +
                 ", postcode='" + postcode + '\'' +
                 ", woonplaats='" + woonplaats + '\'' +

@@ -37,7 +37,7 @@ public class ParticulierDAO {
     }
 
     // get One by gebruikersnaam en wachtwoord
-    public List<Particulier> getOneByOneGebruikersnaamWachtwoord(String gebruikersnaam, String wachtwoord){
+    public List<Particulier> getOneByGebruikersnaamWachtwoord(String gebruikersnaam, String wachtwoord){
         final String sql = "select * from particulier where gebruikersnaam=? and wachtwoord=?";
         return jdbcTemplate.query(sql, new ParticulierRowMapper(), gebruikersnaam, wachtwoord);
     }
@@ -59,7 +59,7 @@ public class ParticulierDAO {
 
     // store One
     public void storeOne(Particulier particulier) {
-        final String sql = "INSERT INTO particulier(gebruikersnaam, wachtwoord, voornaam, tussenvoegsels, achternaam, " +
+        final String sql = "insert into particulier(gebruikersnaam, wachtwoord, voornaam, tussenvoegsels, achternaam, " +
                 "bsn, geboortedatum," +
                 "straat, huisnummer, postcode, woonplaats ) values (?,?,?,?,?,?,?,?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -74,7 +74,7 @@ public class ParticulierDAO {
                 ps.setString(5, particulier.getAchternaam());
                 ps.setInt(6, particulier.getBSN());
                 ps.setDate(7, Date.valueOf(particulier.getGeboortedatum()));
-                ps.setString(8, particulier.getStraatnaam());
+                ps.setString(8, particulier.getStraat());
                 ps.setInt(9, particulier.getHuisnummer());
                 ps.setString(10, particulier.getPostcode());
                 ps.setString(11, particulier.getWoonplaats());
@@ -93,7 +93,7 @@ public class ParticulierDAO {
                 particulier.getAchternaam(),
                 particulier.getBSN(),
                 particulier.getGeboortedatum(),
-                particulier.getStraatnaam(),
+                particulier.getStraat(),
                 particulier.getHuisnummer(),
                 particulier.getPostcode(),
                 particulier.getWoonplaats(),
@@ -113,7 +113,7 @@ public class ParticulierDAO {
         public Particulier mapRow(ResultSet resultSet, int i) throws SQLException {
             PriverekeningDAO priverekeningDAO = new PriverekeningDAO(jdbcTemplate);
             BedrijfsrekeningDAO bedrijfsrekeningDAO = new BedrijfsrekeningDAO(jdbcTemplate);
-            return new Particulier(resultSet.getInt("idParticulier"),
+            return new Particulier(resultSet.getInt("idparticulier"),
                     resultSet.getString("gebruikersnaam"),
                     resultSet.getString("wachtwoord"),
                     resultSet.getString("straat"),
@@ -125,9 +125,8 @@ public class ParticulierDAO {
                     resultSet.getString("achternaam"),
                     resultSet.getDate("geboortedatum").toLocalDate(),
                     resultSet.getInt("BSN"),
-                    priverekeningDAO.getAllByRekeninghouder(resultSet.getInt("idParticulier")),
-                    bedrijfsrekeningDAO.getAllByContactpersoon(resultSet.getInt("idParticulier")));
-
+                    priverekeningDAO.getAllByRekeninghouder(resultSet.getInt("idparticulier")),
+                    bedrijfsrekeningDAO.getAllByContactpersoon(resultSet.getInt("idparticulier")));
         }
     }
 }

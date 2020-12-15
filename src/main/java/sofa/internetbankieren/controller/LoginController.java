@@ -35,7 +35,7 @@ public class LoginController {
         // todo ook bedrijven doorzoeken
         System.out.println("inloggen");
         List<Particulier> klanten =
-            particulierDAO.getOneByOneGebruikersnaamWachtwoord(dummy.getUserName(), dummy.getPassword());
+            particulierDAO.getOneByGebruikersnaamWachtwoord(dummy.getUserName(), dummy.getPassword());
         if(klanten.size() == 0){ // Geen klant met deze inloggegevens
             System.out.println("onbestaande logingegevens");
             return "foutingelogd";

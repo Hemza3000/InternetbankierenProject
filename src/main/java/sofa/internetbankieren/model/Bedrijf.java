@@ -20,10 +20,10 @@ public class Bedrijf extends Klant {
     //moet dit niet bedrijfsrekeningen zijn?
     private List<Bedrijfsrekening> rekeningen = new ArrayList<>();
 
-    public Bedrijf(int idKlant, String gebruikersnaam, String wachtwoord, String straatnaam, int huisnummer,
+    public Bedrijf(int idKlant, String gebruikersnaam, String wachtwoord, String straat, int huisnummer,
                    String postcode, String woonplaats, String bedrijfsnaam, int KVKNummer, String sector,
                    String BTWNummer, Medewerker accountmanager, List<Bedrijfsrekening> rekeningen) {
-        super(idKlant, gebruikersnaam, wachtwoord, straatnaam, huisnummer, postcode, woonplaats);
+        super(idKlant, gebruikersnaam, wachtwoord, straat, huisnummer, postcode, woonplaats);
         this.bedrijfsnaam = bedrijfsnaam;
         this.KVKNummer = KVKNummer;
         this.sector = sector;
@@ -32,9 +32,9 @@ public class Bedrijf extends Klant {
         this.rekeningen = rekeningen;
     }
 
-    public Bedrijf(String straatnaam, int huisnummer, String postcode, String woonplaats,
+    public Bedrijf(String straat, int huisnummer, String postcode, String woonplaats,
                    String bedrijfsnaam, int KVKNummer, String sector, String BTWNummer, Medewerker accountmanager) {
-        this(0, "", "", straatnaam, huisnummer, postcode, woonplaats, bedrijfsnaam,
+        this(0, "", "", straat, huisnummer, postcode, woonplaats, bedrijfsnaam,
                 KVKNummer, sector, BTWNummer, accountmanager, new ArrayList<>());
     }
 
