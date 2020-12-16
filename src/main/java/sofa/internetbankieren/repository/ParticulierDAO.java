@@ -86,7 +86,7 @@ public class ParticulierDAO {
     //update one
     public int updateOne(Particulier particulier) {
         return jdbcTemplate.update("update particulier set gebruikersnaam=?, wachtwoord=?, voornaam=?, tussenvoegsels=?, achternaam=?, bsn=?," +
-                        "geboortedatum=?, straatnaam=?, huisnummer=?, postcode=?, woonplaats=? " +
+                        "geboortedatum=?, straat=?, huisnummer=?, postcode=?, woonplaats=? " +
                         "where idparticulier=?",
                 particulier.getVoornaam(),
                 particulier.getTussenvoegsels(),
