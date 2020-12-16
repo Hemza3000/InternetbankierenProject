@@ -40,6 +40,8 @@ engine = innodb default charset=utf8mb4 collate=utf8mb4_general_ci;
 -- -----------------------------------------------------
 create table if not exists `internet_bankieren`.`medewerker` (
   `personeelsnummer` int not null auto_increment,
+  `gebruikersnaam` varchar(45) not null,
+  `wachtwoord` varchar(45) not null,
   `rol` varchar(45) not null,
   `voornaam` varchar(45) not null,
   `tussenvoegsels` varchar(45) null,

@@ -7,15 +7,15 @@
 <body>
 
 <h1>Log in met uw personeels gegevens</h1>
-<form action="inloggen" method="post" th:object="${backingBean}">
+<form action="login_medewerker" method="post" th:object="${backingBean}">
     <table>
         <tr>
             <td><label for="Gebruikersnaam">Gebruikersnaam</label></td>
-            <td><input type="text" th:field="*{userName}"/></td>
+            <td><input type="text" th:field="*{userName}" placeholder="Gebruikersnaam"/></td>
         </tr>
         <tr>
             <td><label for="Wachtwoord">Wachtwoord</label></td>
-            <td><input type="text" th:field="*{password}" name="Wachtwoord"/></td>
+            <td><input type="password" th:field="*{password}" name="Wachtwoord" placeholder="Wachtwoord"/></td>
         </tr>
         <tr>
             <td></td>

@@ -7,6 +7,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import sofa.internetbankieren.model.Medewerker;
+import sofa.internetbankieren.model.Particulier;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -39,6 +40,12 @@ public class MedewerkerDAO implements GenericDAO<Medewerker>{
     public Medewerker getOneByID(int personeelsnummer) {
         String sql = "select * from medewerker where personeelsnummer=?";
         return jdbcTemplate.queryForObject(sql, new MedewerkerRowMapper(), personeelsnummer);
+    }
+
+    // get One by gebruikersnaam en wachtwoord
+    public List<Medewerker> getOneByGebruikersnaamWachtwoord(String gebruikersnaam, String wachtwoord){
+        final String sql = "select * from medewerker where gebruikersnaam=? and wachtwoord=?";
+        return jdbcTemplate.query(sql, new MedewerkerDAO.MedewerkerRowMapper(), gebruikersnaam, wachtwoord);
     }
 
     @Override
