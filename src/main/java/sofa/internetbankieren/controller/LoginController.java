@@ -42,7 +42,7 @@ public class LoginController {
         System.out.println("inloggen");
 
         List<Particulier> particuliereklanten =
-            particulierDAO.getOneByOneGebruikersnaamWachtwoord(dummy.getUserName(), dummy.getPassword());
+            particulierDAO.getOneByGebruikersnaamWachtwoord(dummy.getUserName(), dummy.getPassword());
 
         List<Bedrijf> bedrijfsklanten =
                 bedrijfDAO.getOneByOneGebruikersnaamWachtwoord(dummy.getUserName(), dummy.getPassword());
