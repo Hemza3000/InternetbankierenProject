@@ -47,6 +47,9 @@ public class Bedrijf extends Klant {
 
     }
 
+    //getters and setters
+
+
     public String getBedrijfsnaam() {
         return bedrijfsnaam;
     }

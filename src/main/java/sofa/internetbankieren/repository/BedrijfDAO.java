@@ -9,6 +9,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import sofa.internetbankieren.model.Bedrijf;
+import sofa.internetbankieren.model.Particulier;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,19 +35,25 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
 
     // Retrieves all customers
     public List<Bedrijf> getAll() {
-        final String sql = "select * from bedrijf";
+        final String sql = "SELECT * FROM bedrijf";
         return jdbcTemplate.query(sql, new BedrijfsMapper());
+    }
+
+    // get One by gebruikersnaam en wachtwoord
+    public List<Bedrijf> getOneByOneGebruikersnaamWachtwoord(String gebruikersnaam, String wachtwoord){
+        final String sql = "select * from bedrijf where gebruikersnaam=? and wachtwoord=?";
+        return jdbcTemplate.query(sql, new BedrijfsMapper(), gebruikersnaam, wachtwoord);
     }
 
     // Retrieves all corporate customers by accountmanager ID
     public List<Bedrijf> getAllByIdAccountmanager(int idAccountmanager) {
-        final String sql = "select * from bedrijf where idaccountmanager=?";
+        final String sql = "SELECT * FROM bedrijf WHERE idaccountmanager=?";
         return jdbcTemplate.query(sql, new BedrijfsMapper(), idAccountmanager);
     }
 
     // Retrieves one corporate customer by ID
     public Bedrijf getOneByID(int idBedrijf) {
-        final String sql = "select * from bedrijf where idbedrijf=?";
+        final String sql = "SELECT * FROM bedrijf WHERE idbedrijf=?";
         return jdbcTemplate.queryForObject(sql, new BedrijfsMapper(), idBedrijf);
     }
 
