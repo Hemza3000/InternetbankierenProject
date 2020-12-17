@@ -34,32 +34,32 @@ public class BedrijfsrekeningDAO implements GenericDAO<Bedrijfsrekening> {
 
     // get One by Id
     public Bedrijfsrekening getOneByID(int idBedrijfsrekening){
-        final String sql = "SELECT * FROM bedrijfsrekening WHERE idbedrijfsrekening=?";
+        final String sql = "select * from bedrijfsrekening where idbedrijfsrekening=?";
             return jdbcTemplate.queryForObject(sql, new BedrijfsrekeningRowMapper(), idBedrijfsrekening);
     }
 
     // get All
     public List<Bedrijfsrekening> getAll() {
-        final String sql = "SELECT * FROM bedrijfsrekening";
+        final String sql = "select * from bedrijfsrekening";
         return jdbcTemplate.query(sql, new BedrijfsrekeningRowMapper(), null);
     }
 
     // get All By Rekeninghouder (Bedrijf)
     public List<Bedrijfsrekening> getAllByBedrijf(int idRekeninghouder) {
-        final String sql = "SELECT * FROM bedrijfsrekening WHERE idbedrijf=?";
+        final String sql = "select * from bedrijfsrekening where idbedrijf=?";
         return jdbcTemplate.query(sql, new BedrijfsrekeningRowMapper(), idRekeninghouder);
     }
 
     // get All By Contactpersoon (Contactpersoon)
     public List<Bedrijfsrekening> getAllByContactpersoon(int idContactpersoon) {
-        final String sql = "SELECT * FROM bedrijfsrekening WHERE idcontactpersoon=?";
+        final String sql = "select * from bedrijfsrekening where idcontactpersoon=?";
         return jdbcTemplate.query(sql, new BedrijfsrekeningRowMapper(), idContactpersoon);
     }
 
     // update One
     public void updateOne(Bedrijfsrekening bedrijfsrekening) {
-         jdbcTemplate.update("UPDATE bedrijfsrekening SET idbedrijf=?, " +
-                " idcontactpersoon=?, saldo=?, IBAN=? WHERE idbedrijfsrekening=?",
+         jdbcTemplate.update("update bedrijfsrekening set idbedrijf=?, " +
+                " idcontactpersoon=?, saldo=?, IBAN=? where idbedrijfsrekening=?",
                 bedrijfsrekening.getRekeninghouder().getIdKlant(),
                 bedrijfsrekening.getContactpersoon().getIdKlant(),
                 bedrijfsrekening.getSaldo(),
@@ -69,7 +69,7 @@ public class BedrijfsrekeningDAO implements GenericDAO<Bedrijfsrekening> {
 
     // store One
     public void storeOne(Bedrijfsrekening bedrijfsrekening) {
-        final String sql = "INSERT INTO bedrijfsrekening (idbedrijf, idcontactpersoon, saldo, iban) values (?,?,?,?)";
+        final String sql = "insert into bedrijfsrekening (idbedrijf, idcontactpersoon, saldo, iban) values (?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
@@ -88,7 +88,7 @@ public class BedrijfsrekeningDAO implements GenericDAO<Bedrijfsrekening> {
 
     // delete One
     public void deleteOne(Bedrijfsrekening bedrijfsrekening) {
-        jdbcTemplate.update("DELETE FROM bedrijfsrekening WHERE idrekening=?",
+        jdbcTemplate.update("delete from bedrijfsrekening where idbedrijfsrekening=?",
                 bedrijfsrekening.getIdRekening());
     }
 

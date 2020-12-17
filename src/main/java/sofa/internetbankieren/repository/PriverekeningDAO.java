@@ -21,11 +21,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
+@Primary
 public class PriverekeningDAO implements GenericDAO<Priverekening> {
 
+    @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @Autowired
     public PriverekeningDAO(JdbcTemplate jdbcTemplate) {
         super();
         this.jdbcTemplate = jdbcTemplate;
@@ -33,26 +34,26 @@ public class PriverekeningDAO implements GenericDAO<Priverekening> {
 
         // get One by Id
     public Priverekening getOneByID(int idPriverekening){
-        final String sql = "SELECT * FROM priverekening WHERE idpriverekening=?";
+        final String sql = "select * from priverekening where idpriverekening=?";
         return jdbcTemplate.queryForObject(sql, new PriverekeningRowMapper(), idPriverekening);
     }
 
         // get All
     public List<Priverekening> getAll() {
-        final String sql = "SELECT * FROM priverekening";
+        final String sql = "select * from priverekening";
         return jdbcTemplate.query(sql, new PriverekeningRowMapper(), null);
     }
 
     // get All By Rekeninghouder
     public List<Priverekening> getAllByRekeninghouder(int idRekeninghouder) {
-        final String sql = "SELECT * FROM priverekening WHERE idrekeninghouder=?";
+        final String sql = "select * from priverekening where idrekeninghouder=?";
         return jdbcTemplate.query(sql, new PriverekeningRowMapper(), idRekeninghouder);
     }
 
     // update One
     public void updateOne(Priverekening priverekening) {
-         jdbcTemplate.update("UPDATE priverekening SET idrekeninghouder=?, " +
-                        " saldo=?, iban=? WHERE idpriverekening=?",
+         jdbcTemplate.update("update priverekening set idrekeninghouder=?, " +
+                        " saldo=?, iban=? where idpriverekening=?",
                 priverekening.getRekeninghouder().getIdKlant(),
                 priverekening.getSaldo(),
                 priverekening.getIBAN(),
@@ -61,7 +62,7 @@ public class PriverekeningDAO implements GenericDAO<Priverekening> {
 
     // store One
     public void storeOne(Priverekening priverekening) {
-        final String sql = "INSERT INTO priverekening (idrekeninghouder, saldo, iban) values (?,?,?,?)";
+        final String sql = "insert into priverekening (idrekeninghouder, saldo, iban) values (?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
@@ -78,13 +79,13 @@ public class PriverekeningDAO implements GenericDAO<Priverekening> {
 
     // delete One
     public void deleteOne(Priverekening priverekening) {
-        jdbcTemplate.update("DELETE FROM priverekening WHERE idrekening=?",
+        jdbcTemplate.update("delete from priverekening where idpriverekening=?",
                 priverekening.getIdRekening());
     }
 
 }
 
-final class PriverekeningRowMapper implements RowMapper<Priverekening> {
+class PriverekeningRowMapper implements RowMapper<Priverekening> {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -92,10 +93,10 @@ final class PriverekeningRowMapper implements RowMapper<Priverekening> {
     @Override
     public Priverekening mapRow(ResultSet resultSet, int i) throws SQLException {
         ParticulierDAO particulierDAO = new ParticulierDAO(jdbcTemplate);
-        return new Priverekening(resultSet.getInt("idPriverekening"),
+        return new Priverekening(resultSet.getInt("idpriverekening"),
                                 resultSet.getString("IBAN"),
-                                resultSet.getDouble("Saldo"),
-                (particulierDAO.getOneByID(resultSet.getInt("idRekeninghouder"))));
+                                resultSet.getDouble("saldo"),
+                (particulierDAO.getOneByID(resultSet.getInt("idrekeninghouder"))));
     }
 }
 

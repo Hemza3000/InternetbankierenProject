@@ -9,6 +9,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import sofa.internetbankieren.model.Bedrijf;
+import sofa.internetbankieren.model.Particulier;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -39,6 +40,12 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
         return jdbcTemplate.query(sql, new BedrijfsMapper());
     }
 
+    // get One by gebruikersnaam en wachtwoord
+    public List<Bedrijf> getOneByOneGebruikersnaamWachtwoord(String gebruikersnaam, String wachtwoord){
+        final String sql = "select * from bedrijf where gebruikersnaam=? and wachtwoord=?";
+        return jdbcTemplate.query(sql, new BedrijfsMapper(), gebruikersnaam, wachtwoord);
+    }
+
     // Retrieves all corporate customers by accountmanager ID
     public List<Bedrijf> getAllByIdAccountmanager(int idAccountmanager) {
         final String sql = "SELECT * FROM bedrijf WHERE idaccountmanager=?";
@@ -64,7 +71,7 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
                 PreparedStatement ps = connection.prepareStatement(sql, new String[]{"idBedrijf"});
                 ps.setString(1, bedrijf.getGebruikersnaam());
                 ps.setString(2, bedrijf.getWachtwoord());
-                ps.setString(3, bedrijf.getStraatnaam());
+                ps.setString(3, bedrijf.getStraat());
                 ps.setInt(4, bedrijf.getHuisnummer());
                 ps.setString(5, bedrijf.getPostcode());
                 ps.setString(6, bedrijf.getWoonplaats());
@@ -82,10 +89,10 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
     //Updates customer in database by ID
     @Override
     public void updateOne(Bedrijf bedrijf) {
-        jdbcTemplate.update("update bedrijf set gebruikersnaam=?, wachtwoord=?, straatnaam=?, huisnummer=?, postcode=?, woonplaats=?, bedrijfsnaam=?, KVKnummer=?, sector=?, BTWnummer=? + where idBedrijf=?",
+        jdbcTemplate.update("update bedrijf set gebruikersnaam=?, wachtwoord=?, straat=?, huisnummer=?, postcode=?, woonplaats=?, bedrijfsnaam=?, KVKnummer=?, sector=?, BTWnummer=? + where idBedrijf=?",
                 bedrijf.getGebruikersnaam(),
                 bedrijf.getWachtwoord(),
-                bedrijf.getStraatnaam(),
+                bedrijf.getStraat(),
                 bedrijf.getHuisnummer(),
                 bedrijf.getPostcode(),
                 bedrijf.getWoonplaats(),
@@ -97,7 +104,7 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
 
     //Deletes customer by ID
     public void deleteOne(Bedrijf bedrijf) {
-         jdbcTemplate.update("DELETE FROM bedrijf WHERE idBedrijf=?",
+         jdbcTemplate.update("delete from bedrijf where idBedrijf=?",
                 bedrijf.getIdKlant());
     }
 
@@ -117,7 +124,7 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
                     resultSet.getInt("idBedrijf"),
                     resultSet.getString("gebruikersnaam"),
                     resultSet.getString("wachtwoord"),
-                    resultSet.getString("straatnaam"),
+                    resultSet.getString("straat"),
                     resultSet.getInt("huisnummer"),
                     resultSet.getString("postcode"),
                     resultSet.getString("woonplaats"),
