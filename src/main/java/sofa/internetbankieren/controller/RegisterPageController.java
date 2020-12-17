@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import sofa.internetbankieren.backing_bean.RegisterFormPartBackingBean;
 import sofa.internetbankieren.model.Bedrijf;
 import sofa.internetbankieren.model.Klant;
 import sofa.internetbankieren.model.Particulier;
@@ -19,6 +20,7 @@ import sofa.internetbankieren.repository.MedewerkerDAO;
 import sofa.internetbankieren.repository.ParticulierDAO;
 
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import java.time.LocalDate;
 
 @SessionAttributes("klant")
@@ -45,10 +47,12 @@ public class RegisterPageController {
     }
 
     @PostMapping("/register_Zakelijk_Particulier")
-    public String choiceHanlder(@RequestParam(name="zakelijkOfParticulier") int value, Model model){
+    public String choiceHandler(@RequestParam(name="zakelijkOfParticulier") int value, Model model){
         if (value == 0 ) {
-            model.addAttribute("klant", new Particulier());
-            return "register_page_2_particulier";
+            //model.addAttribute("klant", new Particulier());
+            //return "register_page_2_particulier";
+            model.addAttribute("backingBean", new RegisterFormPartBackingBean());
+            return "register/particulier";
         }
         else if (value == 1) {
             model.addAttribute("klant", new Bedrijf());
@@ -58,6 +62,12 @@ public class RegisterPageController {
     }
 
     @PostMapping("/register_particulier")
+    public String newParticulierHandler(Model model, @ModelAttribute(name="backingBean") RegisterFormPartBackingBean dummy) {
+        model.addAttribute("backingBean", dummy);
+        return "confirmationParticulier";
+    }
+
+    /*@PostMapping("/register_particulier")
     public String newParticulierHandler(
             @RequestParam(name="First_name") String voornaam,
             @RequestParam(name="Prefix", required = false) String voorvoegsels,
@@ -74,7 +84,7 @@ public class RegisterPageController {
         model.addAttribute("klant", newParticulier);
         System.out.println(newParticulier);
         return "confirmationParticulier";
-    }
+    }*/
 
     @PostMapping("/register_zakelijk")
     public String newBedrijfsHandler(
@@ -94,11 +104,19 @@ public class RegisterPageController {
     }
 
     @PostMapping("/confirmParticulier")
+    public String confirmHandler(@ModelAttribute RegisterFormPartBackingBean backingBean) {
+        Particulier p = new Particulier(backingBean);
+        System.out.println(p);
+        return "register_page_3";
+    }
+
+
+/*    @PostMapping("/confirmParticulier")
     public String confirmHandler(@ModelAttribute(name="klant") Particulier confirmedMember, Model model)
     {
         model.addAttribute("klant", confirmedMember);
         return "register_page_3";
-    }
+    }*/
 
     @PostMapping("/confirmBedrijf")
     public String confirmBedrijfHandler(@ModelAttribute(name="klant") Bedrijf confirmedMember, Model model)
