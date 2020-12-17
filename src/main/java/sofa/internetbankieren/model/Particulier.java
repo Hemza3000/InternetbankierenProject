@@ -5,6 +5,8 @@ package sofa.internetbankieren.model;
  *
  * */
 
+import sofa.internetbankieren.backing_bean.RegisterFormPartBackingBean;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
@@ -43,6 +45,19 @@ public class Particulier extends Klant {
                        int huisnummer, String postcode, String woonplaats) {
      this(0,"", "", straat, huisnummer, postcode, woonplaats, voornaam,
              voorvoegsels, achternaam, geboortedatum, bsn, new ArrayList<>(), new ArrayList<>());
+    }
+
+    public Particulier(RegisterFormPartBackingBean registerFormPartBackingBean) {
+        super(0, "", "", registerFormPartBackingBean.getStraat(),
+                registerFormPartBackingBean.getHuisnummer(), registerFormPartBackingBean.getPostcode(),
+                registerFormPartBackingBean.getWoonplaats());
+        this.voornaam = registerFormPartBackingBean.getVoornaam();
+        this.tussenvoegsels = registerFormPartBackingBean.getTussenvoegsels();
+        this.achternaam = registerFormPartBackingBean.getAchternaam();
+        this.geboortedatum = LocalDate.parse(registerFormPartBackingBean.getGeboortedatum());
+        this.BSN = registerFormPartBackingBean.getBSN();
+        this.priverekeningen = null;
+        this.bedrijfsrekeningen = null;
     }
 
 
