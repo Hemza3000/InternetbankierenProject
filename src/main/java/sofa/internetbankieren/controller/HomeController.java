@@ -15,13 +15,8 @@ public class HomeController {
         super();
     }
 
-    @GetMapping("/")
+    @GetMapping({"/", "/home"})
     public String startHandler() {
-        return "home";
-    }
-
-    @GetMapping("/home")
-    public String homeHandler(){
         return "home";
     }
 }

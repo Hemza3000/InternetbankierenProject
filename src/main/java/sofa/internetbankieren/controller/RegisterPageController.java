@@ -110,8 +110,8 @@ public class RegisterPageController {
     @PostMapping("/confirm")
     public String confirm(@RequestParam String user_name,
                           @RequestParam String password,
-                          HttpSession httpSession){
-        Klant klant = (Klant) httpSession.getAttribute("klant");
+                          Model model){
+        Klant klant = (Klant) model.getAttribute("klant");
         klant.setGebruikersnaam(user_name);
         klant.setWachtwoord(password);
         if (klant instanceof Particulier)

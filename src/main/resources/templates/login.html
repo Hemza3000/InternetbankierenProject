@@ -7,15 +7,15 @@
 <body>
 
 <h1>Log in met uw Sofa-account</h1>
-<form action="inloggen" method="post">
+<form action="inloggen" method="post" th:object="${backingBean}">
     <table>
         <tr>
             <td><label for="Gebruikersnaam">Gebruikersnaam</label></td>
-            <td><input type="text" name="gebruikersnaam"/></td>
+            <td><input type="text" th:field="*{userName}"/></td>
         </tr>
         <tr>
             <td><label for="Wachtwoord">Wachtwoord</label></td>
-            <td><input type="password" name="wachtwoord"/></td>
+            <td><input type="text" th:field="*{password}" name="Wachtwoord"/></td>
         </tr>
         <tr>
             <td></td>
