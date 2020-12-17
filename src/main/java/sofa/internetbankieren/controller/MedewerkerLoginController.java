@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import sofa.internetbankieren.backing_bean.LoginFormBackingBean;
 import sofa.internetbankieren.model.Medewerker;
-import sofa.internetbankieren.model.Particulier;
 import sofa.internetbankieren.repository.MedewerkerDAO;
 
 import java.util.List;
@@ -25,7 +24,7 @@ public class MedewerkerLoginController {
     }
 
     @GetMapping("/login_medewerker")
-        public String inlogMedewerkerHandler(Model model) {
+    public String inlogMedewerkerHandler(Model model) {
         LoginFormBackingBean userDummy = new LoginFormBackingBean("", "");
         model.addAttribute("backingBean", userDummy);
         return "login_medewerker";
@@ -33,7 +32,6 @@ public class MedewerkerLoginController {
 
     @PostMapping("/login_medewerker")
     public String postInlogForm(Model model, @ModelAttribute LoginFormBackingBean dummy) {
-
         System.out.println("inloggen");
         List<Medewerker> medewerkers =
                 medewerkerDAO.getOneByGebruikersnaamWachtwoord(dummy.getUserName(), dummy.getPassword());
@@ -41,11 +39,24 @@ public class MedewerkerLoginController {
             System.out.println("onbestaande logingegevens");
             return "foutingelogd";
         } else {
-            model.addAttribute("ingelogde", medewerkers.get(0));
+            //model.addAttribute("ingelogde", medewerkers.get(0));
             System.out.println("ingelogd!");
-            return "overviewHoofdParticulierenDummy";
+            switch (medewerkers.get(0).getRol()) {
+                case HOOFD_PARTICULIEREN:
+                    return "overviewHoofdParticulierenDummy";
+
+                case HOOFD_MKB:
+                    return "overviewHoofdMkbDummy";
+
+                case ACCOUNTMANAGER:
+                    return "overviewAccountmanagerDummy";
+
+                default:
+                    return "error";
+            }
         }
     }
+
 
 
 }

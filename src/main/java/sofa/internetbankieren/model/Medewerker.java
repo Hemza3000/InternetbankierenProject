@@ -13,7 +13,7 @@ public class Medewerker {
     public enum Rol {
         HOOFD_PARTICULIEREN,
         HOOFD_MKB,
-        ACCOUNT_MANAGER
+        ACCOUNTMANAGER
     }
 
     private int personeelsnummer;
@@ -60,7 +60,7 @@ public class Medewerker {
     }*/
 
     public void voegBedrijfToe(Bedrijf bedrijf){
-        if(rol == Rol.ACCOUNT_MANAGER || rol == Rol.HOOFD_MKB) {
+        if(rol == Rol.ACCOUNTMANAGER || rol == Rol.HOOFD_MKB) {
             if (bedrijven == null)
                 bedrijven = new ArrayList<>();
             bedrijven.add(bedrijf);
