@@ -1,5 +1,8 @@
 package sofa.internetbankieren.model;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+import sofa.internetbankieren.repository.BedrijfDAO;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,12 +27,14 @@ public class Medewerker {
     private String tussenvoegsels;
     private String achternaam;
     private Rol rol;
-    private List<Bedrijf> bedrijven; // Bedrijven waarvoor de medewerker accountmanager is
+    private List<Integer> bedrijfIDs; // Bedrijven waarvoor de medewerker accountmanager is
+    private BedrijfDAO bedrijfDAO = new BedrijfDAO(new JdbcTemplate());
 
     public Medewerker() { super(); }
 
+    // todo constructors aanpassen met bedrijfDAO?
     public Medewerker(int personeelsnummer, String gebruikersnaam, String wachtwoord, String voornaam,
-                      String tussenvoegsels, String achternaam, Rol rol, List<Bedrijf> bedrijven) {
+                      String tussenvoegsels, String achternaam, Rol rol, List<Integer> bedrijven) {
         super();
         this.personeelsnummer = personeelsnummer;
         this.gebruikersnaam = gebruikersnaam;
@@ -38,18 +43,18 @@ public class Medewerker {
         this.tussenvoegsels = tussenvoegsels;
         this.achternaam = achternaam;
         this.rol = rol;
-        this.bedrijven = bedrijven;
+        this.bedrijfIDs = bedrijfIDs;
     }
 
     public Medewerker(String gebruikersnaam, String wachtwoord, String voornaam, String tussenvoegsels,
-                      String achternaam, Rol rol, List<Bedrijf> bedrijven) {
+                      String achternaam, Rol rol, List<Integer> bedrijfIDs) {
         this.gebruikersnaam = gebruikersnaam;
         this.wachtwoord = wachtwoord;
         this.voornaam = voornaam;
         this.tussenvoegsels = tussenvoegsels;
         this.achternaam = achternaam;
         this.rol = rol;
-        this.bedrijven = bedrijven;
+        this.bedrijfIDs = bedrijfIDs;
     }
     // TODO : wat te doen met onderstaande 2 methoden (TacoJ)
     /*public Medewerker(String voornaam, String tussenvoegsels, String achternaam, Rol rol) {
@@ -60,11 +65,11 @@ public class Medewerker {
         this(voornaam, "", achternaam, rol);
     }*/
 
-    public void voegBedrijfToe(Bedrijf bedrijf){
+    public void voegBedrijfToe(Integer bedrijf){
         if(rol == Rol.ACCOUNTMANAGER || rol == Rol.HOOFD_MKB) {
-            if (bedrijven == null)
-                bedrijven = new ArrayList<>();
-            bedrijven.add(bedrijf);
+            if (bedrijfIDs == null)
+                bedrijfIDs = new ArrayList<>();
+            bedrijfIDs.add(bedrijf);
         }
         // TODO else foutafhandeling
     }
@@ -122,10 +127,10 @@ public class Medewerker {
     }
 
     public List<Bedrijf> getBedrijven() {
-        return bedrijven;
+        return bedrijfDAO.getAllByIdAccountmanager(personeelsnummer);
     }
-    public void setBedrijven(List<Bedrijf> bedrijven) {
-        this.bedrijven = bedrijven;
+    public void setBedrijfIDs(List<Integer> bedrijfIDs) {
+        this.bedrijfIDs = bedrijfIDs;
     }
 
     @Override
@@ -138,7 +143,7 @@ public class Medewerker {
                 ", tussenvoegsels='" + tussenvoegsels + '\'' +
                 ", achternaam='" + achternaam + '\'' +
                 ", rol=" + rol +
-                ", bedrijven=" + bedrijven +
+                ", bedrijven=" + bedrijfIDs +
                 '}';
     }
 }

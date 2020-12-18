@@ -96,7 +96,7 @@ public class MedewerkerDAO implements GenericDAO<Medewerker>{
                     resultSet.getString("achternaam"),
                     Medewerker.Rol.valueOf(resultSet.getString("rol")),
                     // TODO IllegalArgumentException afvangen?
-                    bedrijfDAO.getAllByIdAccountmanager(resultSet.getInt("personeelsnummer"))
+                    bedrijfDAO.getAllIDsByIdAccountmanager(resultSet.getInt("personeelsnummer"))
             );
         }
     }
