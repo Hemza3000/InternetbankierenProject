@@ -44,6 +44,11 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
         return jdbcTemplate.query(sql, new BedrijfsMapper(), idAccountmanager);
     }
 
+    public List<Integer> getAllIDsByIdAccountmanager(int idAccountmanager) {
+        final String sql = "select idbedrijf from bedrijf where idaccountmanager=?";
+        return jdbcTemplate.query(sql, new BedrijfsIDMapper(), idAccountmanager);
+    }
+
     // Retrieves one corporate customer by ID
     public Bedrijf getOneByID(int idBedrijf) {
         final String sql = "select * from bedrijf where idbedrijf=?";
@@ -125,6 +130,12 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
                     bedrijfsrekeningDAO.getAllByBedrijf(resultSet.getInt("idBedrijf")));
         }
 
+    }
+
+    private final class BedrijfsIDMapper implements RowMapper<Integer> {
+        public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
+            return resultSet.getInt("idBedrijf");
+        }
     }
 }
 

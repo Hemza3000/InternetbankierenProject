@@ -1,5 +1,8 @@
 package sofa.internetbankieren.model;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+import sofa.internetbankieren.repository.BedrijfDAO;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,19 +24,21 @@ public class Medewerker {
     private String tussenvoegsels;
     private String achternaam;
     private Rol rol;
-    private List<Bedrijf> bedrijven; // Bedrijven waarvoor de medewerker accountmanager is
+    private List<Integer> bedrijfIDs; // Bedrijven waarvoor de medewerker accountmanager is
+    private BedrijfDAO bedrijfDAO = new BedrijfDAO(new JdbcTemplate());
 
     public Medewerker() { super(); }
 
+    // todo constructors aanpassen met bedrijfDAO?
     public Medewerker(int personeelsnummer, String voornaam, String tussenvoegsels, String achternaam, Rol rol,
-                      List<Bedrijf> bedrijven) {
+                      List<Integer> bedrijfIDs) {
         super();
         this.personeelsnummer = personeelsnummer;
         this.voornaam = voornaam;
         this.tussenvoegsels = tussenvoegsels;
         this.achternaam = achternaam;
         this.rol = rol;
-        this.bedrijven = bedrijven;
+        this.bedrijfIDs = bedrijfIDs;
     }
 
     public Medewerker(String voornaam, String tussenvoegsels, String achternaam, Rol rol) {
@@ -44,11 +49,11 @@ public class Medewerker {
         this(voornaam, "", achternaam, rol);
     }
 
-    public void voegBedrijfToe(Bedrijf bedrijf){
+    public void voegBedrijfToe(Integer bedrijf){
         if(rol == Rol.ACCOUNT_MANAGER || rol == Rol.HOOFD_MKB) {
-            if (bedrijven == null)
-                bedrijven = new ArrayList<>();
-            bedrijven.add(bedrijf);
+            if (bedrijfIDs == null)
+                bedrijfIDs = new ArrayList<>();
+            bedrijfIDs.add(bedrijf);
         }
         // TODO else foutafhandeling
     }
@@ -90,9 +95,9 @@ public class Medewerker {
     }
 
     public List<Bedrijf> getBedrijven() {
-        return bedrijven;
+        return bedrijfDAO.getAllByIdAccountmanager(personeelsnummer);
     }
-    public void setBedrijven(List<Bedrijf> bedrijven) {
-        this.bedrijven = bedrijven;
+    public void setBedrijfIDs(List<Integer> bedrijfIDs) {
+        this.bedrijfIDs = bedrijfIDs;
     }
 }
