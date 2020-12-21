@@ -7,13 +7,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import sofa.internetbankieren.backing_bean.LoginFormBackingBean;
-import sofa.internetbankieren.model.Bedrijf;
-import sofa.internetbankieren.model.Klant;
+import sofa.internetbankieren.model.*;
 import org.springframework.web.bind.annotation.*;
 import sofa.internetbankieren.backing_bean.LoginFormBackingBean;
-import sofa.internetbankieren.model.Particulier;
 import sofa.internetbankieren.repository.BedrijfDAO;
-import sofa.internetbankieren.model.Priverekening;
 import sofa.internetbankieren.repository.ParticulierDAO;
 
 import java.util.ArrayList;
@@ -63,7 +60,13 @@ public class LoginController {
         model.addAttribute("ingelogde", alleklanten.get(0));
             System.out.println("ingelogd!");
             Klant gebruiker = alleklanten.get(0);
-            model.addAttribute("accountList", gebruiker);
+            if (gebruiker instanceof Particulier){
+                model.addAttribute("accountList", ((Particulier) gebruiker).getPriverekeningen());
+            }
+            else
+                model.addAttribute("accountList", ((Bedrijf) gebruiker).getRekeningen());
+
+
             model.addAttribute("welcomeName", "Welkom " + alleklanten.get(0).getGebruikersnaam());
             model.addAttribute("user", alleklanten.get(0));
             return "overview";

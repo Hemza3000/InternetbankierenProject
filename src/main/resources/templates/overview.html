@@ -7,10 +7,8 @@
 <body>
 <h1 th:text="${welcomeName}"> Welkom < naam gebruiker > </h1>
 <h2>Dit is het overzichtspaginga</h2>
-<!--
 
 <p th:if="${accountList.isEmpty()}">Er is geen overzicht weer te geven</p>
--->
 
 <table th:unless="${accountList.isEmpty()}">
     <p>Selecteer je rekening voor je laatste transactieoverzicht</p>
