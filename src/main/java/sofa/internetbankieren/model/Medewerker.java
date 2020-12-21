@@ -28,11 +28,9 @@ public class Medewerker {
     private String achternaam;
     private Rol rol;
     private List<Integer> bedrijfIDs; // Bedrijven waarvoor de medewerker accountmanager is
-    private BedrijfDAO bedrijfDAO = new BedrijfDAO(new JdbcTemplate());
 
     public Medewerker() { super(); }
 
-    // todo constructors aanpassen met bedrijfDAO?
     public Medewerker(int personeelsnummer, String gebruikersnaam, String wachtwoord, String voornaam,
                       String tussenvoegsels, String achternaam, Rol rol, List<Integer> bedrijven) {
         super();
@@ -127,7 +125,7 @@ public class Medewerker {
     }
 
     public List<Bedrijf> getBedrijven() {
-        return bedrijfDAO.getAllByIdAccountmanager(personeelsnummer);
+        return new BedrijfDAO(new JdbcTemplate()).getAllByIdAccountmanager(personeelsnummer);
     }
     public void setBedrijfIDs(List<Integer> bedrijfIDs) {
         this.bedrijfIDs = bedrijfIDs;
