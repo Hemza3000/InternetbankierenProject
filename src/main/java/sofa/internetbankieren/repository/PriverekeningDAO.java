@@ -94,10 +94,9 @@ public class PriverekeningDAO implements GenericDAO<Priverekening> {
             return new Priverekening(resultSet.getInt("idpriverekening"),
                     resultSet.getString("IBAN"),
                     resultSet.getDouble("saldo"),
-                    (particulierDAO.getOneByID(resultSet.getInt("idrekeninghouder"))));
+                    resultSet.getInt("idrekeninghouder"));
         }
     }
-
 }
 
 

@@ -12,17 +12,6 @@
 <p th:if="${accountList.isEmpty()}">Er is geen overzicht weer te geven</p>
 -->
 
-<ul>
-    <th:block th:each="name : ${name}">
-        <li th:text="${name}"></li>
-
-
-    </th:block>
-</ul>
-
-
-
-<!--
 <table th:unless="${accountList.isEmpty()}">
     <p>Selecteer je rekening voor je laatste transactieoverzicht</p>
     <tr>
@@ -30,13 +19,12 @@
         <th>tenaamstelling</th>
         <th>saldo</th>
     </tr>
-    <tr th:each="p : ${accountList}">
-        <td th:text="${accountList.IBAN}"></td>
-        <td th:text="${accountList.}"></td>
-        <td th:text=${accountList.saldo}"></td>
+    <tr th:each="rekening : ${accountList}">
+        <td th:text="${rekening.IBAN}"></td>
+        <td th:text="${rekening.rekeninghouder}"></td>
+        <td th:text=${rekening.saldo}"></td>
     </tr>
 </table>
--->
 
 <p>Terug naar de <a href="/home">homepage</a></p> </p>
 

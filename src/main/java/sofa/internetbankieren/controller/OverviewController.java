@@ -36,8 +36,10 @@ public class OverviewController {
     @GetMapping("/overview")
     public String postOverview(@ModelAttribute(name="user")Klant user) {
         System.out.println("test");
-        if (user instanceof Particulier)
+        if (user instanceof Particulier) {
             System.out.println(((Particulier) user).getBSN());
+            System.out.println(((Particulier) user).getPriverekeningen());
+        }
         else
             System.out.println(((Bedrijf) user).getBedrijfsnaam());
         System.out.println("testtest");

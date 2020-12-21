@@ -1,5 +1,9 @@
 package sofa.internetbankieren.model;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+import sofa.internetbankieren.repository.BedrijfDAO;
+import sofa.internetbankieren.repository.ParticulierDAO;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,19 +14,22 @@ import java.util.List;
 
 public class Bedrijfsrekening extends Rekening {
 
-    private Particulier contactpersoon;
-    private Bedrijf rekeninghouder;
+    private int contactpersoon; // is een Particulier
+    private int rekeninghouder; // is een Bedrijf
     private List<Transactie> transactiesHistorie;
+
+    private ParticulierDAO particulierDAO = new ParticulierDAO(new JdbcTemplate());
+    private BedrijfDAO bedrijfDAO = new BedrijfDAO(new JdbcTemplate());
 
     public Bedrijfsrekening() { super(); }
 
-    public Bedrijfsrekening(int idRekening, String IBAN, double saldo, Particulier contactpersoon, Bedrijf rekeninghouder) {
+    public Bedrijfsrekening(int idRekening, String IBAN, double saldo, int contactpersoon, int rekeninghouder) {
         super(idRekening, IBAN, saldo);
         this.contactpersoon = contactpersoon;
         this.rekeninghouder = rekeninghouder;
     }
 
-    public Bedrijfsrekening(String IBAN, double saldo, Particulier contactpersoon, Bedrijf rekeninghouder) {
+    public Bedrijfsrekening(String IBAN, double saldo, int contactpersoon, int rekeninghouder) {
         this(0, IBAN, saldo, contactpersoon, rekeninghouder);
     }
 
@@ -33,18 +40,18 @@ public class Bedrijfsrekening extends Rekening {
     } // TODO NOG VERDER AF TE MAKEN IN VOLGENDE SPRINT
 
     public Particulier getContactpersoon() {
-        return contactpersoon;
+        return particulierDAO.getOneByID(contactpersoon);
     }
 
-    public void setContactpersoon(Particulier contactpersoon) {
+    public void setContactpersoon(int contactpersoon) {
         this.contactpersoon = contactpersoon;
     }
 
     public Bedrijf getRekeninghouder() {
-        return rekeninghouder;
+        return bedrijfDAO.getOneByID(rekeninghouder);
     }
 
-    public void setRekeninghouder(Bedrijf rekeninghouder) {
+    public void setRekeninghouder(int rekeninghouder) {
         this.rekeninghouder = rekeninghouder;
     }
 
