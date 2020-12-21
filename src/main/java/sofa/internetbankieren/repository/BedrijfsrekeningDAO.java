@@ -92,22 +92,23 @@ public class BedrijfsrekeningDAO implements GenericDAO<Bedrijfsrekening> {
                 bedrijfsrekening.getIdRekening());
     }
 
-}
+    class BedrijfsrekeningRowMapper implements RowMapper<Bedrijfsrekening> {
 
+        @Autowired
+        private JdbcTemplate jdbcTemplate;
 
-class BedrijfsrekeningRowMapper implements RowMapper<Bedrijfsrekening> {
-
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-
-    @Override
-    public Bedrijfsrekening mapRow(ResultSet resultSet, int i) throws SQLException {
-        ParticulierDAO particulierDAO = new ParticulierDAO(jdbcTemplate);
-        BedrijfDAO bedrijfDAO = new BedrijfDAO(jdbcTemplate);
-        return new Bedrijfsrekening(resultSet.getInt("idbedrijfsrekening"),
-                                    resultSet.getString("iban"),
-                                    resultSet.getDouble("saldo"),
-                (particulierDAO.getOneByID(resultSet.getInt("idcontactpersoon"))),
-                    (bedrijfDAO.getOneByID(resultSet.getInt("idbedrijf"))));
+        @Override
+        public Bedrijfsrekening mapRow(ResultSet resultSet, int i) throws SQLException {
+            ParticulierDAO particulierDAO = new ParticulierDAO(jdbcTemplate);
+            BedrijfDAO bedrijfDAO = new BedrijfDAO(jdbcTemplate);
+            return new Bedrijfsrekening(resultSet.getInt("idbedrijfsrekening"),
+                    resultSet.getString("iban"),
+                    resultSet.getDouble("saldo"),
+                    resultSet.getInt("idcontactpersoon"),
+                    resultSet.getInt("idbedrijf"));
+        }
     }
+
 }
+
+

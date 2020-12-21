@@ -62,8 +62,9 @@ public class LoginController {
         else{
         model.addAttribute("ingelogde", alleklanten.get(0));
             System.out.println("ingelogd!");
-            model.addAttribute("rekeningoverzicht", alleklanten.get(0));
-            model.addAttribute("name", "Welkom " + alleklanten.get(0));
+            Klant gebruiker = alleklanten.get(0);
+            model.addAttribute("accountList", gebruiker);
+            model.addAttribute("welcomeName", "Welkom " + alleklanten.get(0).getGebruikersnaam());
             model.addAttribute("user", alleklanten.get(0));
             return "overview";
         }

@@ -1,5 +1,8 @@
 package sofa.internetbankieren.model;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+import sofa.internetbankieren.repository.ParticulierDAO;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,17 +13,18 @@ import java.util.List;
 
 public class Priverekening extends Rekening{
 
-    private Particulier rekeninghouder;
+    private int rekeninghouder;
     private List<Transactie> transactiesHistorie;
+    private ParticulierDAO particulierDAO = new ParticulierDAO(new JdbcTemplate());
 
     public Priverekening() { super(); }
 
-    public Priverekening(int idRekening, String IBAN, double saldo, Particulier rekeninghouder) {
+    public Priverekening(int idRekening, String IBAN, double saldo, int rekeninghouder) {
         super(idRekening, IBAN, saldo);
         this.rekeninghouder = rekeninghouder;
     }
 
-    public Priverekening(String IBAN, double saldo, Particulier rekeninghouder) {
+    public Priverekening(String IBAN, double saldo, int rekeninghouder) {
         this(0, IBAN, saldo, rekeninghouder);
     }
 
@@ -32,10 +36,10 @@ public class Priverekening extends Rekening{
 
 
     public Particulier getRekeninghouder() {
-        return rekeninghouder;
+        return particulierDAO.getOneByID(rekeninghouder);
     }
 
-    public void setRekeninghouder(Particulier rekeninghouder) {
+    public void setRekeninghouder(int rekeninghouder) {
         this.rekeninghouder = rekeninghouder;
     }
 
@@ -48,4 +52,8 @@ public class Priverekening extends Rekening{
         return result.toString();
     }
 
+    @Override
+    public List<Transactie> getTransactiesHistorie() {
+        return transactiesHistorie;
+    }
 }

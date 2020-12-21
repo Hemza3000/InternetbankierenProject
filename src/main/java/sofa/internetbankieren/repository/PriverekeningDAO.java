@@ -83,20 +83,21 @@ public class PriverekeningDAO implements GenericDAO<Priverekening> {
                 priverekening.getIdRekening());
     }
 
-}
+    class PriverekeningRowMapper implements RowMapper<Priverekening> {
 
-class PriverekeningRowMapper implements RowMapper<Priverekening> {
+        @Autowired
+        private JdbcTemplate jdbcTemplate;
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-
-    @Override
-    public Priverekening mapRow(ResultSet resultSet, int i) throws SQLException {
-        ParticulierDAO particulierDAO = new ParticulierDAO(jdbcTemplate);
-        return new Priverekening(resultSet.getInt("idpriverekening"),
-                                resultSet.getString("IBAN"),
-                                resultSet.getDouble("saldo"),
-                (particulierDAO.getOneByID(resultSet.getInt("idrekeninghouder"))));
+        @Override
+        public Priverekening mapRow(ResultSet resultSet, int i) throws SQLException {
+            ParticulierDAO particulierDAO = new ParticulierDAO(jdbcTemplate);
+            return new Priverekening(resultSet.getInt("idpriverekening"),
+                    resultSet.getString("IBAN"),
+                    resultSet.getDouble("saldo"),
+                    resultSet.getInt("idrekeninghouder"));
+        }
     }
 }
+
+
 

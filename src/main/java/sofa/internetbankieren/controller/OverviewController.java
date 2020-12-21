@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import sofa.internetbankieren.model.Bedrijf;
 import sofa.internetbankieren.model.Klant;
 import sofa.internetbankieren.model.Particulier;
 import sofa.internetbankieren.model.Priverekening;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@SessionAttributes("gebruiker")
+@SessionAttributes("user")
 @Controller
 public class OverviewController {
 
@@ -27,15 +28,20 @@ public class OverviewController {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    @GetMapping("/overview")
+/*    @GetMapping("/overview")
     public String overviewHandler(){
         return "overview";
-    }
+    }*/
 
-    @PostMapping("/overview")
-    public String postOverview(@ModelAttribute(name="gebruiker")Klant gebruiker) {
+    @GetMapping("/overview")
+    public String postOverview(@ModelAttribute(name="user")Klant user) {
         System.out.println("test");
-        System.out.println(gebruiker.getIdKlant());
+        if (user instanceof Particulier) {
+            System.out.println(((Particulier) user).getBSN());
+            System.out.println(((Particulier) user).getPriverekeningen());
+        }
+        else
+            System.out.println(((Bedrijf) user).getBedrijfsnaam());
         System.out.println("testtest");
         return "overview";
     }
