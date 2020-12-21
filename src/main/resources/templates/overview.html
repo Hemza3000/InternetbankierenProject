@@ -5,13 +5,40 @@
     <title>Overzichtspagina</title>
 </head>
 <body>
-<h1>Welkom < naam gebruiker > </h1>
+<h1 th:text="${welcomeName}"> Welkom < naam gebruiker > </h1>
 <h2>Dit is het overzichtspaginga</h2>
-<object action="overview" th:action="@{/overview}" th:object="${Rekening}" method="get">
-    <p>ik wil dat hier iets staat </p>
-<!--    <p>Voornaam: <input type="text" th:field="*{voornaam}" /></p>-->
-<!--    <p>Achternaam: <input type="text" th:field="*{achternaam}" /></p>-->
-</object>
+<!--
+
+<p th:if="${accountList.isEmpty()}">Er is geen overzicht weer te geven</p>
+-->
+
+<ul>
+    <th:block th:each="name : ${name}">
+        <li th:text="${name}"></li>
+
+
+    </th:block>
+</ul>
+
+
+
+<!--
+<table th:unless="${accountList.isEmpty()}">
+    <p>Selecteer je rekening voor je laatste transactieoverzicht</p>
+    <tr>
+        <th>Rekeningnummer</th>
+        <th>tenaamstelling</th>
+        <th>saldo</th>
+    </tr>
+    <tr th:each="p : ${accountList}">
+        <td th:text="${accountList.IBAN}"></td>
+        <td th:text="${accountList.}"></td>
+        <td th:text=${accountList.saldo}"></td>
+    </tr>
+</table>
+-->
+
 <p>Terug naar de <a href="/home">homepage</a></p> </p>
+
 </body>
 </html>

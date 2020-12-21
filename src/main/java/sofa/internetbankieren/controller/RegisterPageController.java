@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import sofa.internetbankieren.backing_bean.LoginFormBackingBean;
 import sofa.internetbankieren.backing_bean.RegisterFormPartBackingBean;
 import sofa.internetbankieren.model.Bedrijf;
 import sofa.internetbankieren.model.Klant;
@@ -23,7 +24,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.time.LocalDate;
 
-@SessionAttributes("klant")
+@SessionAttributes({"klant", "particulier"})
 @Controller
 public class RegisterPageController {
 
@@ -46,6 +47,7 @@ public class RegisterPageController {
         return "register_page_1";
     }
 
+    // keuze voor doorverwijzen naar zakelijke of particuliere registratiepagina
     @PostMapping("/register_Zakelijk_Particulier")
     public String choiceHandler(@RequestParam(name="zakelijkOfParticulier") int value, Model model){
         if (value == 0 ) {
@@ -61,6 +63,7 @@ public class RegisterPageController {
         return null;
     }
 
+    // registratie particulier
     @PostMapping("/register_particulier")
     public String newParticulierHandler(Model model, @ModelAttribute(name="backingBean") RegisterFormPartBackingBean dummy) {
         model.addAttribute("backingBean", dummy);
@@ -86,6 +89,36 @@ public class RegisterPageController {
         return "confirmationParticulier";
     }*/
 
+    @PostMapping("/confirmParticulier")
+    public String confirmHandler(@ModelAttribute RegisterFormPartBackingBean backingBean, Model model) {
+        Particulier p = new Particulier(backingBean);
+        model.addAttribute("particulier", p);
+        LoginFormBackingBean usernameForm = new LoginFormBackingBean("","");
+        model.addAttribute("usernameForm", usernameForm);
+        return "register/registerUsername";
+    }
+
+    @PostMapping("/usernameForm")
+    public String confirm(Model model, @ModelAttribute LoginFormBackingBean usernameForm,
+                          @ModelAttribute(name="particulier") Particulier p){
+        Klant klant = (Klant) model.getAttribute("particulier");
+        klant.setGebruikersnaam(usernameForm.getUserName());
+        klant.setWachtwoord(usernameForm.getPassword());
+        if (klant instanceof Particulier)
+            particulierDAO.storeOne((Particulier) klant);
+        else
+            bedrijfDAO.storeOne((Bedrijf) klant);
+        return "register_completed";
+    }
+
+/*    @PostMapping("/confirmParticulier")
+    public String confirmHandler(@ModelAttribute(name="klant") Particulier confirmedMember, Model model)
+    {
+        model.addAttribute("klant", confirmedMember);
+        return "register_page_3";
+    }*/
+
+    // registratie bedrijf
     @PostMapping("/register_zakelijk")
     public String newBedrijfsHandler(
             @RequestParam(name="Company_name") String bedrijfsnaam,
@@ -103,24 +136,8 @@ public class RegisterPageController {
         return "confirmationBedrijf";
     }
 
-    @PostMapping("/confirmParticulier")
-    public String confirmHandler(@ModelAttribute RegisterFormPartBackingBean backingBean) {
-        Particulier p = new Particulier(backingBean);
-        System.out.println(p);
-        return "register_page_3";
-    }
-
-
-/*    @PostMapping("/confirmParticulier")
-    public String confirmHandler(@ModelAttribute(name="klant") Particulier confirmedMember, Model model)
-    {
-        model.addAttribute("klant", confirmedMember);
-        return "register_page_3";
-    }*/
-
     @PostMapping("/confirmBedrijf")
-    public String confirmBedrijfHandler(@ModelAttribute(name="klant") Bedrijf confirmedMember, Model model)
-    {
+    public String confirmBedrijfHandler(@ModelAttribute(name="klant") Bedrijf confirmedMember, Model model) {
         model.addAttribute("klant", confirmedMember);
         return "register_page_3";
     }
