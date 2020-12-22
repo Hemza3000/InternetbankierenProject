@@ -120,7 +120,7 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
         @Override
         public Bedrijf mapRow(ResultSet resultSet, int i) throws SQLException {
             BedrijfsrekeningDAO bedrijfsrekeningDAO = new BedrijfsrekeningDAO(jdbcTemplate);
-            MedewerkerDAO medewerkerDAO = new MedewerkerDAO(jdbcTemplate);
+            MedewerkerDAO medewerkerDAO = new MedewerkerDAO(jdbcTemplate, new BedrijfDAO(jdbcTemplate));
             return new Bedrijf(
                     resultSet.getInt("idBedrijf"),
                     resultSet.getString("gebruikersnaam"),

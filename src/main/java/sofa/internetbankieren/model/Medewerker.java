@@ -28,11 +28,12 @@ public class Medewerker {
     private String achternaam;
     private Rol rol;
     private List<Integer> bedrijfIDs; // Bedrijven waarvoor de medewerker accountmanager is
+    private BedrijfDAO bedrijfDAO;
 
-    public Medewerker() { super(); }
+//    public Medewerker() { super(); }
 
     public Medewerker(int personeelsnummer, String gebruikersnaam, String wachtwoord, String voornaam,
-                      String tussenvoegsels, String achternaam, Rol rol, List<Integer> bedrijven) {
+                      String tussenvoegsels, String achternaam, Rol rol, List<Integer> bedrijfIDs, BedrijfDAO bedrijfDAO) {
         super();
         this.personeelsnummer = personeelsnummer;
         this.gebruikersnaam = gebruikersnaam;
@@ -43,7 +44,7 @@ public class Medewerker {
         this.rol = rol;
         this.bedrijfIDs = bedrijfIDs;
     }
-
+/*
     public Medewerker(String gebruikersnaam, String wachtwoord, String voornaam, String tussenvoegsels,
                       String achternaam, Rol rol, List<Integer> bedrijfIDs) {
         this.gebruikersnaam = gebruikersnaam;
@@ -53,7 +54,7 @@ public class Medewerker {
         this.achternaam = achternaam;
         this.rol = rol;
         this.bedrijfIDs = bedrijfIDs;
-    }
+    }*/
     // TODO : wat te doen met onderstaande 2 methoden (TacoJ)
     /*public Medewerker(String voornaam, String tussenvoegsels, String achternaam, Rol rol) {
         this(0, voornaam, tussenvoegsels, achternaam, rol, new ArrayList<>());
@@ -125,7 +126,7 @@ public class Medewerker {
     }
 
     public List<Bedrijf> getBedrijven() {
-        return new BedrijfDAO(new JdbcTemplate()).getAllByIdAccountmanager(personeelsnummer);
+        return bedrijfDAO.getAllByIdAccountmanager(personeelsnummer);
     }
     public void setBedrijfIDs(List<Integer> bedrijfIDs) {
         this.bedrijfIDs = bedrijfIDs;

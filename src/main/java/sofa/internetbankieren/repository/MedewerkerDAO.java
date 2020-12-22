@@ -23,10 +23,12 @@ import java.util.List;
 public class MedewerkerDAO implements GenericDAO<Medewerker>{
 
     private JdbcTemplate jdbcTemplate;
+    private BedrijfDAO bedrijfDAO;
 
-    public MedewerkerDAO(JdbcTemplate jdbcTemplate) {
+    public MedewerkerDAO(JdbcTemplate jdbcTemplate, BedrijfDAO bedrijfDAO) {
         super();
         this.jdbcTemplate = jdbcTemplate;
+        this.bedrijfDAO = bedrijfDAO;
     }
 
     @Override
@@ -82,10 +84,9 @@ public class MedewerkerDAO implements GenericDAO<Medewerker>{
                 medewerker.getPersoneelsnummer());
     }
 
-    private class MedewerkerRowMapper implements RowMapper<Medewerker> {
+    private final class MedewerkerRowMapper implements RowMapper<Medewerker> {
         @Override
         public Medewerker mapRow(ResultSet resultSet, int i) throws SQLException {
-            BedrijfDAO bedrijfDAO = new BedrijfDAO(jdbcTemplate);
             return new Medewerker(
                     resultSet.getInt("personeelsnummer"),
                     resultSet.getString("gebruikersnaam"),
@@ -95,7 +96,8 @@ public class MedewerkerDAO implements GenericDAO<Medewerker>{
                     resultSet.getString("achternaam"),
                     Medewerker.Rol.valueOf(resultSet.getString("rol")),
                     // TODO IllegalArgumentException afvangen?
-                    bedrijfDAO.getAllIDsByIdAccountmanager(resultSet.getInt("personeelsnummer"))
+                    bedrijfDAO.getAllIDsByIdAccountmanager(resultSet.getInt("personeelsnummer")),
+                    bedrijfDAO
             );
         }
     }
