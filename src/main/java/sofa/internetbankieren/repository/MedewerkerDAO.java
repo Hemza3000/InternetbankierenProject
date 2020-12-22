@@ -7,7 +7,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import sofa.internetbankieren.model.Medewerker;
-import sofa.internetbankieren.model.Particulier;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

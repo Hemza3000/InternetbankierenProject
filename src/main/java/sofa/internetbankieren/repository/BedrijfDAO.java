@@ -40,7 +40,7 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
     }
 
     // get One by gebruikersnaam en wachtwoord
-    public List<Bedrijf> getOneByOneGebruikersnaamWachtwoord(String gebruikersnaam, String wachtwoord){
+    public List<Bedrijf> getOneByGebruikersnaamWachtwoord(String gebruikersnaam, String wachtwoord){
         final String sql = "select * from bedrijf where gebruikersnaam=? and wachtwoord=?";
         return jdbcTemplate.query(sql, new BedrijfsMapper(), gebruikersnaam, wachtwoord);
     }
