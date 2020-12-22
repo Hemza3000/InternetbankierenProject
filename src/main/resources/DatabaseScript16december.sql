@@ -147,6 +147,8 @@ engine = innodb default charset=utf8mb4 collate=utf8mb4_general_ci;
 INSERT INTO `internet_bankieren`.`medewerker` (`gebruikersnaam`, `wachtwoord`,`rol`, `voornaam`, `tussenvoegsels`, `achternaam`) VALUES ('Huub', 'geheim','HOOFD_PARTICULIEREN', 'Huub', 'van', 'Thienen');
 INSERT INTO `internet_bankieren`.`medewerker` (`gebruikersnaam`, `wachtwoord`,`rol`, `voornaam`, `achternaam`) VALUES ('Michel', 'geheim', 'HOOFD_MKB', 'Michel', 'Oey');
 INSERT INTO `internet_bankieren`.`medewerker` (`gebruikersnaam`, `wachtwoord`,`rol`, `voornaam`, `tussenvoegsels`, `achternaam`) VALUES ('Remi', 'geheim', 'ACCOUNTMANAGER', 'Remi', 'de', 'Boer');
+INSERT INTO `internet_bankieren`.`particulier` (`idparticulier`, `gebruikersnaam`, `wachtwoord`, `voornaam`, `achternaam`, `bsn`, `geboortedatum`, `straat`, `huisnummer`, `postcode`, `woonplaats`) VALUES ('1', 'Wendy', 'geheim', 'Wendy', 'Ellens', '1', '19841217', 'Simon Stevinweg', '83', '1222 SN', 'Hilversum');
+INSERT INTO `internet_bankieren`.`bedrijf` (`idbedrijf`, `idaccountmanager`, `gebruikersnaam`, `wachtwoord`, `bedrijfsnaam`, `kvknummer`, `sector`, `btwnummer`, `straat`, `huisnummer`, `postcode`, `woonplaats`) VALUES ('1', '2', 'SOFA', 'geheim', 'SOFA', '1', 'Handel en dienstverlening ', '1', 'Geldstraat', '1', '1111 AA', 'Amsterdam');
 
 set sql_mode=@old_sql_mode;
 set foreign_key_checks=@old_foreign_key_checks;

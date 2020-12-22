@@ -67,9 +67,4 @@ public class LoginController {
         }
     }
 
-    @GetMapping("/error")
-    public String loginErrorHandler() {
-        return "foutingelogd";
-    }
-
 }
