@@ -7,7 +7,6 @@ package sofa.internetbankieren.controller;
  * Aangevuld door Wendy om de zakelijke registratie mogelijk te maken
  */
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +18,6 @@ import sofa.internetbankieren.model.Particulier;
 import sofa.internetbankieren.repository.BedrijfDAO;
 import sofa.internetbankieren.repository.MedewerkerDAO;
 import sofa.internetbankieren.repository.ParticulierDAO;
-
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
-import java.time.LocalDate;
 
 @SessionAttributes({"klant", "particulier"})
 @Controller

@@ -1,9 +1,7 @@
 package sofa.internetbankieren.model;
 
-import org.springframework.jdbc.core.JdbcTemplate;
 import sofa.internetbankieren.repository.BedrijfDAO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,8 +28,6 @@ public class Medewerker {
     private List<Integer> bedrijfIDs; // Bedrijven waarvoor de medewerker accountmanager is
     private BedrijfDAO bedrijfDAO;
 
-//    public Medewerker() { super(); }
-
     public Medewerker(int personeelsnummer, String gebruikersnaam, String wachtwoord, String voornaam,
                       String tussenvoegsels, String achternaam, Rol rol, List<Integer> bedrijfIDs, BedrijfDAO bedrijfDAO) {
         super();
@@ -44,26 +40,8 @@ public class Medewerker {
         this.rol = rol;
         this.bedrijfIDs = bedrijfIDs;
     }
+    // TODO verwijderen?
 /*
-    public Medewerker(String gebruikersnaam, String wachtwoord, String voornaam, String tussenvoegsels,
-                      String achternaam, Rol rol, List<Integer> bedrijfIDs) {
-        this.gebruikersnaam = gebruikersnaam;
-        this.wachtwoord = wachtwoord;
-        this.voornaam = voornaam;
-        this.tussenvoegsels = tussenvoegsels;
-        this.achternaam = achternaam;
-        this.rol = rol;
-        this.bedrijfIDs = bedrijfIDs;
-    }*/
-    // TODO : wat te doen met onderstaande 2 methoden (TacoJ)
-    /*public Medewerker(String voornaam, String tussenvoegsels, String achternaam, Rol rol) {
-        this(0, voornaam, tussenvoegsels, achternaam, rol, new ArrayList<>());
-    }*/
-
-    /*public Medewerker(String voornaam, String achternaam, Rol rol) {
-        this(voornaam, "", achternaam, rol);
-    }*/
-
     public void voegBedrijfToe(Integer bedrijf){
         if(rol == Rol.ACCOUNTMANAGER || rol == Rol.HOOFD_MKB) {
             if (bedrijfIDs == null)
@@ -71,7 +49,7 @@ public class Medewerker {
             bedrijfIDs.add(bedrijf);
         }
         // TODO else foutafhandeling
-    }
+    }*/
 
     public String getGebruikersnaam() {
         return gebruikersnaam;
