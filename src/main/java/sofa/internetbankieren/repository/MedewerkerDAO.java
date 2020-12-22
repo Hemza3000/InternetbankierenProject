@@ -1,14 +1,12 @@
 package sofa.internetbankieren.repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import sofa.internetbankieren.model.Medewerker;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,8 +41,7 @@ public class MedewerkerDAO implements GenericDAO<Medewerker>{
         return jdbcTemplate.queryForObject(sql, new MedewerkerRowMapper(), personeelsnummer);
     }
 
-    // get One by gebruikersnaam en wachtwoord
-    public List<Medewerker> getOneByGebruikersnaamWachtwoord(String gebruikersnaam, String wachtwoord){
+  public List<Medewerker> getOneByGebruikersnaamWachtwoord(String gebruikersnaam, String wachtwoord){
         final String sql = "select * from medewerker where gebruikersnaam=? and wachtwoord=?";
         return jdbcTemplate.query(sql, new MedewerkerDAO.MedewerkerRowMapper(), gebruikersnaam, wachtwoord);
     }
@@ -53,16 +50,13 @@ public class MedewerkerDAO implements GenericDAO<Medewerker>{
     public void storeOne(Medewerker medewerker) {
         String sql = "insert into medewerker (voornaam, tussenvoegsels, achternaam, rol) values (?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement(sql, new String[]{"personeelsnummer"});
-                ps.setString(1, medewerker.getVoornaam());
-                ps.setString(2, medewerker.getTussenvoegsels());
-                ps.setString(3, medewerker.getAchternaam());
-                ps.setString(4, medewerker.getRol().name());
-                return ps;
-            }
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, new String[]{"personeelsnummer"});
+            ps.setString(1, medewerker.getVoornaam());
+            ps.setString(2, medewerker.getTussenvoegsels());
+            ps.setString(3, medewerker.getAchternaam());
+            ps.setString(4, medewerker.getRol().name());
+            return ps;
         }, keyHolder);
         medewerker.setPersoneelsnummer(keyHolder.getKey().intValue());
     }

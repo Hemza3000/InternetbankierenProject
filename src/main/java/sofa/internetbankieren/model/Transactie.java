@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 
 /**
  * @author Wendy Ellens
- * <p>
- * Modelleert een banktransactie (bij- of afschrijving)
+ *
+ * Modelleert een banktransactie (een bij- of afschrijving)
  */
 public class Transactie implements Comparable<Transactie> {
 
@@ -15,10 +15,6 @@ public class Transactie implements Comparable<Transactie> {
     private double bedrag;
     private LocalDateTime datum;
     private String omschrijving;
-
-    public Transactie() {
-        super();
-    }
 
     public Transactie(int idTransactie, Rekening rekening, boolean bijschrijving,
                       double bedrag, LocalDateTime datum, String omschrijving) {
