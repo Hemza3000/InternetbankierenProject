@@ -92,7 +92,7 @@ public class ParticulierDAO {
                 particulier.getTussenvoegsels(),
                 particulier.getAchternaam(),
                 particulier.getBSN(),
-                particulier.getGeboortedatum(),
+                particulier.getGeboortedatum(), //todo Date.valueOf toevoegen? (Wendy)
                 particulier.getStraat(),
                 particulier.getHuisnummer(),
                 particulier.getPostcode(),

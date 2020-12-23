@@ -37,7 +37,7 @@ public class MedewerkerDAO implements GenericDAO<Medewerker>{
 
     @Override
     public Medewerker getOneByID(int personeelsnummer) {
-        String sql = "select * from medewerker where personeelsnummer=?";
+        String sql = "select * from medewerker where personeelsnummer = ?";
         return jdbcTemplate.queryForObject(sql, new MedewerkerRowMapper(), personeelsnummer);
     }
 
@@ -65,11 +65,11 @@ public class MedewerkerDAO implements GenericDAO<Medewerker>{
     public void updateOne(Medewerker medewerker) {
         jdbcTemplate.update("update medewerker set voornaam=?, tussenvoegsels=?, achternaam=?, rol=? " +
                         "where personeelsnummer=?",
-                medewerker.getVoornaam(),
-                medewerker.getTussenvoegsels(),
-                medewerker.getAchternaam(),
-                medewerker.getRol().name(),
-                medewerker.getPersoneelsnummer());
+            medewerker.getVoornaam(),
+            medewerker.getTussenvoegsels(),
+            medewerker.getAchternaam(),
+            medewerker.getRol().name(),
+            medewerker.getPersoneelsnummer());
     }
 
     @Override
@@ -82,16 +82,16 @@ public class MedewerkerDAO implements GenericDAO<Medewerker>{
         @Override
         public Medewerker mapRow(ResultSet resultSet, int i) throws SQLException {
             return new Medewerker(
-                    resultSet.getInt("personeelsnummer"),
-                    resultSet.getString("gebruikersnaam"),
-                    resultSet.getString("wachtwoord"),
-                    resultSet.getString("voornaam"),
-                    resultSet.getString("tussenvoegsels"),
-                    resultSet.getString("achternaam"),
-                    Medewerker.Rol.valueOf(resultSet.getString("rol")),
-                    // TODO IllegalArgumentException afvangen?
-                    bedrijfDAO.getAllIDsByIdAccountmanager(resultSet.getInt("personeelsnummer")),
-                    bedrijfDAO
+                resultSet.getInt("personeelsnummer"),
+                resultSet.getString("gebruikersnaam"),
+                resultSet.getString("wachtwoord"),
+                resultSet.getString("voornaam"),
+                resultSet.getString("tussenvoegsels"),
+                resultSet.getString("achternaam"),
+                Medewerker.Rol.valueOf(resultSet.getString("rol")),
+                // TODO IllegalArgumentException afvangen?
+                bedrijfDAO.getAllIDsByIdAccountmanager(resultSet.getInt("personeelsnummer")),
+                bedrijfDAO
             );
         }
     }
