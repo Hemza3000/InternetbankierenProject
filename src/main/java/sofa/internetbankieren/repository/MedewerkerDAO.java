@@ -48,14 +48,17 @@ public class MedewerkerDAO implements GenericDAO<Medewerker>{
 
     @Override
     public void storeOne(Medewerker medewerker) {
-        String sql = "insert into medewerker (voornaam, tussenvoegsels, achternaam, rol) values (?,?,?,?)";
+        String sql = "insert into medewerker (gebruikersnaam, wachtwoord, voornaam, " +
+                "tussenvoegsels, achternaam, rol) values (?,?,?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, new String[]{"personeelsnummer"});
-            ps.setString(1, medewerker.getVoornaam());
-            ps.setString(2, medewerker.getTussenvoegsels());
-            ps.setString(3, medewerker.getAchternaam());
-            ps.setString(4, medewerker.getRol().name());
+            ps.setString(1, medewerker.getGebruikersnaam());
+            ps.setString(2, medewerker.getWachtwoord());
+            ps.setString(3, medewerker.getVoornaam());
+            ps.setString(4, medewerker.getTussenvoegsels());
+            ps.setString(5, medewerker.getAchternaam());
+            ps.setString(6, medewerker.getRol().name());
             return ps;
         }, keyHolder);
         medewerker.setPersoneelsnummer(keyHolder.getKey().intValue());
@@ -63,8 +66,10 @@ public class MedewerkerDAO implements GenericDAO<Medewerker>{
 
     @Override
     public void updateOne(Medewerker medewerker) {
-        jdbcTemplate.update("update medewerker set voornaam=?, tussenvoegsels=?, achternaam=?, rol=? " +
-                        "where personeelsnummer=?",
+        jdbcTemplate.update("update medewerker set gebruikersnaam = ?, wachtwoord = ?, " +
+                        "voornaam = ?, tussenvoegsels = ?, achternaam = ?, rol = ? where personeelsnummer=?",
+            medewerker.getGebruikersnaam(),
+            medewerker.getWachtwoord(),
             medewerker.getVoornaam(),
             medewerker.getTussenvoegsels(),
             medewerker.getAchternaam(),

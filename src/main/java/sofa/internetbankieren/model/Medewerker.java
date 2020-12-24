@@ -1,5 +1,7 @@
 package sofa.internetbankieren.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import sofa.internetbankieren.repository.BedrijfDAO;
 
 import java.util.List;
@@ -10,6 +12,7 @@ import java.util.List;
  * Modelleert een bankmedewerker.
  * Reviewed by Wichert 11-12
  */
+@Component
 public class Medewerker {
 
     public enum Rol {
@@ -28,6 +31,11 @@ public class Medewerker {
     private List<Integer> bedrijfIDs; // Bedrijven waarvoor de medewerker accountmanager is
     private BedrijfDAO bedrijfDAO;
 
+    @Autowired
+    public Medewerker() {
+        super();
+    }
+
     public Medewerker(int personeelsnummer, String gebruikersnaam, String wachtwoord, String voornaam,
                       String tussenvoegsels, String achternaam, Rol rol, List<Integer> bedrijfIDs, BedrijfDAO bedrijfDAO) {
         super();
@@ -39,17 +47,8 @@ public class Medewerker {
         this.achternaam = achternaam;
         this.rol = rol;
         this.bedrijfIDs = bedrijfIDs;
+        this.bedrijfDAO = bedrijfDAO;
     }
-    // TODO verwijderen?
-/*
-    public void voegBedrijfToe(Integer bedrijf){
-        if(rol == Rol.ACCOUNTMANAGER || rol == Rol.HOOFD_MKB) {
-            if (bedrijfIDs == null)
-                bedrijfIDs = new ArrayList<>();
-            bedrijfIDs.add(bedrijf);
-        }
-        // TODO else foutafhandeling
-    }*/
 
     public String getGebruikersnaam() {
         return gebruikersnaam;
