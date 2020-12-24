@@ -5,6 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import sofa.internetbankieren.model.Medewerker;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -20,33 +23,33 @@ class MedewerkerDAOTest {
         Wendy.setVoornaam("Wendy");
         Wendy.setAchternaam("Ellens");
         Wendy.setRol(Medewerker.Rol.ACCOUNTMANAGER);
+        Wendy.setBedrijfIDs(new ArrayList<>());
 
-        // test storeOne
-//        Medewerker Wendy = new Medewerker(0, "W", "E", "Wendy", "", "Ellens", Medewerker.Rol.ACCOUNTMANAGER, new ArrayList<>(), new BedrijfDAO(new JdbcTemplate()));
+        // test storeOne by checking whether personeelsnummer has been set by autoincrement
+//        Medewerker Wendy = new Medewerker(0, "W", "E", "Wendy", "", "Ellens", Medewerker.Rol.ACCOUNTMANAGER,
+//        new ArrayList<>(), new BedrijfDAO(new JdbcTemplate()));
         medewerkerDAO.storeOne(Wendy);
-        assertNotEquals(0, Wendy.getPersoneelsnummer());
+        int generated_personeelsnr = Wendy.getPersoneelsnummer();
+        System.out.println(generated_personeelsnr);
+        assertNotEquals(0, generated_personeelsnr);
 
-        // todo werkt wel!
-        // test getOneByID
-        assertNotNull(medewerkerDAO.getOneByID(Wendy.getPersoneelsnummer()));
+        // test getOneByID by checking whether there is an entry with the generated personeelsnummer
+        System.out.println(medewerkerDAO.getOneByID(generated_personeelsnr));
+        assertNotNull(medewerkerDAO.getOneByID(generated_personeelsnr));
 
-//        // todo werkt niet! (later verwijderen, alleen als tussenstap voor volgende test)
-//        // test getOneByID
-//        assertNotNull(medewerkerDAO.getOneByID(2));
+        // test getAll by checking whether the last in the list has the generated personeelsnummer
+        List<Medewerker> medewerkers = medewerkerDAO.getAll();
+        System.out.println(medewerkers.get(medewerkers.size() - 1).getPersoneelsnummer());
+        assertEquals(generated_personeelsnr, medewerkers.get(medewerkers.size() - 1).getPersoneelsnummer());
 
-
-//        // test getAll todo werkt niet, want zie boven
-//        List<Medewerker> medewerkers = medewerkerDAO.getAll();
-//        assertEquals(Wendy.getPersoneelsnummer(), medewerkers.get(medewerkers.size() - 1).getPersoneelsnummer());
-
-        // test updateOne
+        // test updateOne by altering the rol of the newly stored entry
         Wendy.setRol(Medewerker.Rol.HOOFD_MKB);
         medewerkerDAO.updateOne(Wendy);
-        assertEquals(Medewerker.Rol.HOOFD_MKB, medewerkerDAO.getOneByID(Wendy.getPersoneelsnummer()).getRol());
+        assertEquals(Medewerker.Rol.HOOFD_MKB, medewerkerDAO.getOneByID(generated_personeelsnr).getRol());
 
-//        // test deleteOne todo werkt niet
-//        medewerkerDAO.deleteOne(Wendy);
-//        medewerkers = medewerkerDAO.getAll();
-//        assertNotEquals(Wendy.getPersoneelsnummer(), medewerkers.get(medewerkers.size() - 1).getPersoneelsnummer());
+//        // test deleteOne
+        medewerkerDAO.deleteOne(Wendy);
+        medewerkers = medewerkerDAO.getAll();
+        assertNotEquals(Wendy.getPersoneelsnummer(), medewerkers.get(medewerkers.size() - 1).getPersoneelsnummer());
     }
 }
