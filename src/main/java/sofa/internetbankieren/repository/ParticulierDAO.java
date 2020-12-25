@@ -32,7 +32,7 @@ public class ParticulierDAO {
 
     // get One by Id
     public Particulier getOneByID(int idKlant){
-        final String sql = "select * from particulier where idKlant=?";
+        final String sql = "select * from particulier where idparticulier=?";
         return jdbcTemplate.queryForObject(sql, new ParticulierRowMapper(), idKlant);
     }
 
@@ -101,7 +101,7 @@ public class ParticulierDAO {
     }
 
     public int deleteOne(Particulier particulier) {
-        return jdbcTemplate.update("delete from particulier where idKlant=?",
+        return jdbcTemplate.update("delete from particulier where idparticulier=?",
                 particulier.getIdKlant());
     }
 
@@ -124,7 +124,7 @@ public class ParticulierDAO {
                     resultSet.getString("tussenvoegsels"),
                     resultSet.getString("achternaam"),
                     resultSet.getDate("geboortedatum").toLocalDate(),
-                    resultSet.getInt("BSN"),
+                    resultSet.getInt("bsn"),
                     priverekeningDAO.getAllByRekeninghouder(resultSet.getInt("idparticulier")),
                     bedrijfsrekeningDAO.getAllByContactpersoon(resultSet.getInt("idparticulier")));
         }

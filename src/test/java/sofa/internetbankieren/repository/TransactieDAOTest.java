@@ -43,36 +43,36 @@ class TransactieDAOTest {
 
         // test storeOne by checking whether IdTransactie has been set by autoincrement
         transactieDAO.storeOne(bijschrijving_bedrijf);
-        int generatedIdBedrijf = bijschrijving_bedrijf.getIdTransactie();
-        assertNotEquals(0, generatedIdBedrijf);
+        int generatedIdBedrijfstransactie = bijschrijving_bedrijf.getIdTransactie();
+        assertNotEquals(0, generatedIdBedrijfstransactie);
 
         // test getOneByID by checking whether there is an entry with the generated ID
-        assertNotNull(transactieDAO.getOneByID(generatedIdBedrijf));
+        assertNotNull(transactieDAO.getOneByID(generatedIdBedrijfstransactie));
 
         // test getAll by checking whether the last in the list has the generated ID
         List<Transactie> transacties = transactieDAO.getAll();
-        assertEquals(generatedIdBedrijf, transacties.get(transacties.size() - 1).getIdTransactie());
+        assertEquals(generatedIdBedrijfstransactie, transacties.get(transacties.size() - 1).getIdTransactie());
 
         // test getAllByIDBedrijfsrekening by checking whether the last in the list has the generated ID
         List<Transactie> bedrijfstransacties = transactieDAO.getAllByIDBedrijfsrekening(
                 ((Bedrijfsrekening)bijschrijving_bedrijf.getRekening()).getIdRekening());
-        assertEquals(generatedIdBedrijf, bedrijfstransacties.get(bedrijfstransacties.size() - 1).getIdTransactie());
+        assertEquals(generatedIdBedrijfstransactie, bedrijfstransacties.get(bedrijfstransacties.size() - 1).getIdTransactie());
 
-        // test getAllByIDPriverekening by checking whether the last in the list has the generated IdParticulier
-        int generatedIdParticulier = afschrijving_particulier.getIdTransactie();
+        // test getAllByIDPriverekening by checking whether the last in the list has the generated IdPrivetransactie
+        int generatedIdPrivetransactie = afschrijving_particulier.getIdTransactie();
         List<Transactie> privetransacties = transactieDAO.getAllByIDPriverekening(
                 ((Priverekening)afschrijving_particulier.getRekening()).getIdRekening());
-        assertEquals(generatedIdParticulier, privetransacties.get(privetransacties.size() - 1).getIdTransactie());
+        assertEquals(generatedIdPrivetransactie, privetransacties.get(privetransacties.size() - 1).getIdTransactie());
 
         // test updateOne by altering the omschrijving of one of the stored entries
         bijschrijving_bedrijf.setOmschrijving("Bijschrijving");
         transactieDAO.updateOne(bijschrijving_bedrijf);
-        assertEquals("Bijschrijving", transactieDAO.getOneByID(generatedIdBedrijf).getOmschrijving());
+        assertEquals("Bijschrijving", transactieDAO.getOneByID(generatedIdBedrijfstransactie).getOmschrijving());
 
         // test deleteOne by checking whether the last entry does not have the generated ID anymore
         transactieDAO.deleteOne(bijschrijving_bedrijf);
         transacties = transactieDAO.getAll();
-        assertNotEquals(generatedIdBedrijf, transacties.get(transacties.size() - 1).getIdTransactie());
+        assertNotEquals(generatedIdBedrijfstransactie, transacties.get(transacties.size() - 1).getIdTransactie());
 
         deleteDbEntries();
     }
@@ -94,11 +94,17 @@ class TransactieDAOTest {
 
     private void storeDbEntries() {
         medewerkerDAO.storeOne(medewerker);
+        System.out.println("Personeelsnummer" + medewerker.getPersoneelsnummer());
         bedrijfDAO.storeOne(bedrijf);
+        System.out.println("IdBedrijf" + bedrijf.getIdKlant());
         particulierDAO.storeOne(particulier);
+        System.out.println("IdParticulier" + particulier.getIdKlant());
         bedrijfsrekeningDAO.storeOne(bedrijfsrekening);
+        System.out.println("IdBedrijfsekening" + bedrijfsrekening.getIdRekening());
         priverekeningDAO.storeOne(priverekening);
+        System.out.println("IdPriverekening" + priverekening.getIdRekening());
         transactieDAO.storeOne(afschrijving_particulier);
+        System.out.println("IdTransactie" + afschrijving_particulier.getIdTransactie());
     }
 
     private void deleteDbEntries() {

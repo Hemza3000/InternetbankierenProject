@@ -62,7 +62,7 @@ public class PriverekeningDAO implements GenericDAO<Priverekening> {
 
     // store One
     public void storeOne(Priverekening priverekening) {
-        final String sql = "insert into priverekening (idrekeninghouder, saldo, iban) values (?,?,?,?)";
+        final String sql = "insert into priverekening (idrekeninghouder, saldo, iban) values (?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
