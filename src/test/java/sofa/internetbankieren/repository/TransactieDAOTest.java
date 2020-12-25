@@ -84,10 +84,10 @@ class TransactieDAOTest {
         particulier = new Particulier(0, "", "", "", 0,
                 "", "", "", "", "", LocalDate.now(), 1,
                 new ArrayList<>(), new ArrayList<>());
-        bedrijfsrekening = new Bedrijfsrekening(1, "1",
-                0, 1, 1);
-        priverekening = new Priverekening(1, "1",
-                0, 1);
+        bedrijfsrekening = new Bedrijfsrekening(0, "1",
+                0, particulier, bedrijf);
+        priverekening = new Priverekening(0, "1",
+                0, particulier);
         bijschrijving_bedrijf = new Transactie(0, bedrijfsrekening, true, 1.5, LocalDateTime.now(), "");
         afschrijving_particulier = new Transactie(0, priverekening, false, 1.5, LocalDateTime.now(), "");
     }

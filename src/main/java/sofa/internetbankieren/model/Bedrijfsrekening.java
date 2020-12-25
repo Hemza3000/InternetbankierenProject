@@ -14,44 +14,37 @@ import java.util.List;
 
 public class Bedrijfsrekening extends Rekening {
 
-    private int contactpersoon; // is een Particulier
-    private int rekeninghouder; // is een Bedrijf
+    private Particulier contactpersoon;
+    private Bedrijf rekeninghouder;
     private List<Transactie> transactiesHistorie;
 
-    private ParticulierDAO particulierDAO = new ParticulierDAO(new JdbcTemplate());
-    private BedrijfDAO bedrijfDAO = new BedrijfDAO(new JdbcTemplate());
+    public Bedrijfsrekening() {
+        super();
+    }
 
-    public Bedrijfsrekening() { super(); }
-
-    public Bedrijfsrekening(int idRekening, String IBAN, double saldo, int contactpersoon, int rekeninghouder) {
+    public Bedrijfsrekening(int idRekening, String IBAN, double saldo, Particulier contactpersoon, Bedrijf rekeninghouder) {
         super(idRekening, IBAN, saldo);
         this.contactpersoon = contactpersoon;
         this.rekeninghouder = rekeninghouder;
     }
 
-    public Bedrijfsrekening(String IBAN, double saldo, int contactpersoon, int rekeninghouder) {
+    public Bedrijfsrekening(String IBAN, double saldo, Particulier contactpersoon, Bedrijf rekeninghouder) {
         this(0, IBAN, saldo, contactpersoon, rekeninghouder);
     }
 
-    public void voegTransactieToe() {
-        if (this.transactiesHistorie == null) {
-            transactiesHistorie = new ArrayList<>();
-        }
-    } // TODO NOG VERDER AF TE MAKEN IN VOLGENDE SPRINT
-
     public Particulier getContactpersoon() {
-        return particulierDAO.getOneByID(contactpersoon);
+        return contactpersoon;
     }
 
-    public void setContactpersoon(int contactpersoon) {
+    public void setContactpersoon(Particulier contactpersoon) {
         this.contactpersoon = contactpersoon;
     }
 
     public Bedrijf getRekeninghouder() {
-        return bedrijfDAO.getOneByID(rekeninghouder);
+        return rekeninghouder;
     }
 
-    public void setRekeninghouder(int rekeninghouder) {
+    public void setRekeninghouder(Bedrijf rekeninghouder) {
         this.rekeninghouder = rekeninghouder;
     }
 

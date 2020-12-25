@@ -13,33 +13,26 @@ import java.util.List;
 
 public class Priverekening extends Rekening{
 
-    private int rekeninghouder;
+    private Particulier rekeninghouder;
     private List<Transactie> transactiesHistorie;
-    private ParticulierDAO particulierDAO = new ParticulierDAO(new JdbcTemplate());
 
     public Priverekening() { super(); }
 
-    public Priverekening(int idRekening, String IBAN, double saldo, int rekeninghouder) {
+    public Priverekening(int idRekening, String IBAN, double saldo, Particulier rekeninghouder) {
         super(idRekening, IBAN, saldo);
         this.rekeninghouder = rekeninghouder;
     }
 
-    public Priverekening(String IBAN, double saldo, int rekeninghouder) {
+    public Priverekening(String IBAN, double saldo, Particulier rekeninghouder) {
         this(0, IBAN, saldo, rekeninghouder);
     }
 
-    public void voegTransactieToe() {
-        if (this.transactiesHistorie == null) {
-            transactiesHistorie = new ArrayList<>();
-        }
-    } // TODO NOG VERDER AF TE MAKEN IN VOLGENDE SPRINT
-
 
     public Particulier getRekeninghouder() {
-        return particulierDAO.getOneByID(rekeninghouder);
+        return rekeninghouder;
     }
 
-    public void setRekeninghouder(int rekeninghouder) {
+    public void setRekeninghouder(Particulier rekeninghouder) {
         this.rekeninghouder = rekeninghouder;
     }
 

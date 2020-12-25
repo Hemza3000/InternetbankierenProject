@@ -33,9 +33,9 @@ public class BedrijfsrekeningDAO implements GenericDAO<Bedrijfsrekening> {
     }
 
     // get One by Id
-    public Bedrijfsrekening getOneByID(int idBedrijfsrekening){
+    public Bedrijfsrekening getOneByID(int idBedrijfsrekening) {
         final String sql = "select * from bedrijfsrekening where idbedrijfsrekening=?";
-            return jdbcTemplate.queryForObject(sql, new BedrijfsrekeningRowMapper(), idBedrijfsrekening);
+        return jdbcTemplate.queryForObject(sql, new BedrijfsrekeningRowMapper(), idBedrijfsrekening);
     }
 
     // get All
@@ -58,8 +58,8 @@ public class BedrijfsrekeningDAO implements GenericDAO<Bedrijfsrekening> {
 
     // update One
     public void updateOne(Bedrijfsrekening bedrijfsrekening) {
-         jdbcTemplate.update("update bedrijfsrekening set idbedrijf=?, " +
-                " idcontactpersoon=?, saldo=?, IBAN=? where idbedrijfsrekening=?",
+        jdbcTemplate.update("update bedrijfsrekening set idbedrijf=?, " +
+                        " idcontactpersoon=?, saldo=?, IBAN=? where idbedrijfsrekening=?",
                 bedrijfsrekening.getRekeninghouder().getIdKlant(),
                 bedrijfsrekening.getContactpersoon().getIdKlant(),
                 bedrijfsrekening.getSaldo(),
@@ -104,11 +104,11 @@ public class BedrijfsrekeningDAO implements GenericDAO<Bedrijfsrekening> {
             return new Bedrijfsrekening(resultSet.getInt("idbedrijfsrekening"),
                     resultSet.getString("iban"),
                     resultSet.getDouble("saldo"),
-                    resultSet.getInt("idcontactpersoon"),
-                    resultSet.getInt("idbedrijf"));
+                    (particulierDAO.getOneByID(resultSet.getInt("idcontactpersoon"))),
+                    (bedrijfDAO.getOneByID(resultSet.getInt("idbedrijf"))));
         }
     }
-
 }
+
 
 
