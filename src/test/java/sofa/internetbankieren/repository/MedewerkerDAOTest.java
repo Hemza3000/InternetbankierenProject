@@ -17,15 +17,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class MedewerkerDAOTest {
 
     @Autowired MedewerkerDAO medewerkerDAO;
-    @Autowired Medewerker Wendy;
+    @Autowired Medewerker medewerker;
 
     @Test
     void medewerkerDAOtest() {
-        setWendy();
+        setMedewerker(medewerker);
 
         // test storeOne by checking whether personeelsnummer has been set by autoincrement
-        medewerkerDAO.storeOne(Wendy);
-        int generatedPersoneelsnr = Wendy.getPersoneelsnummer();
+        medewerkerDAO.storeOne(medewerker);
+        int generatedPersoneelsnr = medewerker.getPersoneelsnummer();
         assertNotEquals(0, generatedPersoneelsnr);
 
         // test getOneByID by checking whether there is an entry with the generated personeelsnummer
@@ -36,22 +36,22 @@ class MedewerkerDAOTest {
         assertEquals(generatedPersoneelsnr, medewerkers.get(medewerkers.size() - 1).getPersoneelsnummer());
 
         // test updateOne by altering the rol of the newly stored entry
-        Wendy.setRol(Medewerker.Rol.HOOFD_MKB);
-        medewerkerDAO.updateOne(Wendy);
+        medewerker.setRol(Medewerker.Rol.HOOFD_MKB);
+        medewerkerDAO.updateOne(medewerker);
         assertEquals(Medewerker.Rol.HOOFD_MKB, medewerkerDAO.getOneByID(generatedPersoneelsnr).getRol());
 
         // test deleteOne by checking whether the last entry does not have the generated personeelsnummer anymore
-        medewerkerDAO.deleteOne(Wendy);
+        medewerkerDAO.deleteOne(medewerker);
         medewerkers = medewerkerDAO.getAll();
         assertNotEquals(generatedPersoneelsnr, medewerkers.get(medewerkers.size() - 1).getPersoneelsnummer());
     }
 
-    private void setWendy() {
-        Wendy.setGebruikersnaam("W");
-        Wendy.setWachtwoord("W");
-        Wendy.setVoornaam("Wendy");
-        Wendy.setAchternaam("Ellens");
-        Wendy.setRol(Medewerker.Rol.ACCOUNTMANAGER);
-        Wendy.setBedrijfIDs(new ArrayList<>());
+    static void setMedewerker(Medewerker medewerker) {
+        medewerker.setGebruikersnaam("");
+        medewerker.setWachtwoord("");
+        medewerker.setVoornaam("Voornaam");
+        medewerker.setAchternaam("Achternaam");
+        medewerker.setRol(Medewerker.Rol.ACCOUNTMANAGER);
+        medewerker.setBedrijfIDs(new ArrayList<>());
     }
 }

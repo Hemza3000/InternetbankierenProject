@@ -74,7 +74,8 @@ public class MedewerkerDAO implements GenericDAO<Medewerker>{
             medewerker.getTussenvoegsels(),
             medewerker.getAchternaam(),
             medewerker.getRol().name(),
-            medewerker.getPersoneelsnummer());
+            medewerker.getPersoneelsnummer()
+        );
     }
 
     @Override

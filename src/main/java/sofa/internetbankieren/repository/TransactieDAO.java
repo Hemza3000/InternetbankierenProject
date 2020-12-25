@@ -87,7 +87,8 @@ public class TransactieDAO implements GenericDAO<Transactie> {
             transactie.getRekening() instanceof Bedrijfsrekening ?
                 ((Bedrijfsrekening) transactie.getRekening()).getIdRekening() : null,
             transactie.getRekening() instanceof Priverekening ?
-                ((Priverekening) transactie.getRekening()).getIdRekening() : null
+                ((Priverekening) transactie.getRekening()).getIdRekening() : null,
+            transactie.getIdTransactie()
             );
     }
 
