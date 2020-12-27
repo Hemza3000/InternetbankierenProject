@@ -21,8 +21,8 @@ import java.util.List;
 @Repository
 public class MedewerkerDAO implements GenericDAO<Medewerker>{
 
-    private JdbcTemplate jdbcTemplate;
-    private BedrijfDAO bedrijfDAO;
+    private final JdbcTemplate jdbcTemplate;
+    private final BedrijfDAO bedrijfDAO;
 
     public MedewerkerDAO(JdbcTemplate jdbcTemplate, @Lazy BedrijfDAO bedrijfDAO) {
         super();
