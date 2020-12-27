@@ -24,15 +24,15 @@ import java.util.List;
 @Primary
 public class PriverekeningDAO implements GenericDAO<Priverekening> {
 
-    @Autowired
     private JdbcTemplate jdbcTemplate;
+    private ParticulierDAO particulierDAO;
 
-    public PriverekeningDAO(JdbcTemplate jdbcTemplate) {
-        super();
+    public PriverekeningDAO(JdbcTemplate jdbcTemplate, ParticulierDAO particulierDAO) {
         this.jdbcTemplate = jdbcTemplate;
+        this.particulierDAO = particulierDAO;
     }
 
-        // get One by Id
+    // get One by Id
     public Priverekening getOneByID(int idPriverekening){
         final String sql = "select * from priverekening where idpriverekening=?";
         return jdbcTemplate.queryForObject(sql, new PriverekeningRowMapper(), idPriverekening);
@@ -85,12 +85,8 @@ public class PriverekeningDAO implements GenericDAO<Priverekening> {
 
     class PriverekeningRowMapper implements RowMapper<Priverekening> {
 
-        @Autowired
-        private JdbcTemplate jdbcTemplate;
-
         @Override
         public Priverekening mapRow(ResultSet resultSet, int i) throws SQLException {
-            ParticulierDAO particulierDAO = new ParticulierDAO(jdbcTemplate);
             return new Priverekening(resultSet.getInt("idpriverekening"),
                     resultSet.getString("IBAN"),
                     resultSet.getDouble("saldo"),

@@ -24,12 +24,15 @@ import java.util.List;
 @Primary
 public class BedrijfsrekeningDAO implements GenericDAO<Bedrijfsrekening> {
 
-    @Autowired
     private JdbcTemplate jdbcTemplate;
+    private ParticulierDAO particulierDAO;
+    private BedrijfDAO bedrijfDAO;
 
-    public BedrijfsrekeningDAO(JdbcTemplate jdbcTemplate) {
+    public BedrijfsrekeningDAO(JdbcTemplate jdbcTemplate, ParticulierDAO particulierDAO, BedrijfDAO bedrijfDAO) {
         super();
         this.jdbcTemplate = jdbcTemplate;
+        this.particulierDAO = particulierDAO;
+        this.bedrijfDAO = bedrijfDAO;
     }
 
     // get One by Id
@@ -94,13 +97,8 @@ public class BedrijfsrekeningDAO implements GenericDAO<Bedrijfsrekening> {
 
     class BedrijfsrekeningRowMapper implements RowMapper<Bedrijfsrekening> {
 
-        @Autowired
-        private JdbcTemplate jdbcTemplate;
-
         @Override
         public Bedrijfsrekening mapRow(ResultSet resultSet, int i) throws SQLException {
-            ParticulierDAO particulierDAO = new ParticulierDAO(jdbcTemplate);
-            BedrijfDAO bedrijfDAO = new BedrijfDAO(jdbcTemplate);
             return new Bedrijfsrekening(resultSet.getInt("idbedrijfsrekening"),
                     resultSet.getString("iban"),
                     resultSet.getDouble("saldo"),

@@ -1,5 +1,6 @@
 package sofa.internetbankieren.repository;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -23,7 +24,7 @@ public class MedewerkerDAO implements GenericDAO<Medewerker>{
     private JdbcTemplate jdbcTemplate;
     private BedrijfDAO bedrijfDAO;
 
-    public MedewerkerDAO(JdbcTemplate jdbcTemplate, BedrijfDAO bedrijfDAO) {
+    public MedewerkerDAO(JdbcTemplate jdbcTemplate, @Lazy BedrijfDAO bedrijfDAO) {
         super();
         this.jdbcTemplate = jdbcTemplate;
         this.bedrijfDAO = bedrijfDAO;

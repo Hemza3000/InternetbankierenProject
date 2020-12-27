@@ -1,6 +1,7 @@
 package sofa.internetbankieren.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -26,11 +27,13 @@ import java.util.List;
 public class BedrijfDAO implements GenericDAO<Bedrijf> {
 
     private JdbcTemplate jdbcTemplate;
+    private BedrijfsrekeningDAO bedrijfsrekeningDAO;
+    private MedewerkerDAO medewerkerDAO;
 
-    @Autowired
-    public BedrijfDAO(JdbcTemplate jdbcTemplate) {
-        super();
+    public BedrijfDAO(JdbcTemplate jdbcTemplate, @Lazy BedrijfsrekeningDAO bedrijfsrekeningDAO, MedewerkerDAO medewerkerDAO) {
         this.jdbcTemplate = jdbcTemplate;
+        this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
+        this.medewerkerDAO = medewerkerDAO;
     }
 
     // Retrieves all customers
@@ -119,8 +122,6 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
 
         @Override
         public Bedrijf mapRow(ResultSet resultSet, int i) throws SQLException {
-            BedrijfsrekeningDAO bedrijfsrekeningDAO = new BedrijfsrekeningDAO(jdbcTemplate);
-            MedewerkerDAO medewerkerDAO = new MedewerkerDAO(jdbcTemplate, new BedrijfDAO(jdbcTemplate));
             return new Bedrijf(
                     resultSet.getInt("idBedrijf"),
                     resultSet.getString("gebruikersnaam"),

@@ -5,6 +5,8 @@ package sofa.internetbankieren.repository;
  *
  * */
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
@@ -20,10 +22,16 @@ import java.util.List;
 public class ParticulierDAO {
 
     private JdbcTemplate jdbcTemplate;
+    private PriverekeningDAO priverekeningDAO;
+    private BedrijfsrekeningDAO bedrijfsrekeningDAO;
 
-    public ParticulierDAO(JdbcTemplate jdbcTemplate) {
+    public ParticulierDAO(JdbcTemplate jdbcTemplate, @Lazy PriverekeningDAO priverekeningDAO, @Lazy BedrijfsrekeningDAO bedrijfsrekeningDAO) {
+        super();
         this.jdbcTemplate = jdbcTemplate;
+        this.priverekeningDAO = priverekeningDAO;
+        this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
     }
+
     //get All
     public List<Particulier> getAll() {
         final String sql = "select * from particulier";
@@ -111,8 +119,6 @@ public class ParticulierDAO {
 
         @Override
         public Particulier mapRow(ResultSet resultSet, int i) throws SQLException {
-            PriverekeningDAO priverekeningDAO = new PriverekeningDAO(jdbcTemplate);
-            BedrijfsrekeningDAO bedrijfsrekeningDAO = new BedrijfsrekeningDAO(jdbcTemplate);
             return new Particulier(resultSet.getInt("idparticulier"),
                     resultSet.getString("gebruikersnaam"),
                     resultSet.getString("wachtwoord"),
