@@ -50,6 +50,12 @@ public class PriverekeningDAO implements GenericDAO<Priverekening> {
         return jdbcTemplate.query(sql, new PriverekeningRowMapper(), idRekeninghouder);
     }
 
+    public List<Integer> getAllIDsByRekeninghouder(int idRekeninghouder) {
+        final String sql = "select idpriverekening from priverekening where idrekeninghouder=?";
+        return jdbcTemplate.query(sql, new PriverekeningIDRowMapper(), idRekeninghouder);
+
+    }
+
     // update One
     public void updateOne(Priverekening priverekening) {
          jdbcTemplate.update("update priverekening set idrekeninghouder=?, " +
@@ -91,6 +97,14 @@ public class PriverekeningDAO implements GenericDAO<Priverekening> {
                     resultSet.getString("IBAN"),
                     resultSet.getDouble("saldo"),
                     (particulierDAO.getOneByID(resultSet.getInt("idRekeninghouder"))));
+        }
+    }
+
+    class PriverekeningIDRowMapper implements RowMapper<Integer> {
+
+        @Override
+        public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
+            return resultSet.getInt("idpriverekening");
         }
     }
 }

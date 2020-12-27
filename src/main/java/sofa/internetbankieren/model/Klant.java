@@ -1,5 +1,8 @@
 package sofa.internetbankieren.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import sofa.internetbankieren.repository.BedrijfsrekeningDAO;
 
 /**
  * @author Taco Jongkind & Hemza Lasri, 07-12-2020
@@ -15,10 +18,10 @@ public abstract class Klant {
     private int huisnummer;
     private String postcode;
     private String woonplaats;
-
+    private BedrijfsrekeningDAO bedrijfsrekeningDAO;
 
     public Klant(int idKlant, String gebruikersnaam, String wachtwoord, String straat, int huisnummer,
-                 String postcode, String woonplaats) {
+                 String postcode, String woonplaats, BedrijfsrekeningDAO bedrijfsrekeningDAO) {
         this.idKlant = idKlant;
         this.gebruikersnaam = gebruikersnaam;
         this.wachtwoord = wachtwoord;
@@ -26,8 +29,8 @@ public abstract class Klant {
         this.huisnummer = huisnummer;
         this.postcode = postcode;
         this.woonplaats = woonplaats;
+        this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
     }
-
 
     public Klant() {
     }
@@ -86,6 +89,14 @@ public abstract class Klant {
 
     public void setWoonplaats(String woonplaats) {
         this.woonplaats = woonplaats;
+    }
+
+    public BedrijfsrekeningDAO getBedrijfsrekeningDAO() {
+        return bedrijfsrekeningDAO;
+    }
+
+    public void setBedrijfsrekeningDAO(BedrijfsrekeningDAO bedrijfsrekeningDAO) {
+        this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
     }
 
     @Override

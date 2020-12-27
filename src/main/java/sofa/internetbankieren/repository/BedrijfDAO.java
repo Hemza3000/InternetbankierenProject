@@ -30,7 +30,9 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
     private BedrijfsrekeningDAO bedrijfsrekeningDAO;
     private MedewerkerDAO medewerkerDAO;
 
-    public BedrijfDAO(JdbcTemplate jdbcTemplate, @Lazy BedrijfsrekeningDAO bedrijfsrekeningDAO, MedewerkerDAO medewerkerDAO) {
+    public BedrijfDAO(JdbcTemplate jdbcTemplate, @Lazy BedrijfsrekeningDAO bedrijfsrekeningDAO,
+                      MedewerkerDAO medewerkerDAO) {
+        super();
         this.jdbcTemplate = jdbcTemplate;
         this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
         this.medewerkerDAO = medewerkerDAO;
@@ -135,12 +137,15 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
                     resultSet.getString("sector"),
                     resultSet.getString("BTWnummer"),
                     medewerkerDAO.getOneByID(resultSet.getInt("idAccountmanager")),
-                    bedrijfsrekeningDAO.getAllByBedrijf(resultSet.getInt("idBedrijf")));
+                    bedrijfsrekeningDAO.getAllIDsByBedrijf(resultSet.getInt("idBedrijf")),
+                    bedrijfsrekeningDAO
+            );
         }
-
     }
 
     private final class BedrijfsIDMapper implements RowMapper<Integer> {
+
+        @Override
         public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
             return resultSet.getInt("idBedrijf");
         }

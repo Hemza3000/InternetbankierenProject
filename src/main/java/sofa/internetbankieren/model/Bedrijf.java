@@ -6,6 +6,11 @@ package sofa.internetbankieren.model;
  *
  * */
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import sofa.internetbankieren.repository.BedrijfDAO;
+import sofa.internetbankieren.repository.BedrijfsrekeningDAO;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,34 +21,29 @@ public class Bedrijf extends Klant {
     private String sector;
     private String BTWNummer;
     private Medewerker accountmanager;
-
-    //moet dit niet bedrijfsrekeningen zijn?
-    private List<Bedrijfsrekening> rekeningen = new ArrayList<>();
+    private List<Integer> rekeningIDs = new ArrayList<>();
 
     public Bedrijf(int idKlant, String gebruikersnaam, String wachtwoord, String straat, int huisnummer,
                    String postcode, String woonplaats, String bedrijfsnaam, int KVKNummer, String sector,
-                   String BTWNummer, Medewerker accountmanager, List<Bedrijfsrekening> rekeningen) {
-        super(idKlant, gebruikersnaam, wachtwoord, straat, huisnummer, postcode, woonplaats);
+                   String BTWNummer, Medewerker accountmanager, List<Integer> rekeningIDs,
+                   BedrijfsrekeningDAO bedrijfsrekeningDAO) {
+        super(idKlant, gebruikersnaam, wachtwoord, straat, huisnummer, postcode, woonplaats, bedrijfsrekeningDAO);
         this.bedrijfsnaam = bedrijfsnaam;
         this.KVKNummer = KVKNummer;
         this.sector = sector;
         this.BTWNummer = BTWNummer;
         this.accountmanager = accountmanager;
-        this.rekeningen = rekeningen;
+        this.rekeningIDs = rekeningIDs;
     }
 
-    public Bedrijf(String straat, int huisnummer, String postcode, String woonplaats,
-                   String bedrijfsnaam, int KVKNummer, String sector, String BTWNummer, Medewerker accountmanager) {
+    public Bedrijf(String straat, int huisnummer, String postcode, String woonplaats, String bedrijfsnaam,
+                   int KVKNummer, String sector, String BTWNummer, Medewerker accountmanager,
+                   BedrijfsrekeningDAO bedrijfsrekeningDAO) {
         this(0, "", "", straat, huisnummer, postcode, woonplaats, bedrijfsnaam,
-                KVKNummer, sector, BTWNummer, accountmanager, new ArrayList<>());
+                KVKNummer, sector, BTWNummer, accountmanager, new ArrayList<>(), bedrijfsrekeningDAO);
     }
-
 
     public Bedrijf(){
-
-    }
-    //Vraag: moet deze er nog bij?
-    public void addBedrijf(){
 
     }
 
@@ -91,10 +91,10 @@ public class Bedrijf extends Klant {
     }
 
     public List<Bedrijfsrekening> getRekeningen() {
-        return rekeningen;
+        return super.getBedrijfsrekeningDAO().getAllByBedrijf(super.getIdKlant()) ;
     }
 
-    public void setRekeningen(List<Bedrijfsrekening> rekeningen) {
-        this.rekeningen = rekeningen;
+    public void setRekeningIDs(List<Integer> rekeningIDs) {
+        this.rekeningIDs = rekeningIDs;
     }
 }

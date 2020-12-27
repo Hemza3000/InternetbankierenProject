@@ -53,10 +53,20 @@ public class BedrijfsrekeningDAO implements GenericDAO<Bedrijfsrekening> {
         return jdbcTemplate.query(sql, new BedrijfsrekeningRowMapper(), idRekeninghouder);
     }
 
+    public List<Integer> getAllIDsByBedrijf(int idRekeninghouder) {
+        final String sql = "select idbedrijfsrekening from bedrijfsrekening where idbedrijf=?";
+        return jdbcTemplate.query(sql, new BedrijfsrekeningIDRowMapper(), idRekeninghouder);
+    }
+
     // get All By Contactpersoon (Contactpersoon)
     public List<Bedrijfsrekening> getAllByContactpersoon(int idContactpersoon) {
         final String sql = "select * from bedrijfsrekening where idcontactpersoon=?";
         return jdbcTemplate.query(sql, new BedrijfsrekeningRowMapper(), idContactpersoon);
+    }
+
+    public List<Integer> getAllIDsByContactpersoon(int idContactpersoon) {
+        final String sql = "select idbedrijfsrekening from bedrijfsrekening where idcontactpersoon=?";
+        return jdbcTemplate.query(sql, new BedrijfsrekeningIDRowMapper(), idContactpersoon);
     }
 
     // update One
@@ -104,6 +114,14 @@ public class BedrijfsrekeningDAO implements GenericDAO<Bedrijfsrekening> {
                     resultSet.getDouble("saldo"),
                     (particulierDAO.getOneByID(resultSet.getInt("idcontactpersoon"))),
                     (bedrijfDAO.getOneByID(resultSet.getInt("idbedrijf"))));
+        }
+    }
+
+    class BedrijfsrekeningIDRowMapper implements RowMapper<Integer> {
+
+        @Override
+        public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
+            return resultSet.getInt("idbedrijfsrekening");
         }
     }
 }

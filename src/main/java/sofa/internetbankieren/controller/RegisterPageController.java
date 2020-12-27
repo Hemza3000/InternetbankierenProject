@@ -13,11 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import sofa.internetbankieren.backing_bean.LoginFormBackingBean;
 import sofa.internetbankieren.backing_bean.RegisterFormPartBackingBean;
 import sofa.internetbankieren.model.Bedrijf;
+import sofa.internetbankieren.model.Bedrijfsrekening;
 import sofa.internetbankieren.model.Klant;
 import sofa.internetbankieren.model.Particulier;
-import sofa.internetbankieren.repository.BedrijfDAO;
-import sofa.internetbankieren.repository.MedewerkerDAO;
-import sofa.internetbankieren.repository.ParticulierDAO;
+import sofa.internetbankieren.repository.*;
 
 @SessionAttributes({"klant", "particulier"})
 @Controller
@@ -29,12 +28,17 @@ public class RegisterPageController {
     ParticulierDAO particulierDAO;
     BedrijfDAO bedrijfDAO;
     MedewerkerDAO medewerkerDAO;
+    BedrijfsrekeningDAO bedrijfsrekeningDAO;
+    PriverekeningDAO priverekeningDAO;
 
-    public RegisterPageController(ParticulierDAO particulierDAO, BedrijfDAO bedrijfDAO, MedewerkerDAO medewerkerDAO) {
+    public RegisterPageController(ParticulierDAO particulierDAO, BedrijfDAO bedrijfDAO, MedewerkerDAO medewerkerDAO,
+                                  BedrijfsrekeningDAO bedrijfsrekeningDAO, PriverekeningDAO priverekeningDAO) {
         super();
         this.particulierDAO = particulierDAO;
         this.bedrijfDAO = bedrijfDAO;
         this.medewerkerDAO = medewerkerDAO;
+        this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
+        this.priverekeningDAO = priverekeningDAO;
     }
 
     @GetMapping("/register")
@@ -86,7 +90,7 @@ public class RegisterPageController {
 
     @PostMapping("/confirmParticulier")
     public String confirmHandler(@ModelAttribute RegisterFormPartBackingBean backingBean, Model model) {
-        Particulier p = new Particulier(backingBean);
+        Particulier p = new Particulier(backingBean, bedrijfsrekeningDAO, priverekeningDAO);
         model.addAttribute("particulier", p);
         LoginFormBackingBean usernameForm = new LoginFormBackingBean("","");
         model.addAttribute("usernameForm", usernameForm);
@@ -125,8 +129,8 @@ public class RegisterPageController {
             @RequestParam(name="Postal_code") String postcode,
             @RequestParam(name="City") String woonplaats,
             Model model) {
-        Bedrijf newBedrijf = new Bedrijf(straatnaam, huisnummer, postcode,
-                woonplaats, bedrijfsnaam, KVKNummer, sector, BTWNummer, medewerkerDAO.getOneByID(ID_ACCOUNTMANAGER));
+        Bedrijf newBedrijf = new Bedrijf(straatnaam, huisnummer, postcode, woonplaats, bedrijfsnaam, KVKNummer, sector,
+                BTWNummer, medewerkerDAO.getOneByID(ID_ACCOUNTMANAGER), bedrijfsrekeningDAO);
         model.addAttribute("klant", newBedrijf);
         return "confirmationBedrijf";
     }

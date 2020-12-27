@@ -6,11 +6,12 @@ package sofa.internetbankieren.model;
  * */
 
 import sofa.internetbankieren.backing_bean.RegisterFormPartBackingBean;
+import sofa.internetbankieren.repository.BedrijfsrekeningDAO;
+import sofa.internetbankieren.repository.PriverekeningDAO;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
-//import java.sql.Date;
 
 public class Particulier extends Klant {
 
@@ -19,45 +20,51 @@ public class Particulier extends Klant {
     private String achternaam;
     private LocalDate geboortedatum;
     private int BSN;
-
-    private List<Priverekening> priverekeningen = new ArrayList<>();
-    private List<Bedrijfsrekening> bedrijfsrekeningen = new ArrayList<>();
-
+    private List<Integer> priverekeningIDs = new ArrayList<>();
+    private List<Integer> bedrijfsrekeningIDs = new ArrayList<>();
+    private PriverekeningDAO priverekeningDAO;
 
     public Particulier(int idKlant, String gebruikersnaam, String wachtwoord, String straat, int huisnummer,
                        String postcode, String woonplaats, String voornaam, String tussenvoegsels, String achternaam,
-                       LocalDate geboortedatum, int BSN, List<Priverekening> priverekeningen, List<Bedrijfsrekening> bedrijfsrekeningen) {
-        super(idKlant, gebruikersnaam, wachtwoord, straat, huisnummer, postcode, woonplaats);
+                       LocalDate geboortedatum, int BSN, List<Integer> priverekeningIDs,
+                       List<Integer> bedrijfsrekeningIDs, BedrijfsrekeningDAO bedrijfsrekeningDAO,
+                       PriverekeningDAO priverekeningDAO) {
+        super(idKlant, gebruikersnaam, wachtwoord, straat, huisnummer, postcode, woonplaats, bedrijfsrekeningDAO);
         this.voornaam = voornaam;
         this.tussenvoegsels = tussenvoegsels;
         this.achternaam = achternaam;
         this.geboortedatum = geboortedatum;
         this.BSN = BSN;
-        this.priverekeningen = priverekeningen;
-        this.bedrijfsrekeningen = bedrijfsrekeningen;
+        this.priverekeningIDs = priverekeningIDs;
+        this.bedrijfsrekeningIDs = bedrijfsrekeningIDs;
+        this.priverekeningDAO = priverekeningDAO;
     }
 
 
     public Particulier() {
             }
 
-    public Particulier(String voornaam, String voorvoegsels, String achternaam, LocalDate geboortedatum, int bsn, String straat,
-                       int huisnummer, String postcode, String woonplaats) {
-     this(0,"", "", straat, huisnummer, postcode, woonplaats, voornaam,
-             voorvoegsels, achternaam, geboortedatum, bsn, new ArrayList<>(), new ArrayList<>());
+    public Particulier(String voornaam, String voorvoegsels, String achternaam, LocalDate geboortedatum,
+                       int bsn, String straat, int huisnummer, String postcode, String woonplaats,
+                       BedrijfsrekeningDAO bedrijfsrekeningDAO, PriverekeningDAO priverekeningDAO) {
+     this(0,"", "", straat, huisnummer, postcode, woonplaats, voornaam, voorvoegsels,
+             achternaam, geboortedatum, bsn, new ArrayList<>(), new ArrayList<>(), bedrijfsrekeningDAO,
+             priverekeningDAO);
     }
 
-    public Particulier(RegisterFormPartBackingBean registerFormPartBackingBean) {
+    public Particulier(RegisterFormPartBackingBean registerFormPartBackingBean,
+                       BedrijfsrekeningDAO bedrijfsrekeningDAO, PriverekeningDAO priverekeningDAO) {
         super(0, "", "", registerFormPartBackingBean.getStraat(),
                 registerFormPartBackingBean.getHuisnummer(), registerFormPartBackingBean.getPostcode(),
-                registerFormPartBackingBean.getWoonplaats());
+                registerFormPartBackingBean.getWoonplaats(), bedrijfsrekeningDAO);
         this.voornaam = registerFormPartBackingBean.getVoornaam();
         this.tussenvoegsels = registerFormPartBackingBean.getTussenvoegsels();
         this.achternaam = registerFormPartBackingBean.getAchternaam();
         this.geboortedatum = LocalDate.parse(registerFormPartBackingBean.getGeboortedatum());
         this.BSN = registerFormPartBackingBean.getBSN();
-        this.priverekeningen = null;
-        this.bedrijfsrekeningen = null;
+        this.priverekeningIDs = null;
+        this.bedrijfsrekeningIDs = null;
+        this.priverekeningDAO = priverekeningDAO;
     }
 
 
@@ -107,19 +114,19 @@ public class Particulier extends Klant {
     }
 
     public List<Priverekening> getPriverekeningen() {
-        return priverekeningen;
+        return priverekeningDAO.getAllByRekeninghouder(super.getIdKlant());
     }
 
-    public void setPriverekeningen(List<Priverekening> priverekeningen) {
-        this.priverekeningen = priverekeningen;
+    public void setPriverekeningIDs(List<Integer> priverekeningIDs) {
+        this.priverekeningIDs = priverekeningIDs;
     }
 
     public List<Bedrijfsrekening> getBedrijfsrekeningen() {
-        return bedrijfsrekeningen;
+        return super.getBedrijfsrekeningDAO().getAllByContactpersoon(super.getIdKlant());
     }
 
-    public void setBedrijfsrekeningen(List<Bedrijfsrekening> bedrijfsrekeningen) {
-        this.bedrijfsrekeningen = bedrijfsrekeningen;
+    public void setBedrijfsrekeningIDs(List<Integer> bedrijfsrekeningIDs) {
+        this.bedrijfsrekeningIDs = bedrijfsrekeningIDs;
     }
 
     @Override
@@ -130,8 +137,8 @@ public class Particulier extends Klant {
                 ", achternaam='" + achternaam + '\'' +
                 ", geboortedatum=" + geboortedatum +
                 ", BSN=" + BSN +
-                ", priverekeningen=" + priverekeningen +
-                ", bedrijfsrekeningen=" + bedrijfsrekeningen +
+                ", priverekeningen=" + priverekeningIDs +
+                ", bedrijfsrekeningen=" + bedrijfsrekeningIDs +
                 '}';
     }
 }

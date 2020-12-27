@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import sofa.internetbankieren.model.Medewerker;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,11 +16,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class MedewerkerDAOTest {
 
     @Autowired MedewerkerDAO medewerkerDAO;
-    @Autowired Medewerker medewerker;
+    @Autowired BedrijfDAO bedrijfDAO;
 
     @Test
     void medewerkerDAOtest() {
-        setMedewerker(medewerker);
+        Medewerker medewerker = new Medewerker("Voornaam", "Achternaam", bedrijfDAO);
 
         // test storeOne by checking whether personeelsnummer has been set by autoincrement
         medewerkerDAO.storeOne(medewerker);
@@ -44,14 +43,5 @@ class MedewerkerDAOTest {
         medewerkerDAO.deleteOne(medewerker);
         medewerkers = medewerkerDAO.getAll();
         assertNotEquals(generatedPersoneelsnr, medewerkers.get(medewerkers.size() - 1).getPersoneelsnummer());
-    }
-
-    static void setMedewerker(Medewerker medewerker) {
-        medewerker.setGebruikersnaam("");
-        medewerker.setWachtwoord("");
-        medewerker.setVoornaam("Voornaam");
-        medewerker.setAchternaam("Achternaam");
-        medewerker.setRol(Medewerker.Rol.ACCOUNTMANAGER);
-        medewerker.setBedrijfIDs(new ArrayList<>());
     }
 }

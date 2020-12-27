@@ -18,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class TransactieDAOTest {
 
-    @Autowired Medewerker medewerker;
     @Autowired MedewerkerDAO medewerkerDAO;
     @Autowired BedrijfDAO bedrijfDAO;
     @Autowired ParticulierDAO particulierDAO;
@@ -27,6 +26,7 @@ class TransactieDAOTest {
     @Autowired TransactieDAO transactieDAO;
 
     // Model test objects to store in the database
+    Medewerker medewerker;
     Bedrijf bedrijf;
     Particulier particulier;
     Bedrijfsrekening bedrijfsrekening;
@@ -78,12 +78,12 @@ class TransactieDAOTest {
     }
 
     private void setDBEntries() {
-        MedewerkerDAOTest.setMedewerker(medewerker);
+        medewerker = new Medewerker("Voornaam", "Achternaam", bedrijfDAO);
         bedrijf = new Bedrijf(0, "", "", "", 0, "",
-                "", "", 0, "", "", medewerker, new ArrayList<>());
+                "", "", 0, "", "", medewerker, new ArrayList<>(), bedrijfsrekeningDAO);
         particulier = new Particulier(0, "", "", "", 0,
                 "", "", "", "", "", LocalDate.now(), 1,
-                new ArrayList<>(), new ArrayList<>());
+                new ArrayList<>(), new ArrayList<>(), bedrijfsrekeningDAO, priverekeningDAO);
         bedrijfsrekening = new Bedrijfsrekening(0, "1",
                 0, particulier, bedrijf);
         priverekening = new Priverekening(0, "1",
@@ -108,12 +108,11 @@ class TransactieDAOTest {
     }
 
     private void deleteDbEntries() {
-        medewerkerDAO.deleteOne(medewerker);
-        bedrijfDAO.deleteOne(bedrijf);
-        particulierDAO.deleteOne(particulier);
+        transactieDAO.deleteOne(afschrijving_particulier);
         bedrijfsrekeningDAO.deleteOne(bedrijfsrekening);
         priverekeningDAO.deleteOne(priverekening);
-        transactieDAO.deleteOne(afschrijving_particulier);
+        bedrijfDAO.deleteOne(bedrijf);
+        particulierDAO.deleteOne(particulier);
+        medewerkerDAO.deleteOne(medewerker);
     }
-
 }
