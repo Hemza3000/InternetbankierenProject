@@ -30,7 +30,7 @@ public class OverviewController {
         System.out.println("test");
         if (user instanceof Particulier) {
             System.out.println(((Particulier) user).getBSN());
-            System.out.println(((Particulier) user).getPriverekeningen());
+            System.out.println(((Particulier) user).getRekeningen());
         }
         else
             System.out.println(((Bedrijf) user).getBedrijfsnaam());

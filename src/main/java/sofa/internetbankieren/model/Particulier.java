@@ -20,7 +20,6 @@ public class Particulier extends Klant {
     private String achternaam;
     private LocalDate geboortedatum;
     private int BSN;
-    private List<Integer> priverekeningIDs = new ArrayList<>();
     private List<Integer> bedrijfsrekeningIDs = new ArrayList<>();
     private PriverekeningDAO priverekeningDAO;
 
@@ -29,13 +28,12 @@ public class Particulier extends Klant {
                        LocalDate geboortedatum, int BSN, List<Integer> priverekeningIDs,
                        List<Integer> bedrijfsrekeningIDs, BedrijfsrekeningDAO bedrijfsrekeningDAO,
                        PriverekeningDAO priverekeningDAO) {
-        super(idKlant, gebruikersnaam, wachtwoord, straat, huisnummer, postcode, woonplaats, bedrijfsrekeningDAO);
+        super(idKlant, gebruikersnaam, wachtwoord, straat, huisnummer, postcode, woonplaats, priverekeningIDs, bedrijfsrekeningDAO);
         this.voornaam = voornaam;
         this.tussenvoegsels = tussenvoegsels;
         this.achternaam = achternaam;
         this.geboortedatum = geboortedatum;
         this.BSN = BSN;
-        this.priverekeningIDs = priverekeningIDs;
         this.bedrijfsrekeningIDs = bedrijfsrekeningIDs;
         this.priverekeningDAO = priverekeningDAO;
     }
@@ -56,13 +54,12 @@ public class Particulier extends Klant {
                        BedrijfsrekeningDAO bedrijfsrekeningDAO, PriverekeningDAO priverekeningDAO) {
         super(0, "", "", registerFormPartBackingBean.getStraat(),
                 registerFormPartBackingBean.getHuisnummer(), registerFormPartBackingBean.getPostcode(),
-                registerFormPartBackingBean.getWoonplaats(), bedrijfsrekeningDAO);
+                registerFormPartBackingBean.getWoonplaats(), null, bedrijfsrekeningDAO);
         this.voornaam = registerFormPartBackingBean.getVoornaam();
         this.tussenvoegsels = registerFormPartBackingBean.getTussenvoegsels();
         this.achternaam = registerFormPartBackingBean.getAchternaam();
         this.geboortedatum = LocalDate.parse(registerFormPartBackingBean.getGeboortedatum());
         this.BSN = registerFormPartBackingBean.getBSN();
-        this.priverekeningIDs = null;
         this.bedrijfsrekeningIDs = null;
         this.priverekeningDAO = priverekeningDAO;
     }
@@ -113,12 +110,9 @@ public class Particulier extends Klant {
         this.BSN = BSN;
     }
 
-    public List<Priverekening> getPriverekeningen() {
+    @Override
+    public List<Priverekening> getRekeningen() {
         return priverekeningDAO.getAllByRekeninghouder(super.getIdKlant());
-    }
-
-    public void setPriverekeningIDs(List<Integer> priverekeningIDs) {
-        this.priverekeningIDs = priverekeningIDs;
     }
 
     public List<Bedrijfsrekening> getBedrijfsrekeningen() {
@@ -137,7 +131,6 @@ public class Particulier extends Klant {
                 ", achternaam='" + achternaam + '\'' +
                 ", geboortedatum=" + geboortedatum +
                 ", BSN=" + BSN +
-                ", priverekeningen=" + priverekeningIDs +
                 ", bedrijfsrekeningen=" + bedrijfsrekeningIDs +
                 '}';
     }

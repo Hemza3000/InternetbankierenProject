@@ -6,9 +6,6 @@ package sofa.internetbankieren.model;
  *
  * */
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import sofa.internetbankieren.repository.BedrijfDAO;
 import sofa.internetbankieren.repository.BedrijfsrekeningDAO;
 
 import java.util.ArrayList;
@@ -21,19 +18,18 @@ public class Bedrijf extends Klant {
     private String sector;
     private String BTWNummer;
     private Medewerker accountmanager;
-    private List<Integer> rekeningIDs = new ArrayList<>();
 
     public Bedrijf(int idKlant, String gebruikersnaam, String wachtwoord, String straat, int huisnummer,
                    String postcode, String woonplaats, String bedrijfsnaam, int KVKNummer, String sector,
                    String BTWNummer, Medewerker accountmanager, List<Integer> rekeningIDs,
                    BedrijfsrekeningDAO bedrijfsrekeningDAO) {
-        super(idKlant, gebruikersnaam, wachtwoord, straat, huisnummer, postcode, woonplaats, bedrijfsrekeningDAO);
+        super(idKlant, gebruikersnaam, wachtwoord, straat, huisnummer, postcode, woonplaats, rekeningIDs,
+                bedrijfsrekeningDAO);
         this.bedrijfsnaam = bedrijfsnaam;
         this.KVKNummer = KVKNummer;
         this.sector = sector;
         this.BTWNummer = BTWNummer;
         this.accountmanager = accountmanager;
-        this.rekeningIDs = rekeningIDs;
     }
 
     public Bedrijf(String straat, int huisnummer, String postcode, String woonplaats, String bedrijfsnaam,
@@ -90,11 +86,8 @@ public class Bedrijf extends Klant {
         this.accountmanager = accountmanager;
     }
 
+    @Override
     public List<Bedrijfsrekening> getRekeningen() {
         return super.getBedrijfsrekeningDAO().getAllByBedrijf(super.getIdKlant()) ;
-    }
-
-    public void setRekeningIDs(List<Integer> rekeningIDs) {
-        this.rekeningIDs = rekeningIDs;
     }
 }
