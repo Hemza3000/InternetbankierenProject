@@ -16,6 +16,10 @@ public class Transactie implements Comparable<Transactie> {
     private LocalDateTime datum;
     private String omschrijving;
 
+    public Transactie() {
+        super();
+    }
+
     public Transactie(int idTransactie, Rekening rekening, boolean bijschrijving,
                       double bedrag, LocalDateTime datum, String omschrijving) {
         super();

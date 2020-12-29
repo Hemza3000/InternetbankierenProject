@@ -40,7 +40,6 @@ public class LoginController {
 
     @PostMapping("/inloggen")
     public String postInlogForm(Model model, @ModelAttribute LoginFormBackingBean dummy) {
-        System.out.println("inloggen");
 
         List<Particulier> particuliereklanten =
             particulierDAO.getOneByGebruikersnaamWachtwoord(dummy.getUserName(), dummy.getPassword());
@@ -53,12 +52,10 @@ public class LoginController {
         alleklanten.addAll(bedrijfsklanten);
 
         if(alleklanten.size() == 0){ // Geen klant met deze inloggegevens
-            System.out.println("onbestaande logingegevens");
             return "foutingelogd";
         }
         else{
         model.addAttribute("ingelogde", alleklanten.get(0));
-            System.out.println("ingelogd!");
             Klant gebruiker = alleklanten.get(0);
             model.addAttribute("accountList", gebruiker);
             model.addAttribute("welcomeName", "Welkom " + alleklanten.get(0).getGebruikersnaam());
