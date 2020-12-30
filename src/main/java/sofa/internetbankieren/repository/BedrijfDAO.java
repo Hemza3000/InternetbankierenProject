@@ -1,8 +1,6 @@
 package sofa.internetbankieren.repository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
@@ -10,7 +8,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import sofa.internetbankieren.model.Bedrijf;
-import sofa.internetbankieren.model.Particulier;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -125,7 +122,7 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
         @Override
         public Bedrijf mapRow(ResultSet resultSet, int i) throws SQLException {
             return new Bedrijf(
-                    resultSet.getInt("idBedrijf"),
+                    resultSet.getInt("idbedrijf"),
                     resultSet.getString("gebruikersnaam"),
                     resultSet.getString("wachtwoord"),
                     resultSet.getString("straat"),
@@ -147,7 +144,7 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
 
         @Override
         public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
-            return resultSet.getInt("idBedrijf");
+            return resultSet.getInt("idbedrijf");
         }
     }
 }

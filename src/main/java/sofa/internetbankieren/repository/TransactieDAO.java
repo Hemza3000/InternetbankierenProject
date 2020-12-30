@@ -41,9 +41,19 @@ public class TransactieDAO implements GenericDAO<Transactie> {
         return jdbcTemplate.query(sql, new TransactieRowMapper(), idRekening);
     }
 
+    public List<Integer> getAllIdsByIdPriverekening(int idRekening) {
+        String sql = "select idtransactie from transactie where idpriverekening = ?";
+        return jdbcTemplate.query(sql, new TransactieIdRowMapper(), idRekening);
+    }
+
     public List<Transactie> getAllByIDBedrijfsrekening(int idRekening) {
         String sql = "select * from transactie where idbedrijfsrekening = ?";
         return jdbcTemplate.query(sql, new TransactieRowMapper(), idRekening);
+    }
+
+    public List<Integer> getAllIdsByIdBedrijfsrekening(int idRekening) {
+        String sql = "select idtransactie from transactie where idbedrijfsrekening = ?";
+        return jdbcTemplate.query(sql, new TransactieIdRowMapper(), idRekening);
     }
 
     @Override
@@ -113,6 +123,13 @@ public class TransactieDAO implements GenericDAO<Transactie> {
                 resultSet.getTimestamp("datum").toLocalDateTime(),
                 resultSet.getString("transactiebeschrijving")
                 );
+        }
+    }
+
+    private final class TransactieIdRowMapper implements RowMapper<Integer> {
+        @Override
+        public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
+            return resultSet.getInt("idtransactie");
         }
     }
 }

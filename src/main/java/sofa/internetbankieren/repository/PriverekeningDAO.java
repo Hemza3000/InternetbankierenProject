@@ -4,7 +4,7 @@ package sofa.internetbankieren.repository;
  * @Author Wichert Tjerkstra aangemaakt op 9 dec
  */
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -26,16 +26,24 @@ public class PriverekeningDAO implements GenericDAO<Priverekening> {
 
     private JdbcTemplate jdbcTemplate;
     private ParticulierDAO particulierDAO;
+    private TransactieDAO transactieDAO;
 
-    public PriverekeningDAO(JdbcTemplate jdbcTemplate, ParticulierDAO particulierDAO) {
+    public PriverekeningDAO(JdbcTemplate jdbcTemplate, ParticulierDAO particulierDAO, @Lazy TransactieDAO transactieDAO) {
         this.jdbcTemplate = jdbcTemplate;
         this.particulierDAO = particulierDAO;
+        this.transactieDAO = transactieDAO;
     }
 
     // get One by Id
     public Priverekening getOneByID(int idPriverekening){
-        final String sql = "select * from priverekening where idpriverekening=?";
+        final String sql = "select * from priverekening where idpriverekening = ?";
         return jdbcTemplate.queryForObject(sql, new PriverekeningRowMapper(), idPriverekening);
+    }
+
+    // toegevoegd door Wendy
+    public List<Priverekening> getOneByIban(String iban) {
+        final String sql = "select * from priverekening where iban=?";
+        return jdbcTemplate.query(sql, new PriverekeningRowMapper(), iban);
     }
 
         // get All
@@ -94,9 +102,11 @@ public class PriverekeningDAO implements GenericDAO<Priverekening> {
         @Override
         public Priverekening mapRow(ResultSet resultSet, int i) throws SQLException {
             return new Priverekening(resultSet.getInt("idpriverekening"),
-                    resultSet.getString("IBAN"),
+                    resultSet.getString("iban"),
                     resultSet.getDouble("saldo"),
-                    (particulierDAO.getOneByID(resultSet.getInt("idRekeninghouder"))));
+                    transactieDAO.getAllIdsByIdPriverekening(resultSet.getInt("idpriverekening")),
+                    transactieDAO,
+                    (particulierDAO.getOneByID(resultSet.getInt("idrekeninghouder"))));
         }
     }
 

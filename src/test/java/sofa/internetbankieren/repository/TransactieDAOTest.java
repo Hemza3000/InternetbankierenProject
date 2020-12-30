@@ -80,16 +80,19 @@ class TransactieDAOTest {
     private void setDBEntries() {
         medewerker = new Medewerker("Voornaam", "Achternaam", bedrijfDAO);
         bedrijf = new Bedrijf(0, "", "", "", 0, "",
-                "", "", 0, "", "", medewerker, new ArrayList<>(), bedrijfsrekeningDAO);
+                "", "", 0, "", "", medewerker, new ArrayList<>(),
+                bedrijfsrekeningDAO);
         particulier = new Particulier(0, "", "", "", 0,
                 "", "", "", "", "", LocalDate.now(), 1,
                 new ArrayList<>(), new ArrayList<>(), bedrijfsrekeningDAO, priverekeningDAO);
-        bedrijfsrekening = new Bedrijfsrekening(0, "1",
-                0, particulier, bedrijf);
-        priverekening = new Priverekening(0, "1",
-                0, particulier);
-        bijschrijving_bedrijf = new Transactie(0, bedrijfsrekening, true, 1.5, LocalDateTime.now(), "");
-        afschrijving_particulier = new Transactie(0, priverekening, false, 1.5, LocalDateTime.now(), "");
+        bedrijfsrekening = new Bedrijfsrekening(0, "10", 0, new ArrayList<>(), transactieDAO,
+                particulier, bedrijf);
+        priverekening = new Priverekening(0, "11", 0, new ArrayList<>(), transactieDAO,
+                particulier);
+        bijschrijving_bedrijf = new Transactie(0, bedrijfsrekening, true, 1.5,
+                LocalDateTime.now(), "");
+        afschrijving_particulier = new Transactie(0, priverekening, false, 1.5,
+                LocalDateTime.now(), "");
     }
 
     private void storeDbEntries() {

@@ -5,26 +5,27 @@ package sofa.internetbankieren.model;
  * review: Wendy Ellens, 8 dec
  */
 
-import java.util.ArrayList;
+import sofa.internetbankieren.repository.TransactieDAO;
+
 import java.util.List;
 
-abstract class Rekening {
+public abstract class Rekening {
 
     private int idRekening;
     private String IBAN;
     private double saldo;
-    private List<Transactie> transactiesHistorie;
+    private List<Integer> transactieIDs;
+    private TransactieDAO transactieDAO;
 
     public Rekening() { super(); }
 
-    public Rekening(int idRekening, String IBAN, double saldo) {
+    public Rekening(int idRekening, String IBAN, double saldo, List<Integer> transactieIDs,
+                    TransactieDAO transactieDAO) {
         this.idRekening = idRekening;
         this.IBAN = IBAN;
         this.saldo = saldo;
-    }
-
-    public Rekening(String IBAN, double saldo) {
-        this( 0, IBAN, saldo);
+        this.transactieIDs = transactieIDs;
+        this.transactieDAO = transactieDAO;
     }
 
     public int getIdRekening() {
@@ -51,12 +52,18 @@ abstract class Rekening {
         this.saldo = saldo;
     }
 
-    public List<Transactie> getTransactiesHistorie() {
-        return transactiesHistorie;
+    public abstract List<Transactie> getTransacties();
+
+    public void setTransactieIDs(List<Integer> transactieIDs) {
+        this.transactieIDs = transactieIDs;
     }
 
-    public void setTransactiesHistorie(List<Transactie> transactiesHistorie) {
-        this.transactiesHistorie = transactiesHistorie;
+    public TransactieDAO getTransactieDAO() {
+        return transactieDAO;
+    }
+
+    public void setTransactieDAO(TransactieDAO transactieDAO) {
+        this.transactieDAO = transactieDAO;
     }
 
     // TODO 7/12 wat hebben we nodig in de toString?

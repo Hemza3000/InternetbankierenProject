@@ -1,7 +1,5 @@
 package sofa.internetbankieren.model;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import sofa.internetbankieren.repository.BedrijfsrekeningDAO;
 
 import java.util.ArrayList;

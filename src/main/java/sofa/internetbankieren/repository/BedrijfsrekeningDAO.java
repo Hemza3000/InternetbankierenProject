@@ -4,7 +4,7 @@ package sofa.internetbankieren.repository;
  * @Author Wichert Tjerkstra aangemaakt op 8 dec
  */
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -27,18 +27,27 @@ public class BedrijfsrekeningDAO implements GenericDAO<Bedrijfsrekening> {
     private JdbcTemplate jdbcTemplate;
     private ParticulierDAO particulierDAO;
     private BedrijfDAO bedrijfDAO;
+    private TransactieDAO transactieDAO;
 
-    public BedrijfsrekeningDAO(JdbcTemplate jdbcTemplate, ParticulierDAO particulierDAO, BedrijfDAO bedrijfDAO) {
+    public BedrijfsrekeningDAO(JdbcTemplate jdbcTemplate, ParticulierDAO particulierDAO, BedrijfDAO bedrijfDAO,
+                               @Lazy TransactieDAO transactieDAO) {
         super();
         this.jdbcTemplate = jdbcTemplate;
         this.particulierDAO = particulierDAO;
         this.bedrijfDAO = bedrijfDAO;
+        this.transactieDAO = transactieDAO;
     }
 
     // get One by Id
     public Bedrijfsrekening getOneByID(int idBedrijfsrekening) {
         final String sql = "select * from bedrijfsrekening where idbedrijfsrekening=?";
         return jdbcTemplate.queryForObject(sql, new BedrijfsrekeningRowMapper(), idBedrijfsrekening);
+    }
+
+    // toegevoegd door Wendy
+    public List<Bedrijfsrekening> getOneByIban(String iban) {
+        final String sql = "select * from internet_bankieren.bedrijfsrekening where iban=?";
+        return jdbcTemplate.query(sql, new BedrijfsrekeningRowMapper(), iban);
     }
 
     // get All
@@ -112,6 +121,8 @@ public class BedrijfsrekeningDAO implements GenericDAO<Bedrijfsrekening> {
             return new Bedrijfsrekening(resultSet.getInt("idbedrijfsrekening"),
                     resultSet.getString("iban"),
                     resultSet.getDouble("saldo"),
+                    transactieDAO.getAllIdsByIdBedrijfsrekening(resultSet.getInt("idbedrijfsrekening")),
+                    transactieDAO,
                     (particulierDAO.getOneByID(resultSet.getInt("idcontactpersoon"))),
                     (bedrijfDAO.getOneByID(resultSet.getInt("idbedrijf"))));
         }
