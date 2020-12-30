@@ -146,7 +146,8 @@ INSERT INTO `internet_bankieren`.`medewerker` (`gebruikersnaam`, `wachtwoord`,`r
 INSERT INTO `internet_bankieren`.`particulier` (`gebruikersnaam`, `wachtwoord`, `voornaam`, `achternaam`, `bsn`, `geboortedatum`, `straat`, `huisnummer`, `postcode`, `woonplaats`) VALUES ('Wendy', 'geheim', 'Wendy', 'Ellens', '1', '19841217', 'Simon Stevinweg', '83', '1222 SN', 'Hilversum');
 INSERT INTO `internet_bankieren`.`bedrijf` (`idaccountmanager`, `gebruikersnaam`, `wachtwoord`, `bedrijfsnaam`, `kvknummer`, `sector`, `btwnummer`, `straat`, `huisnummer`, `postcode`, `woonplaats`) VALUES ('2', 'SOFA', 'geheim', 'SOFA', '1', 'Handel en dienstverlening ', '1', 'Geldstraat', '1', '1111 AA', 'Amsterdam');
 INSERT INTO `internet_bankieren`.`priverekening` (`idrekeninghouder`, `iban`, `saldo`) VALUES ('1', '1', '0');
-INSERT INTO `internet_bankieren`.`bedrijfsrekening` (`idbedrijf`, `idcontactpersoon`, `iban`, `saldo`) VALUES ('1', '1', '1', '0');
+INSERT INTO `internet_bankieren`.`priverekening` (`idrekeninghouder`, `iban`, `saldo`) VALUES ('1', '2', '10');
+INSERT INTO `internet_bankieren`.`bedrijfsrekening` (`idbedrijf`, `idcontactpersoon`, `iban`, `saldo`) VALUES ('1', '1', '3', '0');
 INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`, `idbedrijfsrekening`) VALUES ('5', 'zakelijke overboeking', '20201222', '1', '1');
 INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`, `idpriverekening`) VALUES ('5', 'particuliere overboeking', '20201222', '0', '1');
 

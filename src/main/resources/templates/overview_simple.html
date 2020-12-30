@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Overzicht rekeningen</title>
+</head>
+<body>
+<p th:if="${ingelogde.rekeningen.isEmpty()}">Er zijn geen rekeningen om weer te geven</p>
+<!--
+<ul th:unless="${ingelogde.rekeningen.isEmpty()}">
+    <li th:each="rekening : ${ingelogde.rekeningen}">
+        <a th:href="${rekening.getIBAN()}" th:text="${rekening.IBAN}"/>
+        <a th:href="'/account'" th:text="${rekening.IBAN}"/>
+    </li>
+</ul>
+-->
+<table th:unless="${ingelogde.getRekeningen().isEmpty()}">
+    <tr th:each="rekening : ${ingelogde.getRekeningen()}">
+        <td>
+            <a th:href="${'/account/' + rekening.getIBAN()}" th:text="${rekening.getIBAN()}"/>
+        </td>
+    </tr>
+    <!--
+    <tr th:each="mentor : ${mentorsList}">
+        <a th:href="${'/edit-mentor/' + mentor.id}"/>
+        <td th:text="${mentorStat.count}">1</td>
+        <td th:text="${mentor.name}">Adam</td>
+        <td th:text="${mentor.surname}">Nowak</td>
+        <td th:text="${mentor.email}">example@gmail.com</td>
+        </a>
+    </tr>
+    -->
+</table>
+</body>
+</html>

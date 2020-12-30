@@ -60,7 +60,7 @@ public class LoginController {
             model.addAttribute("accountList", gebruiker);
             model.addAttribute("welcomeName", "Welkom " + alleklanten.get(0).getGebruikersnaam());
             model.addAttribute("user", alleklanten.get(0));
-            return "overview";
+            return "overview_simple";
         }
     }
 

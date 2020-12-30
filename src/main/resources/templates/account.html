@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rekeningpagina</title>
+</head>
+<body>
+<p th:if="${rekening.getTransacties().isEmpty()}">Er zijn geen transacties om weer te geven</p>
+<table th:unless="${rekening.getTransacties().isEmpty()}">
+    <tr th:each="transactie : ${rekening.getTransacties()}">
+        <td th:text="${transactie.omschrijving}"></td>
+    </tr>
+</table>
+</body>
+</html>
+
