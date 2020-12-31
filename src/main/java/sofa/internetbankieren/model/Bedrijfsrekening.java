@@ -29,6 +29,12 @@ public class Bedrijfsrekening extends Rekening {
         return contactpersoon;
     }
 
+    // toegevoegd door Wendy
+    @Override
+    public String getTenaamstelling() {
+        return rekeninghouder.getBedrijfsnaam();
+    }
+
     public void setContactpersoon(Particulier contactpersoon) {
         this.contactpersoon = contactpersoon;
     }
@@ -41,6 +47,7 @@ public class Bedrijfsrekening extends Rekening {
         this.rekeninghouder = rekeninghouder;
     }
 
+    // toegevoegd door Wendy
     @Override
     public List<Transactie> getTransacties() {
         return super.getTransactieDAO().getAllByIDBedrijfsrekening(super.getIdRekening());

@@ -10,7 +10,7 @@ set @old_sql_mode=@@sql_mode, sql_mode='only_full_group_by,strict_trans_tables,n
 -- schema internet_bankieren
 -- -----------------------------------------------------
 
-create schema if not exists `internet_bankieren` default character set utf8 ;
+create schema if not exists `internet_bankieren` default character set UTF8MB4;
 use `internet_bankieren` ;
 
 -- -----------------------------------------------------
@@ -148,8 +148,8 @@ INSERT INTO `internet_bankieren`.`bedrijf` (`idaccountmanager`, `gebruikersnaam`
 INSERT INTO `internet_bankieren`.`priverekening` (`idrekeninghouder`, `iban`, `saldo`) VALUES ('1', '1', '0');
 INSERT INTO `internet_bankieren`.`priverekening` (`idrekeninghouder`, `iban`, `saldo`) VALUES ('1', '2', '10');
 INSERT INTO `internet_bankieren`.`bedrijfsrekening` (`idbedrijf`, `idcontactpersoon`, `iban`, `saldo`) VALUES ('1', '1', '3', '0');
-INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`, `idbedrijfsrekening`) VALUES ('5', 'zakelijke overboeking', '20201222', '1', '1');
-INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`, `idpriverekening`) VALUES ('5', 'particuliere overboeking', '20201222', '0', '1');
+INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`, `idbedrijfsrekening`) VALUES ('5', 'zakelijke overboeking', '20201222', '0', '1');
+INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`, `idpriverekening`) VALUES ('5', 'particuliere overboeking', '20201222', '1', '1');
 
 set sql_mode=@old_sql_mode;
 set foreign_key_checks=@old_foreign_key_checks;

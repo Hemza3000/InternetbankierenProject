@@ -21,6 +21,14 @@ public class Priverekening extends Rekening{
         this.rekeninghouder = rekeninghouder;
     }
 
+    // toegevoegd door Wendy
+    @Override
+    public String getTenaamstelling() {
+        return rekeninghouder.getVoornaam() + " "
+                + ((rekeninghouder.getTussenvoegsels() == null) ? "" : rekeninghouder.getTussenvoegsels()) + " "
+                + rekeninghouder.getAchternaam();
+    }
+
     public Particulier getRekeninghouder() {
         return rekeninghouder;
     }
@@ -29,6 +37,7 @@ public class Priverekening extends Rekening{
         this.rekeninghouder = rekeninghouder;
     }
 
+    // toegevoegd door Wendy
     @Override
     public List<Transactie> getTransacties() {
         return super.getTransactieDAO().getAllByIDPriverekening(super.getIdRekening());

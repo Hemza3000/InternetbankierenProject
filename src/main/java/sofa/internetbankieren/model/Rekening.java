@@ -28,6 +28,9 @@ public abstract class Rekening {
         this.transactieDAO = transactieDAO;
     }
 
+    // toegevoegd door Wendy
+    public abstract String getTenaamstelling();
+
     public int getIdRekening() {
         return idRekening;
     }
@@ -52,6 +55,7 @@ public abstract class Rekening {
         this.saldo = saldo;
     }
 
+    // toegevoegd door Wendy
     public abstract List<Transactie> getTransacties();
 
     public void setTransactieIDs(List<Integer> transactieIDs) {
