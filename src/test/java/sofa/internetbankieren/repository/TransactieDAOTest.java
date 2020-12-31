@@ -31,10 +31,7 @@ class TransactieDAOTest {
     Particulier particulier;
     Bedrijfsrekening bedrijfsrekening;
     Priverekening priverekening;
-    Transactie bijschrijving_bedrijf;
-    Transactie afschrijving_particulier;
-
-    // TODO werkt nog niet. Werkte wel met bestaande DB entries (id van bedrijfs-/priverekening vervangen door 1)
+    Transactie overboeking_particulier_bedrijf;
 
     @Test
     void transactieDAOtest() {
@@ -42,37 +39,40 @@ class TransactieDAOTest {
         storeDbEntries();
 
         // test storeOne by checking whether IdTransactie has been set by autoincrement
-        transactieDAO.storeOne(bijschrijving_bedrijf);
-        int generatedIdBedrijfstransactie = bijschrijving_bedrijf.getIdTransactie();
-        assertNotEquals(0, generatedIdBedrijfstransactie);
+        transactieDAO.storeOne(overboeking_particulier_bedrijf);
+        int generatedIdPrivetransactie = overboeking_particulier_bedrijf.getIdTransactie();
+        int generatedIdBedrijfstransactie = generatedIdPrivetransactie + 1;
+        System.out.println("IDTransactie: " + generatedIdPrivetransactie);
+        assertNotEquals(0, generatedIdPrivetransactie);
 
         // test getOneByID by checking whether there is an entry with the generated ID
-        assertNotNull(transactieDAO.getOneByID(generatedIdBedrijfstransactie));
+        assertNotNull(transactieDAO.getOneByID(generatedIdPrivetransactie));
 
         // test getAll by checking whether the last in the list has the generated ID
         List<Transactie> transacties = transactieDAO.getAll();
         assertEquals(generatedIdBedrijfstransactie, transacties.get(transacties.size() - 1).getIdTransactie());
 
-        // test getAllByIDBedrijfsrekening by checking whether the last in the list has the generated ID
-        List<Transactie> bedrijfstransacties = transactieDAO.getAllByIDBedrijfsrekening(
-                ((Bedrijfsrekening)bijschrijving_bedrijf.getRekening()).getIdRekening());
-        assertEquals(generatedIdBedrijfstransactie, bedrijfstransacties.get(bedrijfstransacties.size() - 1).getIdTransactie());
-
         // test getAllByIDPriverekening by checking whether the last in the list has the generated IdPrivetransactie
-        int generatedIdPrivetransactie = afschrijving_particulier.getIdTransactie();
-        List<Transactie> privetransacties = transactieDAO.getAllByIDPriverekening(
-                ((Priverekening)afschrijving_particulier.getRekening()).getIdRekening());
-        assertEquals(generatedIdPrivetransactie, privetransacties.get(privetransacties.size() - 1).getIdTransactie());
+        List<Transactie> privetransacties
+                = transactieDAO.getAllByIDPriverekening(priverekening.getIdRekening());
+        assertEquals(generatedIdPrivetransactie,
+                privetransacties.get(privetransacties.size() - 1).getIdTransactie());
+
+        // test getAllByIDBedrijfsrekening by checking whether the last in the list has the generated ID
+        List<Transactie> bedrijfstransacties
+                = transactieDAO.getAllByIDBedrijfsrekening(bedrijfsrekening.getIdRekening());
+        assertEquals(generatedIdBedrijfstransactie,
+                bedrijfstransacties.get(bedrijfstransacties.size() - 1).getIdTransactie());
 
         // test updateOne by altering the omschrijving of one of the stored entries
-        bijschrijving_bedrijf.setOmschrijving("Bijschrijving");
-        transactieDAO.updateOne(bijschrijving_bedrijf);
-        assertEquals("Bijschrijving", transactieDAO.getOneByID(generatedIdBedrijfstransactie).getOmschrijving());
+        overboeking_particulier_bedrijf.setOmschrijving("Bijschrijving");
+        transactieDAO.updateOne(overboeking_particulier_bedrijf);
+        assertEquals("Bijschrijving", transactieDAO.getOneByID(generatedIdPrivetransactie).getOmschrijving());
 
-        // test deleteOne by checking whether the last entry does not have the generated ID anymore
-        transactieDAO.deleteOne(bijschrijving_bedrijf);
+        // test deleteOne by checking whether the generated ID is not present anymore
+        transactieDAO.deleteOne(overboeking_particulier_bedrijf);
         transacties = transactieDAO.getAll();
-        assertNotEquals(generatedIdBedrijfstransactie, transacties.get(transacties.size() - 1).getIdTransactie());
+        assertNotEquals(generatedIdPrivetransactie, transacties.get(transacties.size() - 2).getIdTransactie());
 
         deleteDbEntries();
     }
@@ -89,10 +89,8 @@ class TransactieDAOTest {
                 particulier, bedrijf);
         priverekening = new Priverekening(0, "11", 0, new ArrayList<>(), transactieDAO,
                 particulier);
-        bijschrijving_bedrijf = new Transactie(0, bedrijfsrekening, true, 1.5,
-                LocalDateTime.now(), "");
-        afschrijving_particulier = new Transactie(0, priverekening, false, 1.5,
-                LocalDateTime.now(), "");
+        overboeking_particulier_bedrijf = new Transactie(priverekening, 1.5, LocalDateTime.now(),
+                "", bedrijfsrekening);
     }
 
     private void storeDbEntries() {
@@ -106,12 +104,9 @@ class TransactieDAOTest {
         System.out.println("IdBedrijfsekening" + bedrijfsrekening.getIdRekening());
         priverekeningDAO.storeOne(priverekening);
         System.out.println("IdPriverekening" + priverekening.getIdRekening());
-        transactieDAO.storeOne(afschrijving_particulier);
-        System.out.println("IdTransactie" + afschrijving_particulier.getIdTransactie());
     }
 
     private void deleteDbEntries() {
-        transactieDAO.deleteOne(afschrijving_particulier);
         bedrijfsrekeningDAO.deleteOne(bedrijfsrekening);
         priverekeningDAO.deleteOne(priverekening);
         bedrijfDAO.deleteOne(bedrijf);

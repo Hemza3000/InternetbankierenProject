@@ -15,25 +15,38 @@ public class Transactie implements Comparable<Transactie> {
     private double bedrag;
     private LocalDateTime datum;
     private String omschrijving;
+    private Rekening tegenRekening;
 
     public Transactie() {
         super();
     }
 
-    public Transactie(int idTransactie, Rekening rekening, boolean bijschrijving,
-                      double bedrag, LocalDateTime datum, String omschrijving) {
+    public Transactie(int idTransactie, Rekening verzender, double bedrag, LocalDateTime datum, String omschrijving,
+                      Rekening ontvanger) {
         super();
         this.idTransactie = idTransactie;
-        this.rekening = rekening;
-        this.bijschrijving = bijschrijving;
+        this.rekening = verzender;
+        this.bijschrijving = false; // Alleen afschrijvingen mogelijk. Bijschrijving wordt gemaakt door DAO.
         this.bedrag = bedrag;
         this.datum = datum;
         this.omschrijving = omschrijving;
+        this.tegenRekening = ontvanger;
     }
 
-    public Transactie(Rekening rekening, boolean bijschrijving, double bedrag,
-                      LocalDateTime datum, String omschrijving) {
-        this(0, rekening, bijschrijving, bedrag, datum, omschrijving);
+    public Transactie(Rekening verzender, double bedrag, LocalDateTime datum, String omschrijving, Rekening ontvanger) {
+        this(0, verzender, bedrag, datum, omschrijving, ontvanger);
+    }
+
+    // Kloon maken
+    public Transactie(Transactie andereTransactie) {
+        super();
+        this.idTransactie = andereTransactie.idTransactie;
+        this.rekening = andereTransactie.rekening;
+        this.bijschrijving = andereTransactie.bijschrijving;
+        this.bedrag = andereTransactie.bedrag;
+        this.datum = andereTransactie.datum;
+        this.omschrijving = andereTransactie.omschrijving;
+        this.tegenRekening = andereTransactie.tegenRekening;
     }
 
     public int getIdTransactie() {
@@ -82,6 +95,14 @@ public class Transactie implements Comparable<Transactie> {
 
     public void setOmschrijving(String omschrijving) {
         this.omschrijving = omschrijving;
+    }
+
+    public Rekening getTegenRekening() {
+        return tegenRekening;
+    }
+
+    public void setTegenRekening(Rekening tegenRekening) {
+        this.tegenRekening = tegenRekening;
     }
 
     @Override

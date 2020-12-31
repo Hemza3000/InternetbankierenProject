@@ -18,9 +18,9 @@ import java.util.List;
 @Repository
 public class TransactieDAO implements GenericDAO<Transactie> {
 
-    private JdbcTemplate jdbcTemplate;
-    private PriverekeningDAO priverekeningDAO;
-    private BedrijfsrekeningDAO bedrijfsrekeningDAO;
+    private final JdbcTemplate jdbcTemplate;
+    private final PriverekeningDAO priverekeningDAO;
+    private final BedrijfsrekeningDAO bedrijfsrekeningDAO;
 
     public TransactieDAO(JdbcTemplate jdbcTemplate, PriverekeningDAO priverekeningDAO,
                          BedrijfsrekeningDAO bedrijfsrekeningDAO) {
@@ -62,8 +62,30 @@ public class TransactieDAO implements GenericDAO<Transactie> {
         return jdbcTemplate.queryForObject(sql, new TransactieRowMapper(), idTransactie);
     }
 
+    private Rekening getRekeningByID(int idTransactie) {
+        String sql = "select * from transactie where idtransactie = ?";
+        return jdbcTemplate.queryForObject(sql, new TransactieRekeningRowMapper(), idTransactie);
+    }
+
     @Override
     public void storeOne(Transactie transactie) {
+        // in de database wordt de transactie opgeslagen als een aparte bij- en afschrijving
+        Transactie transactie2 = new Transactie(transactie);
+        transactie2.setBijschrijving(!transactie.isBijschrijving());
+        transactie2.setRekening(transactie.getTegenRekening());
+        transactie2.setTegenRekening(transactie.getRekening());
+        // eerst de afschrijving, dan de bijschrijving
+        if (transactie.isBijschrijving()) {
+            storePart(transactie2);
+            storePart(transactie);
+        }
+        else {
+            storePart(transactie);
+            storePart(transactie2);
+        }
+    }
+
+    private void storePart(Transactie transactie) {
         String sql = "insert into transactie (bedrag, transactiebeschrijving, datum, bijschrijving, " +
                 "idbedrijfsrekening, idpriverekening) values (?,?,?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -74,12 +96,12 @@ public class TransactieDAO implements GenericDAO<Transactie> {
             ps.setTimestamp(3, Timestamp.valueOf(transactie.getDatum()));
             ps.setBoolean(4, transactie.isBijschrijving());
             if (transactie.getRekening() instanceof Bedrijfsrekening) {
-                ps.setInt(5, ((Bedrijfsrekening) transactie.getRekening()).getIdRekening());
-                ps.setNull(6, Types.INTEGER); //todo werkt het ook zonder deze regel?
+                ps.setInt(5, transactie.getRekening().getIdRekening());
+                ps.setNull(6, Types.INTEGER);
             }
             else {
-                ps.setNull(5, Types.INTEGER); //todo werkt het ook zonder deze regel?
-                ps.setInt(6, ((Priverekening) transactie.getRekening()).getIdRekening());
+                ps.setNull(5, Types.INTEGER);
+                ps.setInt(6, transactie.getRekening().getIdRekening());
             }
             return ps;
         }, keyHolder);
@@ -88,6 +110,7 @@ public class TransactieDAO implements GenericDAO<Transactie> {
 
     @Override
     public void updateOne(Transactie transactie) {
+        // todo: bij- en afschrijvingen tegelijk updaten
         jdbcTemplate.update("update transactie set bedrag = ?, transactiebeschrijving = ?, datum = ?, " +
                         "bijschrijving = ?, idbedrijfsrekening = ?, idpriverekening = ? where idtransactie = ?",
             transactie.getBedrag(),
@@ -95,34 +118,42 @@ public class TransactieDAO implements GenericDAO<Transactie> {
             Timestamp.valueOf(transactie.getDatum()),
             transactie.isBijschrijving(),
             transactie.getRekening() instanceof Bedrijfsrekening ?
-                ((Bedrijfsrekening) transactie.getRekening()).getIdRekening() : null,
+                transactie.getRekening().getIdRekening() : null,
             transactie.getRekening() instanceof Priverekening ?
-                ((Priverekening) transactie.getRekening()).getIdRekening() : null,
+                transactie.getRekening().getIdRekening() : null,
             transactie.getIdTransactie()
             );
     }
 
     @Override
     public void deleteOne(Transactie transactie) {
-        jdbcTemplate.update("delete from transactie where idtransactie = ?",
-                transactie.getIdTransactie());
+        // de bij- en afschrijving worden verwijderd
+        deletePart(transactie.getIdTransactie());
+        deletePart(transactie.getIdTransactie() + 1);
+    }
+
+    private void deletePart(int idTransactie) {
+        jdbcTemplate.update("delete from transactie where idtransactie = ?", idTransactie);
     }
 
     private final class TransactieRowMapper implements RowMapper<Transactie> {
         @Override
         public Transactie mapRow(ResultSet resultSet, int i) throws SQLException {
-            return new Transactie(
+            Transactie transactie = new Transactie(
                 resultSet.getInt("idtransactie"),
-                resultSet.getInt("idbedrijfsrekening") == 0 ?
-                    priverekeningDAO.getOneByID(resultSet.getInt("idpriverekening")) :
-                    bedrijfsrekeningDAO.getOneByID(resultSet.getInt("idbedrijfsrekening")),
-                // todo controleren of precies een van beide rekeningvelden is gevuld?
-                resultSet.getBoolean("bijschrijving"),
-                // todo controleren of bijschrijving 0 of 1 is?
+                getRekening(resultSet),
                 resultSet.getDouble("bedrag"),
                 resultSet.getTimestamp("datum").toLocalDateTime(),
-                resultSet.getString("transactiebeschrijving")
-                );
+                resultSet.getString("transactiebeschrijving"),
+                // voor bijschrijvingen staat de tegenrekening in de vorige transactie, anders in de volgende
+                        resultSet.getBoolean("bijschrijving")
+                        ? getRekeningByID(resultSet.getInt("idtransactie") - 1)
+                        : getRekeningByID(resultSet.getInt("idtransactie") + 1)
+                    // todo controleren of afschrijving inderdaad eerst staat?
+            );
+            transactie.setBijschrijving(resultSet.getBoolean("bijschrijving"));
+            // todo controleren of bijschrijving 0 of 1 is?
+            return transactie;
         }
     }
 
@@ -131,5 +162,20 @@ public class TransactieDAO implements GenericDAO<Transactie> {
         public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
             return resultSet.getInt("idtransactie");
         }
+    }
+
+    private final class TransactieRekeningRowMapper implements RowMapper<Rekening> {
+        @Override
+        public Rekening mapRow(ResultSet resultSet, int i) throws SQLException {
+            return getRekening(resultSet);
+        }
+    }
+
+    // retourneert het gevulde veld: priverekening of bedrijfsrekening
+    private Rekening getRekening(ResultSet resultSet) throws SQLException {
+        return resultSet.getInt("idbedrijfsrekening") == 0 ?
+                priverekeningDAO.getOneByID(resultSet.getInt("idpriverekening")) :
+                bedrijfsrekeningDAO.getOneByID(resultSet.getInt("idbedrijfsrekening"));
+        // todo controleren of precies een van beide rekeningvelden is gevuld?
     }
 }
