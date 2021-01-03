@@ -29,7 +29,7 @@ public class AccountController {
         this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
     }
 
-    @GetMapping("/account/{IBAN}")
+    @GetMapping("/rekening/{IBAN}")
     public String accountHandler(Model model, @PathVariable("IBAN") String iban) {
         List<Rekening> rekeningen = new ArrayList<>();
         rekeningen.addAll(priverekeningDAO.getOneByIban(iban));

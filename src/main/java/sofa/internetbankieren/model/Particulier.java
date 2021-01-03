@@ -64,6 +64,13 @@ public class Particulier extends Klant {
         this.priverekeningDAO = priverekeningDAO;
     }
 
+    // toegevoegd door Wendy
+    @Override
+    public String getNaam() {
+        return voornaam + " "
+                + ((tussenvoegsels == null) ? "" : tussenvoegsels) + " "
+                + achternaam;
+    }
 
     public void addParticulier(){
 

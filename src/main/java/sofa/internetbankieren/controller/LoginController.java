@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import sofa.internetbankieren.backing_bean.LoginFormBackingBean;
 import sofa.internetbankieren.model.Bedrijf;
 import sofa.internetbankieren.model.Klant;
-import org.springframework.web.bind.annotation.*;
 import sofa.internetbankieren.model.Particulier;
 import sofa.internetbankieren.repository.BedrijfDAO;
 import sofa.internetbankieren.repository.ParticulierDAO;
@@ -17,19 +16,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author
+ *
  */
-@SessionAttributes("user")
 @Controller
 public class LoginController {
-    private ParticulierDAO particulierDAO;
-    private BedrijfDAO bedrijfDAO;
+    private final ParticulierDAO particulierDAO;
+    private final BedrijfDAO bedrijfDAO;
 
     public LoginController(ParticulierDAO particulierDAO, BedrijfDAO bedrijfDAO) {
         this.particulierDAO = particulierDAO;
         this.bedrijfDAO = bedrijfDAO;
     }
-
 
     @GetMapping("/login")
     public String inlogHandler(Model model) {
@@ -38,7 +35,7 @@ public class LoginController {
       return "login";
     }
 
-    @PostMapping("/inloggen")
+    @PostMapping("/overzicht")
     public String postInlogForm(Model model, @ModelAttribute LoginFormBackingBean dummy) {
 
         List<Particulier> particuliereklanten =
@@ -56,12 +53,7 @@ public class LoginController {
         }
         else{
         model.addAttribute("ingelogde", alleklanten.get(0));
-            Klant gebruiker = alleklanten.get(0);
-            model.addAttribute("accountList", gebruiker);
-            model.addAttribute("welcomeName", "Welkom " + alleklanten.get(0).getGebruikersnaam());
-            model.addAttribute("user", alleklanten.get(0));
-            return "overview_simple";
+            return "overview";
         }
     }
-
 }

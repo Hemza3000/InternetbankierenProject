@@ -43,6 +43,13 @@ public class Bedrijf extends Klant {
 
     }
 
+    // toegevoegd door Wendy
+    @Override
+    public String getNaam() {
+        return bedrijfsnaam;
+    }
+
+
     //getters and setters
 
 
