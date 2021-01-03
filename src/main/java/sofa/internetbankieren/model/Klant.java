@@ -1,5 +1,9 @@
 package sofa.internetbankieren.model;
 
+import sofa.internetbankieren.repository.BedrijfsrekeningDAO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Taco Jongkind & Hemza Lasri, 07-12-2020
@@ -15,10 +19,11 @@ public abstract class Klant {
     private int huisnummer;
     private String postcode;
     private String woonplaats;
+    private List<Integer> rekeningIDs = new ArrayList<>(); // verplaatst vanuit subklassen door Wendy
+    private BedrijfsrekeningDAO bedrijfsrekeningDAO;
 
-
-    public Klant(int idKlant, String gebruikersnaam, String wachtwoord, String straat, int huisnummer,
-                 String postcode, String woonplaats) {
+    public Klant(int idKlant, String gebruikersnaam, String wachtwoord, String straat, int huisnummer, String postcode,
+                 String woonplaats, List<Integer> rekeningIDs, BedrijfsrekeningDAO bedrijfsrekeningDAO) {
         this.idKlant = idKlant;
         this.gebruikersnaam = gebruikersnaam;
         this.wachtwoord = wachtwoord;
@@ -26,8 +31,9 @@ public abstract class Klant {
         this.huisnummer = huisnummer;
         this.postcode = postcode;
         this.woonplaats = woonplaats;
+        this.rekeningIDs = rekeningIDs;
+        this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
     }
-
 
     public Klant() {
     }
@@ -88,6 +94,22 @@ public abstract class Klant {
         this.woonplaats = woonplaats;
     }
 
+    // toegevoegd door Wendy
+    public abstract List<? extends Rekening> getRekeningen();
+
+    // toegevoegd door Wendy
+    public void setRekeningIDs(List<Integer> rekeningIDs) {
+        this.rekeningIDs = rekeningIDs;
+    }
+
+    public BedrijfsrekeningDAO getBedrijfsrekeningDAO() {
+        return bedrijfsrekeningDAO;
+    }
+
+    public void setBedrijfsrekeningDAO(BedrijfsrekeningDAO bedrijfsrekeningDAO) {
+        this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
+    }
+
     @Override
     public String toString() {
         return "Klant{" +
@@ -98,6 +120,7 @@ public abstract class Klant {
                 ", huisnummer=" + huisnummer +
                 ", postcode='" + postcode + '\'' +
                 ", woonplaats='" + woonplaats + '\'' +
+                ", rekeningIDs=" + rekeningIDs +
                 '}';
     }
 }

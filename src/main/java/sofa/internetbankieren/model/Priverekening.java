@@ -1,9 +1,7 @@
 package sofa.internetbankieren.model;
 
-import org.springframework.jdbc.core.JdbcTemplate;
-import sofa.internetbankieren.repository.ParticulierDAO;
+import sofa.internetbankieren.repository.TransactieDAO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,34 +11,36 @@ import java.util.List;
 
 public class Priverekening extends Rekening{
 
-    private int rekeninghouder;
-    private List<Transactie> transactiesHistorie;
-    private ParticulierDAO particulierDAO = new ParticulierDAO(new JdbcTemplate());
+    private Particulier rekeninghouder;
 
     public Priverekening() { super(); }
 
-    public Priverekening(int idRekening, String IBAN, double saldo, int rekeninghouder) {
-        super(idRekening, IBAN, saldo);
+    public Priverekening(int idRekening, String IBAN, double saldo, List<Integer> transactieIDs,
+                         TransactieDAO transactieDAO, Particulier rekeninghouder) {
+        super(idRekening, IBAN, saldo, transactieIDs, transactieDAO);
         this.rekeninghouder = rekeninghouder;
     }
 
-    public Priverekening(String IBAN, double saldo, int rekeninghouder) {
-        this(0, IBAN, saldo, rekeninghouder);
+    // toegevoegd door Wendy
+    @Override
+    public String getTenaamstelling() {
+        return rekeninghouder.getVoornaam() + " "
+                + ((rekeninghouder.getTussenvoegsels() == null) ? "" : rekeninghouder.getTussenvoegsels()) + " "
+                + rekeninghouder.getAchternaam();
     }
-
-    public void voegTransactieToe() {
-        if (this.transactiesHistorie == null) {
-            transactiesHistorie = new ArrayList<>();
-        }
-    } // TODO NOG VERDER AF TE MAKEN IN VOLGENDE SPRINT
-
 
     public Particulier getRekeninghouder() {
-        return particulierDAO.getOneByID(rekeninghouder);
+        return rekeninghouder;
     }
 
-    public void setRekeninghouder(int rekeninghouder) {
+    public void setRekeninghouder(Particulier rekeninghouder) {
         this.rekeninghouder = rekeninghouder;
+    }
+
+    // toegevoegd door Wendy
+    @Override
+    public List<Transactie> getTransacties() {
+        return super.getTransactieDAO().getAllByIDPriverekening(super.getIdRekening());
     }
 
     // TODO 7/12 bepalen wat de toString nodig heeft
@@ -50,10 +50,5 @@ public class Priverekening extends Rekening{
         result.append(super.toString());
         result.append(" Rekeninghouder: " + rekeninghouder);
         return result.toString();
-    }
-
-    @Override
-    public List<Transactie> getTransactiesHistorie() {
-        return transactiesHistorie;
     }
 }

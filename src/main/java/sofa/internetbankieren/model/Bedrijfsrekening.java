@@ -1,10 +1,7 @@
 package sofa.internetbankieren.model;
 
-import org.springframework.jdbc.core.JdbcTemplate;
-import sofa.internetbankieren.repository.BedrijfDAO;
-import sofa.internetbankieren.repository.ParticulierDAO;
+import sofa.internetbankieren.repository.TransactieDAO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,45 +11,46 @@ import java.util.List;
 
 public class Bedrijfsrekening extends Rekening {
 
-    private int contactpersoon; // is een Particulier
-    private int rekeninghouder; // is een Bedrijf
-    private List<Transactie> transactiesHistorie;
+    private Particulier contactpersoon;
+    private Bedrijf rekeninghouder;
 
-    private ParticulierDAO particulierDAO = new ParticulierDAO(new JdbcTemplate());
-    private BedrijfDAO bedrijfDAO = new BedrijfDAO(new JdbcTemplate());
+    public Bedrijfsrekening() {
+        super();
+    }
 
-    public Bedrijfsrekening() { super(); }
-
-    public Bedrijfsrekening(int idRekening, String IBAN, double saldo, int contactpersoon, int rekeninghouder) {
-        super(idRekening, IBAN, saldo);
+    public Bedrijfsrekening(int idRekening, String IBAN, double saldo, List<Integer> transactieIDs,
+                            TransactieDAO transactieDAO, Particulier contactpersoon, Bedrijf rekeninghouder) {
+        super(idRekening, IBAN, saldo, transactieIDs, transactieDAO);
         this.contactpersoon = contactpersoon;
         this.rekeninghouder = rekeninghouder;
     }
 
-    public Bedrijfsrekening(String IBAN, double saldo, int contactpersoon, int rekeninghouder) {
-        this(0, IBAN, saldo, contactpersoon, rekeninghouder);
-    }
-
-    public void voegTransactieToe() {
-        if (this.transactiesHistorie == null) {
-            transactiesHistorie = new ArrayList<>();
-        }
-    } // TODO NOG VERDER AF TE MAKEN IN VOLGENDE SPRINT
-
     public Particulier getContactpersoon() {
-        return particulierDAO.getOneByID(contactpersoon);
+        return contactpersoon;
     }
 
-    public void setContactpersoon(int contactpersoon) {
+    // toegevoegd door Wendy
+    @Override
+    public String getTenaamstelling() {
+        return rekeninghouder.getBedrijfsnaam();
+    }
+
+    public void setContactpersoon(Particulier contactpersoon) {
         this.contactpersoon = contactpersoon;
     }
 
     public Bedrijf getRekeninghouder() {
-        return bedrijfDAO.getOneByID(rekeninghouder);
+        return rekeninghouder;
     }
 
-    public void setRekeninghouder(int rekeninghouder) {
+    public void setRekeninghouder(Bedrijf rekeninghouder) {
         this.rekeninghouder = rekeninghouder;
+    }
+
+    // toegevoegd door Wendy
+    @Override
+    public List<Transactie> getTransacties() {
+        return super.getTransactieDAO().getAllByIDBedrijfsrekening(super.getIdRekening());
     }
 
     // TODO 7/12 wat hebben we nodig in de toString?

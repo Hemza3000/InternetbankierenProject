@@ -1,5 +1,7 @@
 package sofa.internetbankieren.model;
 
+import sofa.internetbankieren.repository.BedrijfDAO;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,12 +26,11 @@ public class Medewerker {
     private String tussenvoegsels;
     private String achternaam;
     private Rol rol;
-    private List<Bedrijf> bedrijven; // Bedrijven waarvoor de medewerker accountmanager is
-
-    public Medewerker() { super(); }
+    private List<Integer> bedrijfIDs; // Bedrijven waarvoor de medewerker accountmanager is
+    private final BedrijfDAO bedrijfDAO;
 
     public Medewerker(int personeelsnummer, String gebruikersnaam, String wachtwoord, String voornaam,
-                      String tussenvoegsels, String achternaam, Rol rol, List<Bedrijf> bedrijven) {
+                      String tussenvoegsels, String achternaam, Rol rol, List<Integer> bedrijfIDs, BedrijfDAO bedrijfDAO) {
         super();
         this.personeelsnummer = personeelsnummer;
         this.gebruikersnaam = gebruikersnaam;
@@ -38,35 +39,12 @@ public class Medewerker {
         this.tussenvoegsels = tussenvoegsels;
         this.achternaam = achternaam;
         this.rol = rol;
-        this.bedrijven = bedrijven;
+        this.bedrijfIDs = bedrijfIDs;
+        this.bedrijfDAO = bedrijfDAO;
     }
 
-    public Medewerker(String gebruikersnaam, String wachtwoord, String voornaam, String tussenvoegsels,
-                      String achternaam, Rol rol, List<Bedrijf> bedrijven) {
-        this.gebruikersnaam = gebruikersnaam;
-        this.wachtwoord = wachtwoord;
-        this.voornaam = voornaam;
-        this.tussenvoegsels = tussenvoegsels;
-        this.achternaam = achternaam;
-        this.rol = rol;
-        this.bedrijven = bedrijven;
-    }
-    // TODO : wat te doen met onderstaande 2 methoden (TacoJ)
-    /*public Medewerker(String voornaam, String tussenvoegsels, String achternaam, Rol rol) {
-        this(0, voornaam, tussenvoegsels, achternaam, rol, new ArrayList<>());
-    }*/
-
-    /*public Medewerker(String voornaam, String achternaam, Rol rol) {
-        this(voornaam, "", achternaam, rol);
-    }*/
-
-    public void voegBedrijfToe(Bedrijf bedrijf){
-        if(rol == Rol.ACCOUNTMANAGER || rol == Rol.HOOFD_MKB) {
-            if (bedrijven == null)
-                bedrijven = new ArrayList<>();
-            bedrijven.add(bedrijf);
-        }
-        // TODO else foutafhandeling
+    public Medewerker(String voornaam, String achternaam, BedrijfDAO bedrijfDAO) {
+        this(0, "", "", voornaam, "", achternaam, Rol.ACCOUNTMANAGER, new ArrayList<>(), bedrijfDAO);
     }
 
     public String getGebruikersnaam() {
@@ -122,10 +100,10 @@ public class Medewerker {
     }
 
     public List<Bedrijf> getBedrijven() {
-        return bedrijven;
+        return bedrijfDAO.getAllByIdAccountmanager(personeelsnummer);
     }
-    public void setBedrijven(List<Bedrijf> bedrijven) {
-        this.bedrijven = bedrijven;
+    public void setBedrijfIDs(List<Integer> bedrijfIDs) {
+        this.bedrijfIDs = bedrijfIDs;
     }
 
     @Override
@@ -138,7 +116,7 @@ public class Medewerker {
                 ", tussenvoegsels='" + tussenvoegsels + '\'' +
                 ", achternaam='" + achternaam + '\'' +
                 ", rol=" + rol +
-                ", bedrijven=" + bedrijven +
+                ", bedrijven=" + bedrijfIDs +
                 '}';
     }
 }

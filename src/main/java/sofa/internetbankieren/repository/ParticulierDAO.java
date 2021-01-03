@@ -5,6 +5,8 @@ package sofa.internetbankieren.repository;
  *
  * */
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
@@ -20,10 +22,16 @@ import java.util.List;
 public class ParticulierDAO {
 
     private JdbcTemplate jdbcTemplate;
+    private PriverekeningDAO priverekeningDAO;
+    private BedrijfsrekeningDAO bedrijfsrekeningDAO;
 
-    public ParticulierDAO(JdbcTemplate jdbcTemplate) {
+    public ParticulierDAO(JdbcTemplate jdbcTemplate, @Lazy PriverekeningDAO priverekeningDAO, @Lazy BedrijfsrekeningDAO bedrijfsrekeningDAO) {
+        super();
         this.jdbcTemplate = jdbcTemplate;
+        this.priverekeningDAO = priverekeningDAO;
+        this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
     }
+
     //get All
     public List<Particulier> getAll() {
         final String sql = "select * from particulier";
@@ -32,7 +40,7 @@ public class ParticulierDAO {
 
     // get One by Id
     public Particulier getOneByID(int idKlant){
-        final String sql = "select * from particulier where idKlant=?";
+        final String sql = "select * from particulier where idparticulier=?";
         return jdbcTemplate.queryForObject(sql, new ParticulierRowMapper(), idKlant);
     }
 
@@ -92,7 +100,7 @@ public class ParticulierDAO {
                 particulier.getTussenvoegsels(),
                 particulier.getAchternaam(),
                 particulier.getBSN(),
-                particulier.getGeboortedatum(),
+                particulier.getGeboortedatum(), //todo Date.valueOf toevoegen? (Wendy)
                 particulier.getStraat(),
                 particulier.getHuisnummer(),
                 particulier.getPostcode(),
@@ -101,7 +109,7 @@ public class ParticulierDAO {
     }
 
     public int deleteOne(Particulier particulier) {
-        return jdbcTemplate.update("delete from particulier where idKlant=?",
+        return jdbcTemplate.update("delete from particulier where idparticulier=?",
                 particulier.getIdKlant());
     }
 
@@ -111,8 +119,6 @@ public class ParticulierDAO {
 
         @Override
         public Particulier mapRow(ResultSet resultSet, int i) throws SQLException {
-            PriverekeningDAO priverekeningDAO = new PriverekeningDAO(jdbcTemplate);
-            BedrijfsrekeningDAO bedrijfsrekeningDAO = new BedrijfsrekeningDAO(jdbcTemplate);
             return new Particulier(resultSet.getInt("idparticulier"),
                     resultSet.getString("gebruikersnaam"),
                     resultSet.getString("wachtwoord"),
@@ -124,9 +130,12 @@ public class ParticulierDAO {
                     resultSet.getString("tussenvoegsels"),
                     resultSet.getString("achternaam"),
                     resultSet.getDate("geboortedatum").toLocalDate(),
-                    resultSet.getInt("BSN"),
-                    priverekeningDAO.getAllByRekeninghouder(resultSet.getInt("idparticulier")),
-                    bedrijfsrekeningDAO.getAllByContactpersoon(resultSet.getInt("idparticulier")));
+                    resultSet.getInt("bsn"),
+                    priverekeningDAO.getAllIDsByRekeninghouder(resultSet.getInt("idparticulier")),
+                    bedrijfsrekeningDAO.getAllIDsByContactpersoon(resultSet.getInt("idparticulier")),
+                    bedrijfsrekeningDAO,
+                    priverekeningDAO
+            );
         }
     }
 }

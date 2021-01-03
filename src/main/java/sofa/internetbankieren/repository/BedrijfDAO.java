@@ -1,7 +1,6 @@
 package sofa.internetbankieren.repository;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
@@ -9,7 +8,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import sofa.internetbankieren.model.Bedrijf;
-import sofa.internetbankieren.model.Particulier;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,11 +24,15 @@ import java.util.List;
 public class BedrijfDAO implements GenericDAO<Bedrijf> {
 
     private JdbcTemplate jdbcTemplate;
+    private BedrijfsrekeningDAO bedrijfsrekeningDAO;
+    private MedewerkerDAO medewerkerDAO;
 
-    @Autowired
-    public BedrijfDAO(JdbcTemplate jdbcTemplate) {
+    public BedrijfDAO(JdbcTemplate jdbcTemplate, @Lazy BedrijfsrekeningDAO bedrijfsrekeningDAO,
+                      MedewerkerDAO medewerkerDAO) {
         super();
         this.jdbcTemplate = jdbcTemplate;
+        this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
+        this.medewerkerDAO = medewerkerDAO;
     }
 
     // Retrieves all customers
@@ -40,7 +42,7 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
     }
 
     // get One by gebruikersnaam en wachtwoord
-    public List<Bedrijf> getOneByOneGebruikersnaamWachtwoord(String gebruikersnaam, String wachtwoord){
+    public List<Bedrijf> getOneByGebruikersnaamWachtwoord(String gebruikersnaam, String wachtwoord){
         final String sql = "select * from bedrijf where gebruikersnaam=? and wachtwoord=?";
         return jdbcTemplate.query(sql, new BedrijfsMapper(), gebruikersnaam, wachtwoord);
     }
@@ -49,6 +51,11 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
     public List<Bedrijf> getAllByIdAccountmanager(int idAccountmanager) {
         final String sql = "SELECT * FROM bedrijf WHERE idaccountmanager=?";
         return jdbcTemplate.query(sql, new BedrijfsMapper(), idAccountmanager);
+    }
+
+    public List<Integer> getAllIDsByIdAccountmanager(int idAccountmanager) {
+        final String sql = "select idbedrijf from bedrijf where idaccountmanager=?";
+        return jdbcTemplate.query(sql, new BedrijfsIDMapper(), idAccountmanager);
     }
 
     // Retrieves one corporate customer by ID
@@ -114,10 +121,8 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
 
         @Override
         public Bedrijf mapRow(ResultSet resultSet, int i) throws SQLException {
-            BedrijfsrekeningDAO bedrijfsrekeningDAO = new BedrijfsrekeningDAO(jdbcTemplate);
-            MedewerkerDAO medewerkerDAO = new MedewerkerDAO(jdbcTemplate);
             return new Bedrijf(
-                    resultSet.getInt("idBedrijf"),
+                    resultSet.getInt("idbedrijf"),
                     resultSet.getString("gebruikersnaam"),
                     resultSet.getString("wachtwoord"),
                     resultSet.getString("straat"),
@@ -129,9 +134,18 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
                     resultSet.getString("sector"),
                     resultSet.getString("BTWnummer"),
                     medewerkerDAO.getOneByID(resultSet.getInt("idAccountmanager")),
-                    bedrijfsrekeningDAO.getAllByBedrijf(resultSet.getInt("idBedrijf")));
+                    bedrijfsrekeningDAO.getAllIDsByBedrijf(resultSet.getInt("idBedrijf")),
+                    bedrijfsrekeningDAO
+            );
         }
+    }
 
+    private final class BedrijfsIDMapper implements RowMapper<Integer> {
+
+        @Override
+        public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
+            return resultSet.getInt("idbedrijf");
+        }
     }
 }
 

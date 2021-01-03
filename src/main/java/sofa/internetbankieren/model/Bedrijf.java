@@ -6,6 +6,8 @@ package sofa.internetbankieren.model;
  *
  * */
 
+import sofa.internetbankieren.repository.BedrijfsrekeningDAO;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,33 +19,27 @@ public class Bedrijf extends Klant {
     private String BTWNummer;
     private Medewerker accountmanager;
 
-    //moet dit niet bedrijfsrekeningen zijn?
-    private List<Bedrijfsrekening> rekeningen = new ArrayList<>();
-
     public Bedrijf(int idKlant, String gebruikersnaam, String wachtwoord, String straat, int huisnummer,
                    String postcode, String woonplaats, String bedrijfsnaam, int KVKNummer, String sector,
-                   String BTWNummer, Medewerker accountmanager, List<Bedrijfsrekening> rekeningen) {
-        super(idKlant, gebruikersnaam, wachtwoord, straat, huisnummer, postcode, woonplaats);
+                   String BTWNummer, Medewerker accountmanager, List<Integer> rekeningIDs,
+                   BedrijfsrekeningDAO bedrijfsrekeningDAO) {
+        super(idKlant, gebruikersnaam, wachtwoord, straat, huisnummer, postcode, woonplaats, rekeningIDs,
+                bedrijfsrekeningDAO);
         this.bedrijfsnaam = bedrijfsnaam;
         this.KVKNummer = KVKNummer;
         this.sector = sector;
         this.BTWNummer = BTWNummer;
         this.accountmanager = accountmanager;
-        this.rekeningen = rekeningen;
     }
 
-    public Bedrijf(String straat, int huisnummer, String postcode, String woonplaats,
-                   String bedrijfsnaam, int KVKNummer, String sector, String BTWNummer, Medewerker accountmanager) {
+    public Bedrijf(String straat, int huisnummer, String postcode, String woonplaats, String bedrijfsnaam,
+                   int KVKNummer, String sector, String BTWNummer, Medewerker accountmanager,
+                   BedrijfsrekeningDAO bedrijfsrekeningDAO) {
         this(0, "", "", straat, huisnummer, postcode, woonplaats, bedrijfsnaam,
-                KVKNummer, sector, BTWNummer, accountmanager, new ArrayList<>());
+                KVKNummer, sector, BTWNummer, accountmanager, new ArrayList<>(), bedrijfsrekeningDAO);
     }
-
 
     public Bedrijf(){
-
-    }
-    //Vraag: moet deze er nog bij?
-    public void addBedrijf(){
 
     }
 
@@ -90,11 +86,8 @@ public class Bedrijf extends Klant {
         this.accountmanager = accountmanager;
     }
 
+    @Override
     public List<Bedrijfsrekening> getRekeningen() {
-        return rekeningen;
-    }
-
-    public void setRekeningen(List<Bedrijfsrekening> rekeningen) {
-        this.rekeningen = rekeningen;
+        return super.getBedrijfsrekeningDAO().getAllByBedrijf(super.getIdKlant()) ;
     }
 }
