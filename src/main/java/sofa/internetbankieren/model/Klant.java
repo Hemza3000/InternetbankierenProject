@@ -38,6 +38,9 @@ public abstract class Klant {
     public Klant() {
     }
 
+    // toegevoegd door Wendy
+    public abstract String getNaam();
+
     public String getGebruikersnaam() {
         return gebruikersnaam;
     }
