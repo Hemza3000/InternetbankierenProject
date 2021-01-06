@@ -57,15 +57,16 @@ public class LoginController {
             return "foutingelogd";
         }
         else{
-        model.addAttribute("ingelogde", alleklanten.get(0));
+            model.addAttribute("ingelogde", alleklanten.get(0));
             Klant gebruiker = alleklanten.get(0);
-            if (gebruiker instanceof Particulier){
+            model.addAttribute("accountList", gebruiker);
+            /*if (gebruiker instanceof Particulier){
                 model.addAttribute("accountList", ((Particulier) gebruiker).getPriverekeningen());
             }
             else
                 model.addAttribute("accountList", ((Bedrijf) gebruiker).getRekeningen());
 
-
+*/
             model.addAttribute("welcomeName", "Welkom " + alleklanten.get(0).getGebruikersnaam());
             model.addAttribute("user", alleklanten.get(0));
             return "overview_simple";
