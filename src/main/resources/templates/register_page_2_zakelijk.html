@@ -13,35 +13,35 @@
     <table>
         <tr>
             <td><label for="Company_name">Bedrijfsnaam</label></td>
-            <td><input name="Company_name"/></td>
+            <td><input id="Company_name" name="Company_name" required/></td>
         </tr>
         <tr>
             <td><label for="Branch">Sector</label></td>
-            <td><input name="Branch"/></td>
+            <td><input id="Branch" name="Branch" required/></td>
         </tr>
         <tr>
             <td><label for="KVK_number">KVK nummer</label></td>
-            <td><input name="KVK_number"/></td>
+            <td><input id="KVK_number" name="KVK_number" required/></td>
         </tr>
         <tr>
             <td><label for="BTW_number">BTW nummer</label></td>
-            <td><input name="BTW_number"/></td>
+            <td><input id="BTW_number" name="BTW_number" required/></td>
         </tr>
         <tr>
-            <td><label for="Street">Straat</label></td>
-            <td><input name="Street"/></td>
+            <td><label for="pc_field">Postcode</label></td>
+            <td><input id="pc_field" name="Postal_code" required/></td>
         </tr>
         <tr>
-            <td><label for="House_number">Huisnummer</label></td>
-            <td><input name="House_number"/></td>
+            <td><label for="nr_field">Huisnummer</label></td>
+            <td><input id="nr_field" name="House_number" required /></td>
         </tr>
         <tr>
-            <td><label for="Postal_code">Postcode</label></td>
-            <td><input name="Postal_code"/></td>
+            <td><label for="street_field">Straat</label></td>
+            <td><input id="street_field" name="Street" required/></td>
         </tr>
         <tr>
-            <td><label for="City">Woonplaats</label></td>
-            <td><input name="City"/></td>
+            <td><label for="city_field">Woonplaats</label></td>
+            <td><input id="city_field" name="City" required/></td>
         </tr>
         <td></td>
         <td><input type="submit" name="OK" value="OK"><input type="reset" name="reset" value="Reset"></td>
@@ -50,5 +50,39 @@
     </table>
 </form>
 <p>Terug naar de <a href="/home">homepage</a></p> </p>
+
+<script>
+    // voegt automatisch straat + woonplaats in bij het invullen van Postcode en huisnummer
+    document.getElementById('pc_field').addEventListener('focusout', checkForAddressPart)
+    document.getElementById('nr_field').addEventListener('focusout', checkForAddressPart)
+
+    function checkForAddressPart() {
+        let regex = new RegExp(/^[1-9][0-9]{3}[\s]?[A-Za-z]{2}$/i);
+
+        let pc = document.getElementById('pc_field').value
+        let nr = document.getElementById('nr_field').value
+
+        if (regex.test(pc) && nr) {
+            fetch(`https://postcode.tech/api/v1/postcode?postcode=${pc}&number=${nr}`, {
+                headers: {
+                    'Authorization': 'Bearer b3ba02a8-2796-4225-a4d2-d982ad2d3ec1',
+                },
+            })
+                .then(response => response.json())
+                .then(json => processAddress(json))
+                .catch((error) => {
+                    console.error('foutje', error)
+                });
+        }
+    }
+
+    function processAddress(data){
+        console.log(data)
+        let addressPart = data
+        document.getElementById('street_field').value = addressPart.street
+        document.getElementById('city_field').value = addressPart.city
+    }
+
+</script>
 </body>
 </html>
