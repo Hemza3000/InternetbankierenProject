@@ -13,39 +13,39 @@
     <table>
         <tr>
             <td><label for="First_name">Voornaam</label></td>
-            <td><input th:field="*{voornaam}" name="First_name"/></td>
+            <td><input th:field="*{voornaam}" name="First_name" required/></td>
         </tr>
         <tr>
             <td><label for="Prefix">Voorvoegsels</label></td>
-            <td><input th:field="*{tussenvoegsels}"name="Prefix"/></td>
+            <td><input th:field="*{tussenvoegsels}"name="Prefix" /></td>
         </tr>
         <tr>
             <td><label for="Last_name">Achternaam</label></td>
-            <td><input th:field="*{achternaam}"name="Last_name"/></td>
+            <td><input th:field="*{achternaam}"name="Last_name" required/></td>
         </tr>
         <tr>
             <td><label for="Birthday">Geboortedatum</label></td>
-            <td><input th:field="*{geboortedatum}" name="Birthday"></td>
+            <td><input th:field="*{geboortedatum}" name="Birthday" required></td>
         </tr>
         <tr>
             <td><label for="BSN">Burgerservicenummer</label></td>
-            <td><input th:field="*{BSN}"name="BSN"/></td>
-        </tr>
-        <tr>
-            <td><label for="Street">Straat</label></td>
-            <td><input th:field="*{straat}"name="Street"/></td>
-        </tr>
-        <tr>
-            <td><label for="House_number">Huisnummer</label></td>
-            <td><input th:field="*{huisnummer}" name="Street"/></td>
+            <td><input th:field="*{BSN}"name="BSN" required/></td>
         </tr>
         <tr>
             <td><label for="Postal_code">Postcode</label></td>
-            <td><input th:field="*{postcode}"name="Postal_code"/></td>
+            <td><input th:field="*{postcode}"name="Postal_code" required/></td>
+        </tr>
+        <tr>
+            <td><label for="House_number">Huisnummer</label></td>
+            <td><input th:field="*{huisnummer}" name="Street" required/></td>
+        </tr>
+        <tr>
+            <td><label for="Street">Straat</label></td>
+            <td><input th:field="*{straat}"name="Street" required/></td>
         </tr>
         <tr>
             <td><label for="City">Woonplaats</label></td>
-            <td><input th:field="*{woonplaats}"name="City"/></td>
+            <td><input th:field="*{woonplaats}"name="City" required/></td>
         </tr>
         <td></td>
         <td><input type="submit" name="OK" value="Bevestigen"></td>
