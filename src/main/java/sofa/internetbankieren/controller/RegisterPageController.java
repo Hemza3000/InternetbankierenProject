@@ -123,7 +123,6 @@ public class RegisterPageController {
             particulierDAO.storeOne((Particulier) klant);
         else
             bedrijfDAO.storeOne((Bedrijf) klant);
-        return "register_completed";
+        return "register/register_completed";
     }
-
 }

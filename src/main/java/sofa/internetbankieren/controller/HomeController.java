@@ -19,4 +19,9 @@ public class HomeController {
     public String startHandler() {
         return "home";
     }
+
+    @GetMapping("/voorwaarden")
+    public String voorwaardenHandler(){
+        return "voorwaarden";
+    }
 }
