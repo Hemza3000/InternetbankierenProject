@@ -19,16 +19,21 @@
             <td><input type="text" name="bedrag" th:field="*{bedrag}" placeholder="0,00" required/></td>
         </tr>
             <td><label for="Omschrijving">Omschrijving overboeking</label></td>
-            <td><input type="text" name="bedrag" th:field="*{bedrag}" placeholder="Omschrijving" required/></td>
+            <td><input type="text" name="bedrag" th:field="*{omschrijving}" placeholder="Omschrijving" required/></td>
         </tr>
     </table>
 </form>
 </tr>
 <td></td>
-<td><input type="submit" name="OK" value="Bevestigen"></td>
+<td><input type="submit" name="OK" value="Bevestigen" onsubmit="msg"></td>
 
 </tr>
 <p>Terug naar de <a href="/home">homepage</a></p> </p>
+<script>
+    function msg() {
+        alert('Overboeking is toegevoegd,\nU gaat nu terug naar de hoofdpagina.');
+    }
+</script>
 
 </body>
 </html>
