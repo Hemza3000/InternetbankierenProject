@@ -24,4 +24,6 @@ public class HomeController {
     public String voorwaardenHandler(){
         return "voorwaarden";
     }
+
+
 }

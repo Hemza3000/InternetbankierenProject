@@ -2,6 +2,7 @@ package sofa.internetbankieren.model;
 
 import sofa.internetbankieren.repository.TransactieDAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,6 +23,12 @@ public class Bedrijfsrekening extends Rekening {
                             TransactieDAO transactieDAO, Particulier contactpersoon, Bedrijf rekeninghouder) {
         super(idRekening, IBAN, saldo, transactieIDs, transactieDAO);
         this.contactpersoon = contactpersoon;
+        this.rekeninghouder = rekeninghouder;
+    }
+
+    public Bedrijfsrekening(int idRekening, String IBAN, TransactieDAO transactieDAO, Particulier contactPersoon, Bedrijf rekeninghouder) {
+        super(idRekening, IBAN, 0, new ArrayList<>(), transactieDAO);
+        this.contactpersoon = contactPersoon;
         this.rekeninghouder = rekeninghouder;
     }
 

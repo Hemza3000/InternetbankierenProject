@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Wichert Tjerkstra">
+    <title>Nieuw rekeningnummer openen</title>
+</head>
+<body>
+
+<h1>Open hier een nieuw rekeningnummer</h1>
+<p>Controleer je gegevens en bevestig onderaan de pagina voor het openen van een nieuwe rekening.</p>
+
+<form action="formAccountNumber" method="post">
+<table>
+    <tr>
+        <td><label for="accountName" >Op naam van</label>
+        <td id="accountName" th:text="${}"></td>
+    </tr>
+    <tr>
+        <td><label for="newIBAN">Nieuw rekeningnummer</label></td>
+        <td th:text="a" id="newIBAN" name="newIBAN"></td>
+    </tr>
+    <tr>
+        <td><input id="akkoord" type="radio" required> <label> ik ga akkoord met de <a href="/voorwaarden">voorwaarden</a> </label></td>
+    </tr>
+        <td></td>
+        <td><input type="submit" name="OK" value="bevestig" onsubmit="msg()"></td>
+</table>
+</form>
+<p>Terug naar het <a href="/home">homepage</a></p>
+<script>
+    function msg() {
+        alert('Rekening is toegevoegd,\nU gaat nu terug naar de hoofdpagina.');
+    }
+</script>
+</body>
+</html>

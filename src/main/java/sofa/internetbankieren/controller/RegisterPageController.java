@@ -16,6 +16,7 @@ import sofa.internetbankieren.model.Bedrijf;
 import sofa.internetbankieren.model.Klant;
 import sofa.internetbankieren.model.Particulier;
 import sofa.internetbankieren.repository.*;
+import sofa.internetbankieren.service.AccountService;
 
 @SessionAttributes({"klant", "particulier"})
 @Controller
@@ -23,7 +24,8 @@ public class RegisterPageController {
 
     // Zoals aangegeven door de PO, is het hoofd MKB (medewerker 2) altijd de accountmanager.
     public final static int ID_ACCOUNTMANAGER = 2;
-
+    String newIBAN;
+    AccountService accountService;
     ParticulierDAO particulierDAO;
     BedrijfDAO bedrijfDAO;
     MedewerkerDAO medewerkerDAO;
@@ -114,8 +116,7 @@ public class RegisterPageController {
 
     @PostMapping("/confirm")
     public String confirm(@RequestParam String user_name,
-                          @RequestParam String password,
-                          Model model){
+                          @RequestParam String password, Model model){
         Klant klant = (Klant) model.getAttribute("klant");
         klant.setGebruikersnaam(user_name);
         klant.setWachtwoord(password);
@@ -125,4 +126,19 @@ public class RegisterPageController {
             bedrijfDAO.storeOne((Bedrijf) klant);
         return "register/register_completed";
     }
+
+    @GetMapping("/RegisterAccountNumber")
+    public String RegisterAccountNumberHandlder(Model model){
+        Klant particulier = (Klant) model.getAttribute("particulier");
+        newIBAN = accountService.createRandomIBAN();
+        model.addAttribute("testtest", particulier);
+        model.addAttribute("IBAN", newIBAN);
+        return "RegisterAccountNumber";
+    }
+
+    @PostMapping("/formAccountNumber")
+    public String formAccountNumberHandlder(){
+        return "overview";
+    }
+
 }

@@ -8,9 +8,10 @@
 <body>
 
 <h1>Open hier een nieuw rekeningnummer</h1>
-<p>Controleer je gegevens en bevestig onderaan de pagina voor het openen van een nieuwe rekening.</p>
+<p>Controleer de gegevens en bevestig onderaan de pagina voor het openen van een nieuwe rekening.</p>
+<p th:if="${isBedrijf}">Voor het openen van een bedrijfsrekening is de achternaam en bsn van de contactpersoon verplicht.</p>
 
-<form action="formNewAccountNumber" method="post">
+<form action="formNewAccountNumber" method="post" onsubmit="msg()">
 <table>
     <tr>
         <td><label for="accountName" >Op naam van</label>
@@ -20,18 +21,27 @@
         <td><label for="newIBAN">Nieuw rekeningnummer</label></td>
         <td th:text="${IBAN}" id="newIBAN" name="newIBAN"></td>
     </tr>
+    <tr th:hidden="${!isBedrijf}">
+        <td><label for="NaamContactpersoon">Naam contactpersoon</label></td>
+        <td><input id="NaamContactpersoon" name="NaamContactpersoon"></td>
+    </tr>
+    <tr th:hidden="${!isBedrijf}">
+        <td><label for="formContactpersoon">BSN contactpersoon</label></td>
+        <td><input id="formContactpersoon" name="formContactpersoon" value=""></td>
+    </tr>
     <tr>
         <td><input id="akkoord" type="radio" required> <label> ik ga akkoord met de <a href="/voorwaarden">voorwaarden</a> </label></td>
     </tr>
         <td></td>
-        <td><input type="submit" name="OK" value="bevestig" onsubmit="msg()"></td>
+        <td><input type="submit" name="OK" value="bevestig"></td>
 </table>
+
 </form>
 <p>Terug naar het <a href="/overzicht">rekeningoverzicht</a></p>
 <script>
     function msg() {
         alert('Rekening is toegevoegd');
     }
-</script></body>
-
+</script>
+</body>
 </html>
