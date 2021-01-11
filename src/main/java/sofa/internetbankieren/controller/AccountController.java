@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import sofa.internetbankieren.model.Priverekening;
 import sofa.internetbankieren.model.Rekening;
 import sofa.internetbankieren.model.Transactie;
 import sofa.internetbankieren.repository.BedrijfsrekeningDAO;
