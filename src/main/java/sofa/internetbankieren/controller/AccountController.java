@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import sofa.internetbankieren.model.Priverekening;
 import sofa.internetbankieren.model.Rekening;
 import sofa.internetbankieren.model.Transactie;
@@ -19,6 +21,7 @@ import java.util.List;
  * @author Wendy Ellens
  */
 @Controller
+@SessionAttributes("rekening")
 public class AccountController {
     private static final int MAX_TRANSACTIES = 10;
     private final PriverekeningDAO priverekeningDAO;

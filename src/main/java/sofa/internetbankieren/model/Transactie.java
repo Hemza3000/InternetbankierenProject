@@ -49,6 +49,10 @@ public class Transactie implements Comparable<Transactie> {
         this.tegenRekening = andereTransactie.tegenRekening;
     }
 
+    public Transactie(String iban, double bedrag, String omschrijving) {
+
+    }
+
     public int getIdTransactie() {
         return idTransactie;
     }
