@@ -26,20 +26,22 @@ public class NewAccountNumberController {
     private AccountService accountService;
     private String newIBAN;
 
-    public NewAccountNumberController(PriverekeningDAO priverekeningDAO, TransactieDAO transactieDAO, AccountService accountService
-    ,BedrijfsrekeningDAO bedrijfsrekeningDAO, ParticulierDAO particulierDAO) {
+    public NewAccountNumberController(PriverekeningDAO priverekeningDAO, TransactieDAO transactieDAO,
+    BedrijfsrekeningDAO bedrijfsrekeningDAO, ParticulierDAO particulierDAO, AccountService accountService) {
         this.priverekeningDAO = priverekeningDAO;
         this.transactieDAO = transactieDAO;
-        this.accountService = accountService;
         this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
         this.particulierDAO = particulierDAO;
+        this.accountService = accountService;
     }
 
+    // Toevoegen van rekeningnummers van een ingelogde gebruiker
     @GetMapping("/newAccountNumberPage")
     public String newAccountNumberPageHandler(Model model, @ModelAttribute(name="ingelogde") Klant ingelogde){
         newIBAN = accountService.createRandomIBAN();
         model.addAttribute("IBAN", newIBAN);
         model.addAttribute("ingelogde", ingelogde);
+        // check of ingelogde is een particulier of een bedrijf.
         boolean bedrijf = false;
         if ( ingelogde instanceof Bedrijf) {
             bedrijf = true;
@@ -53,7 +55,7 @@ public class NewAccountNumberController {
         if (ingelogde instanceof Particulier) {
             Priverekening priverekening = new Priverekening(0, newIBAN, transactieDAO, (Particulier) ingelogde);
             priverekeningDAO.storeOne(priverekening);
-            // registeren van rekeningnummer
+            // registeren van bedrijfsrekening
         } else {
             int contactPersoonBSN = Integer.parseInt(formContactpersoon);
             Particulier contactPersoon = particulierDAO.getByBSN(contactPersoonBSN);
@@ -64,5 +66,6 @@ public class NewAccountNumberController {
         return "overview";
     }
 
+    // Toevoegen van rekeningnummers van een gebruiker die zich aan het registeren is.
 
 }

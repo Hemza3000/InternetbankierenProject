@@ -14,11 +14,11 @@
 <table>
     <tr>
         <td><label for="accountName" >Op naam van</label>
-        <td id="accountName" th:text="${}"></td>
+        <td id="accountName" th:text="${klant.getNaam()}"></td>
     </tr>
     <tr>
         <td><label for="newIBAN">Nieuw rekeningnummer</label></td>
-        <td th:text="a" id="newIBAN" name="newIBAN"></td>
+        <td th:text="${IBAN}" id="newIBAN" name="newIBAN"></td>
     </tr>
     <tr>
         <td><input id="akkoord" type="radio" required> <label> ik ga akkoord met de <a href="/voorwaarden">voorwaarden</a> </label></td>
@@ -30,7 +30,7 @@
 <p>Terug naar het <a href="/home">homepage</a></p>
 <script>
     function msg() {
-        alert('Rekening is toegevoegd,\nU gaat nu terug naar de hoofdpagina.');
+        alert('Rekening is toegevoegd,\nRegistratie is klaar,\nje gaat terug naar de homepage.');
     }
 </script>
 </body>

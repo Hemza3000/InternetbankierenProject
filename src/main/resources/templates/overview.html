@@ -23,7 +23,7 @@
         <td th:text="${#numbers.formatDecimal(rekening.saldo, 1, 2, 'COMMA')}"></td>
     </tr>
 </table>
-<p th:hidden="${ingelogde.rekeningen.isEmpty()}" ><a href="/newAccountNumberPage">Klik hier</a> om nog een nieuwe rekening te openen.</p>
+<p th:hidden="${ingelogde.rekeningen.isEmpty()}" ><a href="/newAccountNumberPage">Klik hier</a> om een extra rekening te openen.</p>
 <p><a href="/home">Uitloggen</a></p>
 </body>
 </html>
