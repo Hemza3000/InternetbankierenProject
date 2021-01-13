@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rekeningpagina</title>
     <meta name="author" content="Wendy Ellens">
 </head>
+
 <body th:object="${rekening}">
 <h1>Transactieoverzicht</h1>
 <h2>IBAN: <span th:text="*{IBAN}"></span>, ten name van <span th:text="*{tenaamstelling}"></span></h2>
 <p th:text="${#temporals.format(nu, 'dd-MM-yyyy, HH:mm')}"></p>
 <h2>Saldo: <span th:text="*{#numbers.formatDecimal(saldo, 1, 2, 'COMMA')}"></span> euro</h2>
 <p th:if="*{getTransacties().isEmpty()}">Er zijn geen transacties om weer te geven</p>
+
 <table th:unless="*{getTransacties().isEmpty()}">
     <tr>Laatste bij- en afschrijvingen</tr>
     <tr>
@@ -29,7 +32,8 @@
         <td th:text="${transactie.tegenRekening.IBAN}"></td>
     </tr>
 </table>
+
 <p>Klik <a href="/moneyTransfer">hier</a> om een bedrag over te boeken</p>
-<p>Terug naar de <a href="/home">homepage</a></p> </p>
+<p>Terug naar de <a href="/home">homepage</a></p>
 </body>
 </html>

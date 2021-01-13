@@ -1,57 +1,62 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sofa - registreren</title>
+    <meta name="author" content="Wendy Ellens">
 </head>
+
 <body>
 <h1>Registreer je hier als zakelijke klant</h1>
 <p>Stap 2/4</p>
 <p>Vul hieronder de bedrijfsgegevens in</p>
 
-<form action="register_zakelijk" method="post">
+<form action="register_zakelijk" method="post" th:object="${klant}">
     <table>
         <tr>
-            <td><label for="Company_name">Bedrijfsnaam</label></td>
-            <td><input id="Company_name" name="Company_name" required/></td>
+            <td><label for="name_field"> Bedrijfsnaam</label></td>
+            <td><input type="text" id="name_field" th:field="*{bedrijfsnaam}" required/></td>
         </tr>
         <tr>
-            <td><label for="Branch">Sector</label></td>
-            <td><input id="Branch" name="Branch" required/></td>
+            <td><label for="sector_field"> Sector</label></td>
+            <td><input type="text" id="sector_field" th:field="*{sector}" required/></td>
         </tr>
         <tr>
-            <td><label for="KVK_number">KVK nummer</label></td>
-            <td><input id="KVK_number" name="KVK_number" required/></td>
+            <td><label for="kvk_field"> KVK nummer</label></td>
+            <td><input type="text" id="kvk_field" th:field="*{KVKNummer}" required/></td>
         </tr>
         <tr>
-            <td><label for="BTW_number">BTW nummer</label></td>
-            <td><input id="BTW_number" name="BTW_number" required/></td>
+            <td><label for="btw_field"> BTW nummer</label></td>
+            <td><input type="text" id="btw_field" th:field="*{BTWNummer}" required/></td>
         </tr>
         <tr>
-            <td><label for="pc_field">Postcode</label></td>
-            <td><input id="pc_field" name="Postal_code" required/></td>
+            <td><label for="pc_field"> Postcode</label></td>
+            <td><input type="text" id="pc_field" th:field="*{postcode}" name="Postal_code" required/></td>
         </tr>
         <tr>
             <td><label for="nr_field">Huisnummer</label></td>
-            <td><input id="nr_field" name="House_number" required /></td>
+            <td><input type="text" id="nr_field" th:field="*{huisnummer}" required/></td>
         </tr>
         <tr>
             <td><label for="street_field">Straat</label></td>
-            <td><input id="street_field" name="Street" required/></td>
+            <td><input type="text" id="street_field" th:field="*{straat}" name="Street" required/></td>
         </tr>
         <tr>
             <td><label for="city_field">Woonplaats</label></td>
-            <td><input id="city_field" name="City" required/></td>
+            <td><input type="text" id="city_field" th:field="*{woonplaats}" name="City" required/></td>
         </tr>
+        <tr>
         <td></td>
-        <td><input type="submit" name="OK" value="OK"><input type="reset" name="reset" value="Reset"></td>
-
+        <td><input type="submit" value="OK"><input type="reset" value="Reset"></td>
         </tr>
     </table>
 </form>
-<p>Terug naar de <a href="/home">homepage</a></p> </p>
+<p>Terug naar de <a href="/home">homepage</a></p>
 
 <script>
+    // toegevoegd door Wichert
     // voegt automatisch straat + woonplaats in bij het invullen van Postcode en huisnummer
     document.getElementById('pc_field').addEventListener('focusout', checkForAddressPart)
     document.getElementById('nr_field').addEventListener('focusout', checkForAddressPart)
