@@ -31,7 +31,7 @@ public class AccountService {
     }
 
     public boolean checkUniqueIBAN(String IBAN){
-        List<Priverekening> priverekeningList = priverekeningDAO.getOneByIban(IBAN);
+        List<Priverekening> priverekeningList = priverekeningDAO.getAllByIban(IBAN);
         List<Bedrijfsrekening> bedrijfsrekeningList = bedrijfsrekeningDAO.getOneByIban(IBAN);
         if (priverekeningList.isEmpty()){
             return true;
