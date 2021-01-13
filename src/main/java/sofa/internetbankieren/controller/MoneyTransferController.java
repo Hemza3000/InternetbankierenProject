@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import sofa.internetbankieren.backing_bean.MoneyTransferBackingbean;
+import sofa.internetbankieren.backing_bean.MoneyTransferBackingBean;
 import sofa.internetbankieren.model.Rekening;
 import sofa.internetbankieren.model.Transactie;
 import sofa.internetbankieren.repository.BedrijfsrekeningDAO;
@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 
 public class MoneyTransferController {
     private MoneyTransferService moneyTransferService;
-    private MoneyTransferBackingbean moneyTransferBackingbean;
+    private MoneyTransferBackingBean moneyTransferBackingbean;
 
     TransactieDAO transactieDAO;
     PriverekeningDAO priverekeningDAO;
@@ -34,7 +34,7 @@ public class MoneyTransferController {
 
     @GetMapping({"/moneyTransfer"})
     public String moneyTransferHandler(Model model) {
-        MoneyTransferBackingbean moneyTransferBackingbean = new MoneyTransferBackingbean(0,"", "");
+        MoneyTransferBackingBean moneyTransferBackingbean = new MoneyTransferBackingBean(0,"", "");
         model.addAttribute("MoneyTransferBackingbean", moneyTransferBackingbean);
         return "moneyTransfer";
     }
@@ -45,7 +45,7 @@ public class MoneyTransferController {
         return "overview";
     }
     @PostMapping
-    public String depositHandler(@ModelAttribute MoneyTransferBackingbean backingBean, Model model) {
+    public String depositHandler(@ModelAttribute MoneyTransferBackingBean backingBean, Model model) {
         Rekening rekening = (Rekening) model.getAttribute("rekening");
         Rekening tegenrekening = (Rekening) priverekeningDAO.getOneByIban(backingBean.getTegenrekening());
         Transactie transactie = new Transactie(0, rekening, backingBean.getBedrag(), LocalDateTime.now(),

@@ -1,12 +1,5 @@
 package sofa.internetbankieren.controller;
 
-/**
- * @Author Wichert Tjerkstra
- * aangemaakt op 9 dec
- *
- * Aangevuld door Wendy om de zakelijke registratie mogelijk te maken
- */
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,25 +10,33 @@ import sofa.internetbankieren.repository.*;
 import sofa.internetbankieren.service.AccountService;
 import sofa.internetbankieren.service.RegisterService;
 
-import java.util.List;
-
+/**
+ * @author Wichert Tjerkstra (particulier), Wendy Ellens (bedrijf)
+ * aangemaakt op 9 dec
+ *
+ * Handelt de registratie van (particuliere/zakelijke) klanten af in 4 stappen:
+ * 1. Keuze particulier/bedrijf
+ * 2. Invoer klantgegevens
+ * 3. Eventuele wijzigingen klantgegevens na controle door klant
+ * 4. Invoer logingegevens
+ */
+@SessionAttributes("klant")
 @Controller
-@SessionAttributes({"klant", "particulier"})
-public class RegisterPageController {
+public class RegistrationController {
 
     // Zoals aangegeven door de PO, is het hoofd MKB (medewerker 2) altijd de accountmanager.
     public final static int ID_ACCOUNTMANAGER = 2;
     private String newIBAN;
-    private AccountService accountService;
-    private ParticulierDAO particulierDAO;
-    private BedrijfDAO bedrijfDAO;
-    private MedewerkerDAO medewerkerDAO;
-    private BedrijfsrekeningDAO bedrijfsrekeningDAO;
-    private PriverekeningDAO priverekeningDAO;
-    private TransactieDAO transactieDAO;
-    private RegisterService registerService;
+    private final AccountService accountService;
+    private final ParticulierDAO particulierDAO;
+    private final BedrijfDAO bedrijfDAO;
+    private final MedewerkerDAO medewerkerDAO;
+    private final BedrijfsrekeningDAO bedrijfsrekeningDAO;
+    private final PriverekeningDAO priverekeningDAO;
+    private final TransactieDAO transactieDAO;
+    private final RegisterService registerService;
 
-    public RegisterPageController(ParticulierDAO particulierDAO, BedrijfDAO bedrijfDAO, MedewerkerDAO medewerkerDAO,
+    public RegistrationController(ParticulierDAO particulierDAO, BedrijfDAO bedrijfDAO, MedewerkerDAO medewerkerDAO,
                                   BedrijfsrekeningDAO bedrijfsrekeningDAO, PriverekeningDAO priverekeningDAO,
                                   AccountService accountService, TransactieDAO transactieDAO, RegisterService registerService) {
         super();
@@ -51,10 +52,10 @@ public class RegisterPageController {
 
     @GetMapping("/register")
     public String registerHandler() {
-        return "register_page_1";
+        return "register/particulierOfBedrijf";
     }
 
-    // keuze voor doorverwijzen naar zakelijke of particuliere registratiepagina
+    // Stap 1: keuze voor doorverwijzen naar zakelijke of particuliere registratiepagina
     @PostMapping("/register_Zakelijk_Particulier")
     public String choiceHandler(@RequestParam(name = "zakelijkOfParticulier") int value, Model model) {
         if (value == 0) {
@@ -62,32 +63,37 @@ public class RegisterPageController {
             return "register/particulier";
         } else if (value == 1) {
             model.addAttribute("klant", new Bedrijf());
-            return "register_page_2_zakelijk";
+            return "register/bedrijf";
         }
         return null;
     }
 
-    // registratie particulier
+
+    // Registratie particulier
+
+    // Stap 2: verwerken ingevoerde klantgegevens
     @PostMapping("/register_particulier")
     public String newParticulierHandler(Model model, @ModelAttribute(name = "backingBean") RegisterFormPartBackingBean dummy) {
         model.addAttribute("backingBean", dummy);
-        return "confirmationParticulier";
+        return "register/confirmationParticulier";
     }
 
+    // Stap 3: verwerken eventuele wijzigingen in klantgegevens na controle door klant
     @PostMapping("/confirmParticulier")
     public String confirmHandler(@ModelAttribute RegisterFormPartBackingBean backingBean, Model model) {
         Particulier p = new Particulier(backingBean, bedrijfsrekeningDAO, priverekeningDAO);
-        model.addAttribute("particulier", p);
-        LoginFormBackingBean usernameForm = new LoginFormBackingBean("", "");
+        model.addAttribute("klant", p);
+        LoginFormBackingBean usernameForm = new LoginFormBackingBean("","");
         model.addAttribute("doesExist", false);
         model.addAttribute("usernameForm", usernameForm);
         return "register/registerUsername";
     }
 
+    // Stap 4: verwerken ingevoerde logingegevens
     @PostMapping("/usernameForm")
     public String confirm(Model model, @ModelAttribute LoginFormBackingBean usernameForm,
-                          @ModelAttribute(name = "particulier") Particulier p) {
-        Klant klant = (Klant) model.getAttribute("particulier");
+                          @ModelAttribute(name="klant") Particulier p){
+        Klant klant = (Klant) model.getAttribute("klant");
         // validatie voor unieke gebruikersnaam
         if (!registerService.checkUniqueUsername(usernameForm.getUserName())) {
             LoginFormBackingBean usernameExist = new LoginFormBackingBean("", "");
@@ -101,46 +107,35 @@ public class RegisterPageController {
             particulierDAO.storeOne((Particulier) klant);
         } else
             bedrijfDAO.storeOne((Bedrijf) klant);
-        return "register/register_completed";
+        return "register/completed";
     }
 
-    // registratie bedrijf
+
+    // Registratie bedrijf
+
+    // Stap 2: verwerken ingevoerde klantgegevens
     @PostMapping("/register_zakelijk")
-    public String newBedrijfsHandler(
-            @RequestParam(name = "Company_name") String bedrijfsnaam,
-            @RequestParam(name = "Branch") String sector,
-            @RequestParam(name = "KVK_number") int KVKNummer,
-            @RequestParam(name = "BTW_number") String BTWNummer,
-            @RequestParam(name = "Street") String straatnaam,
-            @RequestParam(name = "House_number") int huisnummer,
-            @RequestParam(name = "Postal_code") String postcode,
-            @RequestParam(name = "City") String woonplaats,
-            Model model) {
-        Bedrijf newBedrijf = new Bedrijf(straatnaam, huisnummer, postcode, woonplaats, bedrijfsnaam, KVKNummer, sector,
-                BTWNummer, medewerkerDAO.getOneByID(ID_ACCOUNTMANAGER), bedrijfsrekeningDAO);
-        model.addAttribute("klant", newBedrijf);
-        return "confirmationBedrijf";
+    public String newBedrijfsHandler(@ModelAttribute("klant") Bedrijf bedrijf, Model model) {
+        model.addAttribute("klant", bedrijf);
+        return "register/confirmationBedrijf";
     }
 
+    // Stap 3: verwerken eventuele wijzigingen in klantgegevens na controle door klant
     @PostMapping("/confirmBedrijf")
-    public String confirmBedrijfHandler(@ModelAttribute(name = "klant") Bedrijf confirmedMember, Model model) {
-        model.addAttribute("klant", confirmedMember);
-        return "register_page_3";
+    public String confirmBedrijfHandler(@ModelAttribute("klant") Bedrijf bedrijf, Model model) {
+        model.addAttribute("klant", bedrijf);
+        return "register/registerLogin";
     }
 
-    @PostMapping("/confirm")
-    public String confirm(@RequestParam String user_name,
-                          @RequestParam String password, Model model) {
-        Klant klant = (Klant) model.getAttribute("klant");
-        klant.setGebruikersnaam(user_name);
-        klant.setWachtwoord(password);
-        if (klant instanceof Particulier)
-            particulierDAO.storeOne((Particulier) klant);
-        else
-            bedrijfDAO.storeOne((Bedrijf) klant);
-        return "register/register_completed";
+    // Stap 4: verwerken ingevoerde logingegevens
+    @PostMapping("/storeLogin")
+    public String confirm(@ModelAttribute("klant") Bedrijf bedrijf) {
+        bedrijf.setAccountmanager(medewerkerDAO.getOneByID(ID_ACCOUNTMANAGER));
+        bedrijfDAO.storeOne(bedrijf);
+        return "register/completed";
     }
 
+    // Rekening openen
     @GetMapping("/RegisterAccountNumber")
     public String RegisterAccountNumberHandlder(Model model, @ModelAttribute(name = "klant") Klant klant) {
         newIBAN = accountService.createRandomIBAN();

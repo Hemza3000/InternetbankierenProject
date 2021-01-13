@@ -9,7 +9,9 @@ import sofa.internetbankieren.backing_bean.LoginFormBackingBean;
 import sofa.internetbankieren.model.Medewerker;
 import sofa.internetbankieren.repository.MedewerkerDAO;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @TacoJongkind 15-12-2020
@@ -18,9 +20,13 @@ import java.util.List;
 @Controller
 public class MedewerkerLoginController {
     private MedewerkerDAO medewerkerDAO;
+    private final Map<Medewerker.Rol, String> volgendePagina = new HashMap<>(); // toegevoegd door Wendy i.h.k.v. Maintenance
 
     public MedewerkerLoginController(MedewerkerDAO medewerkerDAO) {
         this.medewerkerDAO = medewerkerDAO;
+        volgendePagina.put(Medewerker.Rol.HOOFD_PARTICULIEREN, "overviewHoofdParticulierenDummy");
+        volgendePagina.put(Medewerker.Rol.HOOFD_MKB, "overviewHoofdMkbDummy");
+        volgendePagina.put(Medewerker.Rol.ACCOUNTMANAGER, "overviewAccountmanagerDummy");
     }
 
     @GetMapping("/login_medewerker")
@@ -39,24 +45,11 @@ public class MedewerkerLoginController {
             System.out.println("onbestaande logingegevens");
             return "foutingelogd";
         } else {
-            //model.addAttribute("ingelogde", medewerkers.get(0));
+            Medewerker ingelogde = medewerkers.get(0);
+            model.addAttribute("ingelogde", ingelogde);
             System.out.println("ingelogd!");
-            switch (medewerkers.get(0).getRol()) {
-                case HOOFD_PARTICULIEREN:
-                    return "overviewHoofdParticulierenDummy";
-
-                case HOOFD_MKB:
-                    return "overviewHoofdMkbDummy";
-
-                case ACCOUNTMANAGER:
-                    return "overviewAccountmanagerDummy";
-
-                default:
-                    return "error";
-            }
+            // switch vervangen door map volgendePagina door Wendy i.h.k.v. Maintenance
+            return volgendePagina.getOrDefault(ingelogde.getRol(), "error");
         }
     }
-
-
-
 }

@@ -30,7 +30,8 @@ public class Medewerker {
     private final BedrijfDAO bedrijfDAO;
 
     public Medewerker(int personeelsnummer, String gebruikersnaam, String wachtwoord, String voornaam,
-                      String tussenvoegsels, String achternaam, Rol rol, List<Integer> bedrijfIDs, BedrijfDAO bedrijfDAO) {
+                      String tussenvoegsels, String achternaam, Rol rol, List<Integer> bedrijfIDs,
+                      BedrijfDAO bedrijfDAO) {
         super();
         this.personeelsnummer = personeelsnummer;
         this.gebruikersnaam = gebruikersnaam;
@@ -44,7 +45,8 @@ public class Medewerker {
     }
 
     public Medewerker(String voornaam, String achternaam, BedrijfDAO bedrijfDAO) {
-        this(0, "", "", voornaam, "", achternaam, Rol.ACCOUNTMANAGER, new ArrayList<>(), bedrijfDAO);
+        this(0, "", "", voornaam, "", achternaam, Rol.ACCOUNTMANAGER,
+                new ArrayList<>(), bedrijfDAO);
     }
 
     public String getGebruikersnaam() {
