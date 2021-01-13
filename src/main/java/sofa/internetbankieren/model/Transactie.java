@@ -113,4 +113,18 @@ public class Transactie implements Comparable<Transactie> {
     public int compareTo(Transactie other) {
         return this.datum.compareTo(other.datum);
     }
+
+    @Override
+    public String toString() {
+        return "Transactie{" +
+                "idTransactie=" + idTransactie +
+                ", rekening=" + rekening +
+                ", bijschrijving=" + bijschrijving +
+                ", bedrag=" + bedrag +
+                ", datum=" + datum +
+                ", omschrijving='" + omschrijving + '\'' +
+                ", tegenRekening=" + tegenRekening +
+                '}';
+    }
 }
+

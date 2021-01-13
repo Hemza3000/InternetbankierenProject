@@ -1,13 +1,12 @@
 package sofa.internetbankieren.backing_bean;
 
-
-public class MoneyTransferBackingbean {
+public class MoneyTransferBackingBean {
 
     private double bedrag;
     private String tegenrekening;
     private String omschrijving;
 
-    public MoneyTransferBackingbean(double bedrag, String tegenrekening, String omschrijving) {
+    public MoneyTransferBackingBean(double bedrag, String tegenrekening, String omschrijving) {
         this.bedrag = bedrag;
         this.tegenrekening = tegenrekening;
         this.omschrijving = omschrijving;
@@ -36,5 +35,5 @@ public class MoneyTransferBackingbean {
     public void setOmschrijving(String omschrijving) {
         this.omschrijving = omschrijving;
     }
-}
 
+}
