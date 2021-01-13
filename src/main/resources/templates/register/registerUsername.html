@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>SOFA - registreren</title>
@@ -15,6 +15,9 @@
             <td><label for="user_name">Gebruikersnaam</label></td>
             <td><input type="text" name="user_name" th:field="*{userName}" required/></td>
         </tr>
+        <tr th:if="${doesExist}">
+            <td></td>
+            <td><font color="red">Gebruikersnaam bestaat al: kies een andere gebruikersnaam</font></td>
         <tr>
             <td><label for="password">Wachtwoord</label></td>
             <td><input type="password" name="password" th:field="*{password}" required/></td>

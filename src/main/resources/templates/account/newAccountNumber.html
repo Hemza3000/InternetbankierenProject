@@ -26,16 +26,19 @@
         <td><input id="NaamContactpersoon" name="NaamContactpersoon"></td>
     </tr>
     <tr th:hidden="${!isBedrijf}">
-        <td><label for="formContactpersoon">BSN contactpersoon</label></td>
-        <td><input id="formContactpersoon" name="formContactpersoon" value=""></td>
+        <td><label for="bsnContactpersoon">BSN contactpersoon</label></td>
+        <td><input type="number" id="bsnContactpersoon" name="bsnContactpersoon" value=""></td>
+    </tr>
+    <tr th:if="${!doesExist}">
+        <td></td>
+        <td><font color="red">BSN komt niet overeen met gegevens. Probeer opnieuw</font></td>
     </tr>
     <tr>
-        <td><input id="akkoord" type="radio" required> <label> ik ga akkoord met de <a href="/voorwaarden">voorwaarden</a> </label></td>
+        <td><input id="akkoord" type="radio" required><label> ik ga akkoord met de <a href="/voorwaarden">voorwaarden</a> </label></td>
     </tr>
         <td></td>
         <td><input type="submit" name="OK" value="bevestig"></td>
 </table>
-
 </form>
 <p>Terug naar het <a href="/overzicht">rekeningoverzicht</a></p>
 <script>

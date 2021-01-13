@@ -47,6 +47,11 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
         return jdbcTemplate.query(sql, new BedrijfsMapper(), gebruikersnaam, wachtwoord);
     }
 
+    public List<Bedrijf> getOneByGebruikersnaam(String gebruikersnaam){
+        final String sql = "select * from bedrijf where gebruikersnaam=?";
+        return jdbcTemplate.query(sql, new BedrijfsMapper(), gebruikersnaam);
+    }
+
     // Retrieves all corporate customers by accountmanager ID
     public List<Bedrijf> getAllByIdAccountmanager(int idAccountmanager) {
         final String sql = "SELECT * FROM bedrijf WHERE idaccountmanager=?";
@@ -95,7 +100,8 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
     //Updates customer in database by ID
     @Override
     public void updateOne(Bedrijf bedrijf) {
-        jdbcTemplate.update("update bedrijf set gebruikersnaam=?, wachtwoord=?, straat=?, huisnummer=?, postcode=?, woonplaats=?, bedrijfsnaam=?, KVKnummer=?, sector=?, BTWnummer=? + where idBedrijf=?",
+        jdbcTemplate.update("update bedrijf set gebruikersnaam=?, wachtwoord=?, straat=?, huisnummer=?, postcode=?, " +
+                        "woonplaats=?, bedrijfsnaam=?, KVKnummer=?, sector=?, BTWnummer=? + where idBedrijf=?",
                 bedrijf.getGebruikersnaam(),
                 bedrijf.getWachtwoord(),
                 bedrijf.getStraat(),
@@ -114,9 +120,7 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
                 bedrijf.getIdKlant());
     }
 
-
     //Rowmapper
-
     private final class BedrijfsMapper implements RowMapper<Bedrijf> {
 
         @Override

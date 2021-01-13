@@ -50,6 +50,18 @@ public class ParticulierDAO {
         return jdbcTemplate.query(sql, new ParticulierRowMapper(), gebruikersnaam, wachtwoord);
     }
 
+    // get all by gebruikersnaam
+    public List<Particulier> getAllByGebruikersnaam(String gebruikersnaam){
+        final String sql = "select * from particulier where gebruikersnaam=?";
+        return jdbcTemplate.query(sql, new ParticulierRowMapper(), gebruikersnaam);
+    }
+
+    // get all by bsn
+    public List<Particulier> getAllByBSN(int bsn){
+        final String sql = "select * from particulier where bsn=?";
+        return jdbcTemplate.query(sql, new ParticulierRowMapper(), bsn);
+    }
+
     //get All by naam
     public Particulier getByNaam(String voornaam, String achternaam) {
         final String sql = "select * from particulier where voornaam=? and achternaam=?";
