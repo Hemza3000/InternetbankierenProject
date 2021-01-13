@@ -1,7 +1,20 @@
 package sofa.internetbankieren.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import sofa.internetbankieren.backing_bean.MoneyTransferBackingbean;
+import sofa.internetbankieren.model.Rekening;
+import sofa.internetbankieren.model.Transactie;
+import sofa.internetbankieren.repository.BedrijfsrekeningDAO;
+import sofa.internetbankieren.repository.PriverekeningDAO;
+import sofa.internetbankieren.repository.TransactieDAO;
+import sofa.internetbankieren.service.MoneyTransferService;
+
+import java.time.LocalDateTime;
 
 @Controller
 @SessionAttributes("ingelogde")
@@ -32,9 +45,9 @@ public class MoneyTransferController {
         return "overview";
     }
     @PostMapping
-    public String depositHandler(@ModelAttribute MoneyTransferBackingBean backingBean, Model model) {
+    public String depositHandler(@ModelAttribute MoneyTransferBackingbean backingBean, Model model) {
         Rekening rekening = (Rekening) model.getAttribute("rekening");
-        Rekening tegenrekening = (Rekening) priverekeningDAO.getOneByIban(backingBean.getIBAN());
+        Rekening tegenrekening = (Rekening) priverekeningDAO.getOneByIban(backingBean.getTegenrekening());
         Transactie transactie = new Transactie(0, rekening, backingBean.getBedrag(), LocalDateTime.now(),
                 backingBean.getOmschrijving(), tegenrekening);
         transactieDAO.storeOne(transactie);
