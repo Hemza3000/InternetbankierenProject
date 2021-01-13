@@ -1,39 +1,35 @@
 package sofa.internetbankieren.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import sofa.internetbankieren.backing_bean.LoginFormBackingBean;
-import sofa.internetbankieren.backing_bean.MoneyTransferBackingBean;
-import sofa.internetbankieren.backing_bean.RegisterFormPartBackingBean;
-import sofa.internetbankieren.model.Particulier;
-import sofa.internetbankieren.model.Rekening;
-import sofa.internetbankieren.model.Transactie;
-import sofa.internetbankieren.repository.BedrijfsrekeningDAO;
-import sofa.internetbankieren.repository.PriverekeningDAO;
-import sofa.internetbankieren.repository.TransactieDAO;
-
-import java.time.LocalDateTime;
-
-import static javax.swing.text.html.CSS.getAttribute;
 
 @Controller
+@SessionAttributes("ingelogde")
+
 public class MoneyTransferController {
+    private MoneyTransferService moneyTransferService;
+    private MoneyTransferBackingbean moneyTransferBackingbean;
+
     TransactieDAO transactieDAO;
     PriverekeningDAO priverekeningDAO;
     BedrijfsrekeningDAO bedrijfsrekeningDAO;
 
     public MoneyTransferController() {
-        super();
+        this.moneyTransferService = moneyTransferService;
+        this.moneyTransferBackingbean = moneyTransferBackingbean;
     }
 
     @GetMapping({"/moneyTransfer"})
     public String moneyTransferHandler(Model model) {
-        MoneyTransferBackingBean userDummy = new MoneyTransferBackingBean("",0.0,"");
-        model.addAttribute("backingBean", userDummy);
+        MoneyTransferBackingbean moneyTransferBackingbean = new MoneyTransferBackingbean(0,"", "");
+        model.addAttribute("MoneyTransferBackingbean", moneyTransferBackingbean);
         return "moneyTransfer";
+    }
+
+    @PostMapping("/moneyTransfer")
+    public String moneyTransferHandler2(@ModelAttribute MoneyTransferController backingbean, Model model){
+        moneyTransferService.deposit("", moneyTransferBackingbean.getBedrag(), moneyTransferBackingbean.getTegenrekening(), moneyTransferBackingbean.getOmschrijving());
+        return "overview";
     }
     @PostMapping
     public String depositHandler(@ModelAttribute MoneyTransferBackingBean backingBean, Model model) {
