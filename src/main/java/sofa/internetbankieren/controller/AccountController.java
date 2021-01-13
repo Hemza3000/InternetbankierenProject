@@ -36,7 +36,7 @@ public class AccountController {
     @GetMapping("/rekening/{IBAN}")
     public String accountHandler(Model model, @PathVariable("IBAN") String iban) {
         List<Rekening> rekeningen = new ArrayList<>();
-        rekeningen.addAll(priverekeningDAO.getOneByIban(iban));
+        rekeningen.addAll(priverekeningDAO.getAllByIban(iban));
         rekeningen.addAll(bedrijfsrekeningDAO.getOneByIban(iban));
         Rekening rekening = rekeningen.get(0);
         List<Transactie> transacties = rekening.getTransacties();
