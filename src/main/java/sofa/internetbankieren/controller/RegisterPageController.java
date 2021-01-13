@@ -15,6 +15,7 @@ import sofa.internetbankieren.backing_bean.RegisterFormPartBackingBean;
 import sofa.internetbankieren.model.*;
 import sofa.internetbankieren.repository.*;
 import sofa.internetbankieren.service.AccountService;
+import sofa.internetbankieren.service.RegisterService;
 
 import java.util.List;
 
@@ -32,11 +33,11 @@ public class RegisterPageController {
     private BedrijfsrekeningDAO bedrijfsrekeningDAO;
     private PriverekeningDAO priverekeningDAO;
     private TransactieDAO transactieDAO;
-
+    private RegisterService registerService;
 
     public RegisterPageController(ParticulierDAO particulierDAO, BedrijfDAO bedrijfDAO, MedewerkerDAO medewerkerDAO,
                                   BedrijfsrekeningDAO bedrijfsrekeningDAO, PriverekeningDAO priverekeningDAO,
-                                  AccountService accountService, TransactieDAO transactieDAO) {
+                                  AccountService accountService, TransactieDAO transactieDAO, RegisterService registerService) {
         super();
         this.particulierDAO = particulierDAO;
         this.bedrijfDAO = bedrijfDAO;
@@ -45,6 +46,7 @@ public class RegisterPageController {
         this.priverekeningDAO = priverekeningDAO;
         this.accountService = accountService;
         this.transactieDAO = transactieDAO;
+        this.registerService = registerService;
     }
 
     @GetMapping("/register")
@@ -86,8 +88,8 @@ public class RegisterPageController {
     public String confirm(Model model, @ModelAttribute LoginFormBackingBean usernameForm,
                           @ModelAttribute(name = "particulier") Particulier p) {
         Klant klant = (Klant) model.getAttribute("particulier");
-        // validatie voor unieke gebruikersnaam.
-        if (!checkUniqueUsername(usernameForm.getUserName())) {
+        // validatie voor unieke gebruikersnaam
+        if (!registerService.checkUniqueUsername(usernameForm.getUserName())) {
             LoginFormBackingBean usernameExist = new LoginFormBackingBean("", "");
             model.addAttribute("usernameForm", usernameExist);
             model.addAttribute("doesExist", true);
@@ -137,12 +139,6 @@ public class RegisterPageController {
         else
             bedrijfDAO.storeOne((Bedrijf) klant);
         return "register/register_completed";
-    }
-
-    public boolean checkUniqueUsername(String username) {
-        List<Particulier> particulierList = particulierDAO.getAllByGebruikersnaam(username);
-        List<Bedrijf> bedrijfList = bedrijfDAO.getOneByGebruikersnaam(username);
-        return particulierList.isEmpty() && bedrijfList.isEmpty();
     }
 
     @GetMapping("/RegisterAccountNumber")
