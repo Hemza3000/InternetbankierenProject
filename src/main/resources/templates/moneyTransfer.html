@@ -8,11 +8,11 @@
 <h1>Overboeken</h1>
 <p> Geef hieronder een geldige IBAN rekening op van de begunstigde
     en het over te boeken bedrag: </p><br>
-<form name="moneyTransfer" action="postMoneyTransfer" method="post" th:object="${backingBean}">
+<!--<form name="overboekForm" action="/moneyTransfer" method="post" th:object="${backingBean}">
     <table>
         <tr>
             <td><label for="Iban">IBAN Nummer</label></td>
-            <td><input type="text" name="IBAN" th:field="*{IBAN}" placeholder="NL06SOFA0123456789" required/></td>
+            <td><input type="text" name="ibannummer" th:field="*{ibannummer}" placeholder="NL06SOFA0123456789" required/></td>
         </tr>
         <tr>
             <td><label for="Bedrag">Bedrag in Euro</label></td>
