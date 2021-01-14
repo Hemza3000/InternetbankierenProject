@@ -50,21 +50,22 @@ public class NewAccountNumberController {
     }
 
     @PostMapping("/formNewAccountNumber")
-    public String form(Model model, @ModelAttribute(name="ingelogde") Klant ingelogde, @RequestParam int bsnContactpersoon) {
+    public String form(Model model, @ModelAttribute(name="ingelogde") Klant ingelogde, @RequestParam String bsnContactpersoon) {
         if (ingelogde instanceof Particulier) {
             Priverekening priverekening = new Priverekening(0, newIBAN, transactieDAO, (Particulier) ingelogde);
             priverekeningDAO.storeOne(priverekening);
             // registeren van bedrijfsrekening
         } else {
+            int bsn = Integer.parseInt(bsnContactpersoon);
             // validatie op uniek BSN nummer
-            if (!checkUniqueBSN(bsnContactpersoon)) {
+            if (!checkUniqueBSN(bsn)) {
                 model.addAttribute("IBAN", newIBAN);
                 model.addAttribute("isBedrijf", true);
                 model.addAttribute("doesExist", false);
                 return "account/newAccountNumber";
             }
             Bedrijfsrekening bedrijfsrekening = new Bedrijfsrekening(0, newIBAN, transactieDAO,
-                    particulierDAO.getByBSN(bsnContactpersoon), (Bedrijf) ingelogde);
+                    particulierDAO.getByBSN(bsn), (Bedrijf) ingelogde);
             bedrijfsrekeningDAO.storeOne(bedrijfsrekening);
         }
         return "overview";

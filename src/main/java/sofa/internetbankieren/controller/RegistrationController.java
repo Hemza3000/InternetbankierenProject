@@ -20,7 +20,7 @@ import sofa.internetbankieren.service.RegisterService;
  * 3. Eventuele wijzigingen klantgegevens na controle door klant
  * 4. Invoer logingegevens
  */
-@SessionAttributes("klant")
+@SessionAttributes({"klant", "ingelogde"})
 @Controller
 public class RegistrationController {
 
@@ -70,7 +70,6 @@ public class RegistrationController {
 
 
     // Registratie particulier
-
     // Stap 2: verwerken ingevoerde klantgegevens
     @PostMapping("/register_particulier")
     public String newParticulierHandler(Model model, @ModelAttribute(name = "backingBean") RegisterFormPartBackingBean dummy) {
@@ -107,9 +106,9 @@ public class RegistrationController {
             particulierDAO.storeOne((Particulier) klant);
         } else
             bedrijfDAO.storeOne((Bedrijf) klant);
+        model.addAttribute("ingelogde", klant);
         return "register/completed";
     }
-
 
     // Registratie bedrijf
 
@@ -129,34 +128,12 @@ public class RegistrationController {
 
     // Stap 4: verwerken ingevoerde logingegevens
     @PostMapping("/storeLogin")
-    public String confirm(@ModelAttribute("klant") Bedrijf bedrijf) {
+    public String confirm(@ModelAttribute("klant") Bedrijf bedrijf, Model model) {
+        Klant klant = (Klant) model.getAttribute("klant");
         bedrijf.setAccountmanager(medewerkerDAO.getOneByID(ID_ACCOUNTMANAGER));
         bedrijfDAO.storeOne(bedrijf);
+        model.addAttribute("ingelogde", klant);
         return "register/completed";
     }
 
-    // Rekening openen
-    @GetMapping("/RegisterAccountNumber")
-    public String RegisterAccountNumberHandlder(Model model, @ModelAttribute(name = "klant") Klant klant) {
-        newIBAN = accountService.createRandomIBAN();
-        model.addAttribute("klant", klant);
-        model.addAttribute("IBAN", newIBAN);
-        return "account/RegisterAccountNumber";
-    }
-
-    @PostMapping("/formAccountNumber")
-    public String formAccountNumberHandlder(Model model, @ModelAttribute(name = "klant") Klant klant, @RequestParam String formContactpersoon) {
-        if (klant instanceof Particulier) {
-            Priverekening priverekening = new Priverekening(0, newIBAN, transactieDAO, (Particulier) klant);
-            priverekeningDAO.storeOne(priverekening);
-            // registeren van rekeningnummer
-        } else {
-            int contactPersoonBSN = Integer.parseInt(formContactpersoon);
-            Particulier contactPersoon = particulierDAO.getByBSN(contactPersoonBSN);
-            //TODO controle op contactpersoon (op basis van BSN) bestaat)
-            Bedrijfsrekening bedrijfsrekening = new Bedrijfsrekening(0, newIBAN, transactieDAO, contactPersoon, (Bedrijf) klant);
-            bedrijfsrekeningDAO.storeOne(bedrijfsrekening);
-        }
-        return "home";
-    }
 }

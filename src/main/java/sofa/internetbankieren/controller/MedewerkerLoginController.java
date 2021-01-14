@@ -24,9 +24,9 @@ public class MedewerkerLoginController {
 
     public MedewerkerLoginController(MedewerkerDAO medewerkerDAO) {
         this.medewerkerDAO = medewerkerDAO;
-        volgendePagina.put(Medewerker.Rol.HOOFD_PARTICULIEREN, "overviewHoofdParticulierenDummy");
-        volgendePagina.put(Medewerker.Rol.HOOFD_MKB, "overviewHoofdMkbDummy");
-        volgendePagina.put(Medewerker.Rol.ACCOUNTMANAGER, "overviewAccountmanagerDummy");
+        volgendePagina.put(Medewerker.Rol.HOOFD_PARTICULIEREN, "medewerker/overviewHoofdParticulierenDummy");
+        volgendePagina.put(Medewerker.Rol.HOOFD_MKB, "medewerker/overviewHoofdMkbDummy");
+        volgendePagina.put(Medewerker.Rol.ACCOUNTMANAGER, "medewerker/overviewAccountmanagerDummy");
     }
 
     @GetMapping("/login_medewerker")
