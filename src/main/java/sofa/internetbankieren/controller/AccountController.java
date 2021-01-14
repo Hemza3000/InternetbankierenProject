@@ -38,7 +38,7 @@ public class AccountController {
         // Rekening opzoeken o.b.v. IBAN
         List<Rekening> rekeningen = new ArrayList<>();
         rekeningen.addAll(priverekeningDAO.getAllByIban(iban));
-        rekeningen.addAll(bedrijfsrekeningDAO.getOneByIban(iban));
+        rekeningen.addAll(bedrijfsrekeningDAO.getAllByIban(iban));
         Rekening rekening = rekeningen.get(0);
 
         // Lijst maken van laatste maximaal MAX_TRANSACTIES transacties met meeste recente vooraan

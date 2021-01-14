@@ -13,6 +13,7 @@ import sofa.internetbankieren.model.Transactie;
 import sofa.internetbankieren.repository.BedrijfsrekeningDAO;
 import sofa.internetbankieren.repository.PriverekeningDAO;
 import sofa.internetbankieren.repository.TransactieDAO;
+import sofa.internetbankieren.service.MoneyTransferService;
 //import sofa.internetbankieren.service.MoneyTransferService;
 
 import java.time.LocalDateTime;
@@ -27,11 +28,13 @@ public class MoneyTransferController {
     private Transactie transactie;
     private PriverekeningDAO priverekeningDAO;
     private BedrijfsrekeningDAO bedrijfsrekeningDAO;
+    private MoneyTransferService moneyTransferService;
 
-    public MoneyTransferController(PriverekeningDAO priverekeningDAO, BedrijfsrekeningDAO bedrijfsrekeningDAO, TransactieDAO transactieDAO) {
+    public MoneyTransferController(PriverekeningDAO priverekeningDAO, BedrijfsrekeningDAO bedrijfsrekeningDAO, TransactieDAO transactieDAO, MoneyTransferService moneyTransferService) {
         this.priverekeningDAO = priverekeningDAO;
         this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
         this.transactieDAO = transactieDAO;
+        this.moneyTransferService = moneyTransferService;
     }
 
     @GetMapping({"/moneyTransfer"})
@@ -55,47 +58,19 @@ public class MoneyTransferController {
         nieuweTransactie = new Transactie(0, mijnRekening, bedrag,LocalDateTime.now(), backingbean.getOmschrijving(), priverekeningDAO.getOneByIban(backingbean.getTegenrekening()));
         System.out.println(nieuweTransactie);
 
-        if (validatieSaldo(mijnRekening, bedrag, tegenrekening)){
+        if (moneyTransferService.validatieSaldo (mijnRekening, bedrag, tegenrekening)){
             mijnRekening.setSaldo(eigenSaldo - bedrag);
             tegenrekening.setSaldo(tegenrekeningSaldo+ bedrag);
             transactieDAO.storeOne(nieuweTransactie);
             priverekeningDAO.updateOne(mijnRekening);
             priverekeningDAO.updateOne(tegenrekening);
         }
-        return "account";
+        return "account/account";
     }
 
-//    @PostMapping
-//    public String depositHandler(@ModelAttribute MoneyTransferBackingBean backingBean, Model model) {
-//
-//        Rekening rekening = (Rekening) model.getAttribute("rekening");
-//        Rekening tegenrekening = (Rekening) priverekeningDAO.getOneByIban(backingBean.getTegenrekening());
-//        Transactie transactie = new Transactie(0, rekening, backingBean.getBedrag(), LocalDateTime.now(),
-//                backingBean.getOmschrijving(), tegenrekening);
-//        transactieDAO.storeOne(transactie);
-//        return "account";
-//    }
-
-    public boolean validatieSaldo(Rekening mijnRekening, double bedrag, Rekening tegenrekening) {
-
-        double eigenSaldo = mijnRekening.getSaldo();
-        double tegenrekeningSaldo = tegenrekening.getSaldo();
-
-
-        if (mijnRekening.getSaldo() <= bedrag) {
-            System.out.println("saldo te laag");
-            return false;
-        } else {
-            System.out.println("voldoende saldo");
-            return true;
-
-        }
-
-
-    }
-
+}
 
     //todo: nog voor bedrijf aanmaken
 
-}
+
 

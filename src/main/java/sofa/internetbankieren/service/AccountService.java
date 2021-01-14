@@ -32,7 +32,7 @@ public class AccountService {
 
     public boolean checkUniqueIBAN(String IBAN){
         List<Priverekening> priverekeningList = priverekeningDAO.getAllByIban(IBAN);
-        List<Bedrijfsrekening> bedrijfsrekeningList = bedrijfsrekeningDAO.getOneByIban(IBAN);
+        List<Bedrijfsrekening> bedrijfsrekeningList = bedrijfsrekeningDAO.getAllByIban(IBAN);
             return priverekeningList.isEmpty() && bedrijfsrekeningList.isEmpty();
     }
 }
