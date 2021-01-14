@@ -36,5 +36,7 @@ public class MoneyTransferBackingbean {
     public void setOmschrijving(String omschrijving) {
         this.omschrijving = omschrijving;
     }
+
+    //deze comment mag weg
 }
 
