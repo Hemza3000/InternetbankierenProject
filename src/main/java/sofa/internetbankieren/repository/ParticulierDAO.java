@@ -38,13 +38,7 @@ public class ParticulierDAO {
         return jdbcTemplate.query(sql, new ParticulierRowMapper(), null);
     }
 
-    // get One by Id
-    public Particulier getOneByID(int idKlant){
-        final String sql = "select * from particulier where idparticulier=?";
-        return jdbcTemplate.queryForObject(sql, new ParticulierRowMapper(), idKlant);
-    }
-
-    // get One by gebruikersnaam en wachtwoord
+    // get all by gebruikersnaam en wachtwoord
     public List<Particulier> getOneByGebruikersnaamWachtwoord(String gebruikersnaam, String wachtwoord){
         final String sql = "select * from particulier where gebruikersnaam=? and wachtwoord=?";
         return jdbcTemplate.query(sql, new ParticulierRowMapper(), gebruikersnaam, wachtwoord);
@@ -61,15 +55,21 @@ public class ParticulierDAO {
         final String sql = "select * from particulier where bsn=?";
         return jdbcTemplate.query(sql, new ParticulierRowMapper(), bsn);
     }
+    // get One by Id
+    public Particulier getOneByID(int idKlant){
+        final String sql = "select * from particulier where idparticulier=?";
+        return jdbcTemplate.queryForObject(sql, new ParticulierRowMapper(), idKlant);
+    }
 
-    //get All by naam
+    //get One by naam
     public Particulier getByNaam(String voornaam, String achternaam) {
         final String sql = "select * from particulier where voornaam=? and achternaam=?";
         return jdbcTemplate
                 .queryForObject(sql,
                         new ParticulierRowMapper(), voornaam, achternaam);
     }
-    //get All by BSN
+
+    //get One by BSN
     public Particulier getByBSN(int BSN) {
         final String sql = "select * from particulier where bsn=?";
         return jdbcTemplate

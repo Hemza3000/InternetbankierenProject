@@ -24,10 +24,28 @@
             <td><input type="password" id="password_field" th:field="*{wachtwoord}" required/></td>
         </tr>
         <tr>
+            <td></td>
+            <td id="passwordFalse"></td>
+        </tr>
         <td></td>
-        <td><input type="submit" value="OK"><input type="reset" value="Reset"></td>
+        <td><input type="submit" name="OK" value="OK"><input type="reset" name="reset" value="Reset"></td>
         </tr>
     </table>
 </form>
+<script>
+    // Wichert gemaakt
+    document.getElementById("password").addEventListener("focusout", validatie);
+
+    function validatie() {
+        let password = document.forms['usernameForm']['password'].value;
+        let regex = /^.{6,}$/;
+        if ( regex.test(password) == false ) {
+            document.getElementById("passwordFalse").innerHTML = '<span style=\'color:#ff0000\'>Wachtwoord bestaat uit minder dan 6 tekens</span>';
+            return false;
+        } else {
+            document.getElementById("passwordFalse").innerHTML = '';
+        }
+    }
+</script>
 </body>
 </html>

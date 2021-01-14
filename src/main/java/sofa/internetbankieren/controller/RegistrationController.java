@@ -10,6 +10,8 @@ import sofa.internetbankieren.repository.*;
 import sofa.internetbankieren.service.AccountService;
 import sofa.internetbankieren.service.RegisterService;
 
+import java.util.ArrayList;
+
 /**
  * @author Wichert Tjerkstra (particulier), Wendy Ellens (bedrijf)
  * aangemaakt op 9 dec
@@ -129,9 +131,10 @@ public class RegistrationController {
     // Stap 4: verwerken ingevoerde logingegevens
     @PostMapping("/storeLogin")
     public String confirm(@ModelAttribute("klant") Bedrijf bedrijf, Model model) {
-        Klant klant = (Klant) model.getAttribute("klant");
         bedrijf.setAccountmanager(medewerkerDAO.getOneByID(ID_ACCOUNTMANAGER));
+        bedrijf.setBedrijfsrekeningDAO(bedrijfsrekeningDAO);
         bedrijfDAO.storeOne(bedrijf);
+        Klant klant = bedrijf;
         model.addAttribute("ingelogde", klant);
         return "register/completed";
     }

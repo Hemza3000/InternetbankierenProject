@@ -42,11 +42,11 @@
         </tr>
         <tr>
             <td><label for="Street">Straat</label></td>
-            <td><input type="text" id="street_field" th:field="*{straat}" name="Street" required/></td>
+            <td><input type="text" id="street_field" th:field="*{straat}" name="Street" readonly/></td>
         </tr>
         <tr>
             <td><label for="City">Woonplaats</label></td>
-            <td><input type="text" id="city_field" th:field="*{woonplaats}" name="City" required/></td>
+            <td><input type="text" id="city_field" th:field="*{woonplaats}" name="City" readonly/></td>
         </tr>
         <td></td>
         <td><input type="submit" name="OK" value="OK"><input type="reset" name="reset" value="Reset"></td>
@@ -57,6 +57,7 @@
 <p>Terug naar de <a href="/home">homepage</a></p> </p>
 
 <script>
+    // toegevoegd door Wichert
     // voegt automatisch straat + woonplaats in bij het invullen van Postcode en huisnummer
     document.getElementById('pc_field').addEventListener('focusout', checkForAddressPart)
     document.getElementById('nr_field').addEventListener('focusout', checkForAddressPart)
