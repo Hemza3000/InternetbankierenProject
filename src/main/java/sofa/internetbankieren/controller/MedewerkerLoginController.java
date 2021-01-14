@@ -24,9 +24,9 @@ public class MedewerkerLoginController {
 
     public MedewerkerLoginController(MedewerkerDAO medewerkerDAO) {
         this.medewerkerDAO = medewerkerDAO;
-        volgendePagina.put(Medewerker.Rol.HOOFD_PARTICULIEREN, "overviewHoofdParticulierenDummy");
-        volgendePagina.put(Medewerker.Rol.HOOFD_MKB, "overviewHoofdMkbDummy");
-        volgendePagina.put(Medewerker.Rol.ACCOUNTMANAGER, "overviewAccountmanagerDummy");
+        volgendePagina.put(Medewerker.Rol.HOOFD_PARTICULIEREN, "/medewerker/overviewHoofdParticulierenDummy");
+        volgendePagina.put(Medewerker.Rol.HOOFD_MKB, "/medewerker/overviewHoofdMkbDummy");
+        volgendePagina.put(Medewerker.Rol.ACCOUNTMANAGER, "/medewerker/overviewAccountmanagerDummy");
     }
 
     @GetMapping("/login_medewerker")
@@ -38,7 +38,6 @@ public class MedewerkerLoginController {
 
     @PostMapping("/login_medewerker")
     public String postInlogForm(Model model, @ModelAttribute LoginFormBackingBean dummy) {
-        System.out.println("inloggen");
         List<Medewerker> medewerkers =
                 medewerkerDAO.getOneByGebruikersnaamWachtwoord(dummy.getUserName(), dummy.getPassword());
         if (medewerkers.size() == 0) { // Geen medewerker met deze inloggegevens
@@ -47,7 +46,6 @@ public class MedewerkerLoginController {
         } else {
             Medewerker ingelogde = medewerkers.get(0);
             model.addAttribute("ingelogde", ingelogde);
-            System.out.println("ingelogd!");
             // switch vervangen door map volgendePagina door Wendy i.h.k.v. Maintenance
             return volgendePagina.getOrDefault(ingelogde.getRol(), "error");
         }
