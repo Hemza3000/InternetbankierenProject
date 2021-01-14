@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author Wendy Ellens
  *
- * Voegt transactiegegevens toe aan de SQL-database of haalt deze eruit op.
+ * Voegt transactiegegevens toe aan de SQL-database en haalt deze eruit op.
  */
 @Repository
 public class TransactieDAO implements GenericDAO<Transactie> {
@@ -23,7 +23,7 @@ public class TransactieDAO implements GenericDAO<Transactie> {
     private final BedrijfsrekeningDAO bedrijfsrekeningDAO;
 
     public TransactieDAO(JdbcTemplate jdbcTemplate, PriverekeningDAO priverekeningDAO,
-                         BedrijfsrekeningDAO bedrijfsrekeningDAO) {
+            BedrijfsrekeningDAO bedrijfsrekeningDAO) {
         super();
         this.jdbcTemplate = jdbcTemplate;
         this.priverekeningDAO = priverekeningDAO;
@@ -69,12 +69,14 @@ public class TransactieDAO implements GenericDAO<Transactie> {
 
     @Override
     public void storeOne(Transactie transactie) {
-        // in de database wordt de transactie opgeslagen als een aparte bij- en afschrijving
+
+        // Transactie splitsen in af- en bijschrijving om apart op te slaan in de database
         Transactie transactie2 = new Transactie(transactie);
         transactie2.setBijschrijving(!transactie.isBijschrijving());
         transactie2.setRekening(transactie.getTegenRekening());
         transactie2.setTegenRekening(transactie.getRekening());
-        // eerst de afschrijving, dan de bijschrijving
+
+        // Eerst de afschrijving opslaan, dan de bijschrijving
         if (transactie.isBijschrijving()) {
             storePart(transactie2);
             storePart(transactie);
@@ -85,6 +87,7 @@ public class TransactieDAO implements GenericDAO<Transactie> {
         }
     }
 
+    // Hulpmethode om een af- of bijschrijving op te slaan
     private void storePart(Transactie transactie) {
         String sql = "insert into transactie (bedrag, transactiebeschrijving, datum, bijschrijving, " +
                 "idbedrijfsrekening, idpriverekening) values (?,?,?,?,?,?)";
@@ -95,17 +98,22 @@ public class TransactieDAO implements GenericDAO<Transactie> {
             ps.setString(2, transactie.getOmschrijving());
             ps.setTimestamp(3, Timestamp.valueOf(transactie.getDatum()));
             ps.setBoolean(4, transactie.isBijschrijving());
-            if (transactie.getRekening() instanceof Bedrijfsrekening) {
-                ps.setInt(5, transactie.getRekening().getIdRekening());
-                ps.setNull(6, Types.INTEGER);
-            }
-            else {
-                ps.setNull(5, Types.INTEGER);
-                ps.setInt(6, transactie.getRekening().getIdRekening());
-            }
+            setRekening(ps, transactie);
             return ps;
         }, keyHolder);
         transactie.setIdTransactie(keyHolder.getKey().intValue());
+    }
+
+    // Hulpmethode om juiste rekeningveld (bedrijf of particulier) in te vullen
+    private void setRekening(PreparedStatement ps, Transactie transactie) throws SQLException {
+        if (transactie.getRekening() instanceof Bedrijfsrekening) {
+            ps.setInt(5, transactie.getRekening().getIdRekening());
+            ps.setNull(6, Types.INTEGER);
+        }
+        else {
+            ps.setNull(5, Types.INTEGER);
+            ps.setInt(6, transactie.getRekening().getIdRekening());
+        }
     }
 
     @Override
@@ -117,10 +125,8 @@ public class TransactieDAO implements GenericDAO<Transactie> {
             transactie.getOmschrijving(),
             Timestamp.valueOf(transactie.getDatum()),
             transactie.isBijschrijving(),
-            transactie.getRekening() instanceof Bedrijfsrekening ?
-                transactie.getRekening().getIdRekening() : null,
-            transactie.getRekening() instanceof Priverekening ?
-                transactie.getRekening().getIdRekening() : null,
+            transactie.getRekening() instanceof Bedrijfsrekening ? transactie.getRekening().getIdRekening() : null,
+            transactie.getRekening() instanceof Priverekening ? transactie.getRekening().getIdRekening() : null,
             transactie.getIdTransactie()
             );
     }
@@ -145,11 +151,12 @@ public class TransactieDAO implements GenericDAO<Transactie> {
                 resultSet.getDouble("bedrag"),
                 resultSet.getTimestamp("datum").toLocalDateTime(),
                 resultSet.getString("transactiebeschrijving"),
-                // voor bijschrijvingen staat de tegenrekening in de vorige transactie, anders in de volgende
-                        resultSet.getBoolean("bijschrijving")
-                        ? getRekeningByID(resultSet.getInt("idtransactie") - 1)
-                        : getRekeningByID(resultSet.getInt("idtransactie") + 1)
-                    // todo controleren of afschrijving inderdaad eerst staat?
+                // Tegenrekening opzoeken in database
+                // Voor bijschrijvingen staat deze in de vorige transactie, voor afschrijvingen in de volgende
+                resultSet.getBoolean("bijschrijving")
+                    ? getRekeningByID(resultSet.getInt("idtransactie") - 1)
+                    : getRekeningByID(resultSet.getInt("idtransactie") + 1)
+                // todo controleren of afschrijving inderdaad eerst staat?
             );
             transactie.setBijschrijving(resultSet.getBoolean("bijschrijving"));
             // todo controleren of bijschrijving 0 of 1 is?

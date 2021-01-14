@@ -9,8 +9,8 @@
 <body>
 <h1>Welkom <span th:text="${ingelogde.getNaam()}"></span></h1>
 <h2>Je SOFA-rekeningen</h2>
-<p th:if="${ingelogde.rekeningen.isEmpty()}">Er zijn geen rekeningen om weer te geven.</p>
-<p th:if="${ingelogde.rekeningen.isEmpty()}"><a href="/newAccountNumberPage">klik hier</a> om een nieuwe rekening te open</p>
+<p th:if="${ingelogde.getRekeningen.isEmpty()}">Er zijn geen rekeningen om weer te geven.</p>
+<p th:if="${ingelogde.getRekeningen.isEmpty()}"><a href="/newAccountNumberPage">klik hier</a> om een nieuwe rekening te open</p>
 <table th:unless="${ingelogde.getRekeningen().isEmpty()}">
     <tr>
         <th>IBAN</th>

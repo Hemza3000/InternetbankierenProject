@@ -13,6 +13,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import sofa.internetbankieren.model.Priverekening;
+import sofa.internetbankieren.model.Rekening;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -41,9 +42,14 @@ public class PriverekeningDAO implements GenericDAO<Priverekening> {
     }
 
     // toegevoegd door Wendy
-    public List<Priverekening> getOneByIban(String iban) {
+    public List<Priverekening> getAllByIban(String iban) {
         final String sql = "select * from priverekening where iban=?";
         return jdbcTemplate.query(sql, new PriverekeningRowMapper(), iban);
+    }
+
+    public Rekening getOneByIban(String iban) {
+        final String sql = "select * from priverekening where iban=?";
+        return jdbcTemplate.queryForObject(sql, new PriverekeningRowMapper(), iban);
     }
 
         // get All

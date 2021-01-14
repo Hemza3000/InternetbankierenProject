@@ -1,10 +1,7 @@
 package sofa.internetbankieren.service;
 
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import sofa.internetbankieren.backing_bean.MoneyTransferBackingbean;
-import sofa.internetbankieren.model.Klant;
+import sofa.internetbankieren.backing_bean.MoneyTransferBackingBean;
 import sofa.internetbankieren.model.Priverekening;
 import sofa.internetbankieren.model.Rekening;
 import sofa.internetbankieren.repository.BedrijfsrekeningDAO;
@@ -18,7 +15,7 @@ public class MoneyTransferService {
     private Priverekening priverekening;
     private PriverekeningDAO priverekeningDAO;
     private BedrijfsrekeningDAO bedrijfsrekeningDAO;
-    private MoneyTransferBackingbean moneyTransferBackingbean;
+    private MoneyTransferBackingBean moneyTransferBackingbean;
 
     public MoneyTransferService(PriverekeningDAO priverekeningDAO, BedrijfsrekeningDAO bedrijfsrekeningDAO) {
         this.priverekeningDAO = priverekeningDAO;
