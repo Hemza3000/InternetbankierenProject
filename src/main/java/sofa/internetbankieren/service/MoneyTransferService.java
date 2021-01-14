@@ -1,8 +1,10 @@
 package sofa.internetbankieren.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import sofa.internetbankieren.backing_bean.MoneyTransferBackingBean;
+import sofa.internetbankieren.model.Bedrijfsrekening;
 import sofa.internetbankieren.model.Priverekening;
 import sofa.internetbankieren.model.Rekening;
 import sofa.internetbankieren.repository.BedrijfsrekeningDAO;
@@ -27,7 +29,7 @@ public class MoneyTransferService {
 
     public boolean validatieSaldo(Rekening mijnRekening, double bedrag, Rekening tegenrekening) {
 
-        if (mijnRekening.getSaldo() <= bedrag) {
+        if (mijnRekening.getSaldo() < bedrag) {
             System.out.println("saldo te laag");
             return false;
         } else {
@@ -35,4 +37,5 @@ public class MoneyTransferService {
             return true;
         }
     }
+
 }

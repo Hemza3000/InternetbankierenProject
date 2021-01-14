@@ -6,10 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sofa.internetbankieren.backing_bean.MoneyTransferBackingBean;
-import sofa.internetbankieren.model.Klant;
-import sofa.internetbankieren.model.Priverekening;
-import sofa.internetbankieren.model.Rekening;
-import sofa.internetbankieren.model.Transactie;
+import sofa.internetbankieren.model.*;
 import sofa.internetbankieren.repository.BedrijfsrekeningDAO;
 import sofa.internetbankieren.repository.PriverekeningDAO;
 import sofa.internetbankieren.repository.TransactieDAO;
@@ -17,6 +14,8 @@ import sofa.internetbankieren.service.MoneyTransferService;
 //import sofa.internetbankieren.service.MoneyTransferService;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @SessionAttributes({"ingelogde", "rekening"})
@@ -45,29 +44,35 @@ public class MoneyTransferController {
     }
 
     @PostMapping("/moneyTransfer")
-    public String moneyTransferHandler2(@ModelAttribute MoneyTransferBackingBean backingbean, Model model){
+    public String moneyTransferHandler2(@ModelAttribute MoneyTransferBackingBean backingbean, Model model) {
 
-        Priverekening mijnRekening = (Priverekening) model.getAttribute("rekening");
-        Priverekening tegenrekening = priverekeningDAO.getOneByIban(backingbean.getTegenrekening());
-        System.out.println(backingbean);
-
+        List<Rekening> rekeningen = new ArrayList<>();
+        rekeningen.addAll(priverekeningDAO.getAllByIban(backingbean.getTegenrekening()));
+        rekeningen.addAll(bedrijfsrekeningDAO.getAllByIban(backingbean.getTegenrekening()));
+        Rekening tegenrekening = rekeningen.get(0);
+        Rekening mijnRekening = (Rekening) model.getAttribute("rekening");
         double bedrag = backingbean.getBedrag();
         double eigenSaldo = mijnRekening.getSaldo();
         double tegenrekeningSaldo = tegenrekening.getSaldo();
+        nieuweTransactie = new Transactie(0, mijnRekening, bedrag, LocalDateTime.now(), backingbean.getOmschrijving(), tegenrekening);
 
-        nieuweTransactie = new Transactie(0, mijnRekening, bedrag,LocalDateTime.now(), backingbean.getOmschrijving(), priverekeningDAO.getOneByIban(backingbean.getTegenrekening()));
-        System.out.println(nieuweTransactie);
-
-        if (moneyTransferService.validatieSaldo (mijnRekening, bedrag, tegenrekening)){
+        if (moneyTransferService.validatieSaldo(mijnRekening, bedrag, tegenrekening)) {
             mijnRekening.setSaldo(eigenSaldo - bedrag);
-            tegenrekening.setSaldo(tegenrekeningSaldo+ bedrag);
+            tegenrekening.setSaldo(tegenrekeningSaldo + bedrag);
+
+            if (mijnRekening instanceof Bedrijfsrekening) {
+                bedrijfsrekeningDAO.updateOne((Bedrijfsrekening) mijnRekening); }
+            if (mijnRekening instanceof Priverekening) {
+                priverekeningDAO.updateOne((Priverekening) mijnRekening); }
+            if (tegenrekening instanceof Priverekening) {
+                priverekeningDAO.updateOne((Priverekening) tegenrekening); }
+            if (tegenrekening instanceof Bedrijfsrekening) {
+                bedrijfsrekeningDAO.updateOne((Bedrijfsrekening) tegenrekening); }
+
             transactieDAO.storeOne(nieuweTransactie);
-            priverekeningDAO.updateOne(mijnRekening);
-            priverekeningDAO.updateOne(tegenrekening);
         }
         return "account/account";
     }
-
 }
 
     //todo: nog voor bedrijf aanmaken
