@@ -16,6 +16,8 @@ import sofa.internetbankieren.service.MoneyTransferService;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
+import java.util.List;
 
 @Controller
 @SessionAttributes({"ingelogde", "rekening"})
@@ -28,6 +30,7 @@ public class MoneyTransferController {
     private PriverekeningDAO priverekeningDAO;
     private BedrijfsrekeningDAO bedrijfsrekeningDAO;
     private MoneyTransferService moneyTransferService;
+    private static final int MAX_TRANSACTIES = 10;
 
     public MoneyTransferController(PriverekeningDAO priverekeningDAO, BedrijfsrekeningDAO bedrijfsrekeningDAO, TransactieDAO transactieDAO, MoneyTransferService moneyTransferService) {
         this.priverekeningDAO = priverekeningDAO;
@@ -71,6 +74,11 @@ public class MoneyTransferController {
 
             transactieDAO.storeOne(nieuweTransactie);
         }
+        List<Transactie> transacties = mijnRekening.getTransacties();
+        Collections.sort(transacties, Collections.reverseOrder());
+        if (transacties.size() > 0)
+            transacties = transacties.subList(0, Math.min(transacties.size(), MAX_TRANSACTIES));
+        model.addAttribute("transacties", transacties);
         return "account/account";
     }
 }
