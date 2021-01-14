@@ -53,11 +53,10 @@ public class MoneyTransferController {
 
         if (validatieSaldo(mijnRekening, bedrag, tegenrekening)){
             double overtemaken = eigenSaldo - bedrag;
-
             mijnRekening.setSaldo(overtemaken);
             System.out.println(overtemaken);
             System.out.println(eigenSaldo);
-            tegenrekening.setSaldo(tegenrekeningSaldo+ nieuweTransactie.getBedrag());
+            tegenrekening.setSaldo(tegenrekeningSaldo+ bedrag);
             transactieDAO.storeOne(nieuweTransactie);
             System.out.println(eigenSaldo);
             System.out.println(tegenrekeningSaldo);
@@ -91,9 +90,6 @@ public class MoneyTransferController {
         } else {
             System.out.println("voldoende saldo");
             return true;
-
-
-
 
     }
 
