@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sofa.internetbankieren.backing_bean.MoneyTransferBackingBean;
 import sofa.internetbankieren.model.Klant;
+import sofa.internetbankieren.model.Priverekening;
 import sofa.internetbankieren.model.Rekening;
 import sofa.internetbankieren.model.Transactie;
 import sofa.internetbankieren.repository.BedrijfsrekeningDAO;
@@ -27,7 +28,7 @@ public class MoneyTransferController {
     private PriverekeningDAO priverekeningDAO;
     private BedrijfsrekeningDAO bedrijfsrekeningDAO;
 
-    public MoneyTransferController(PriverekeningDAO priverekeningDAO, BedrijfsrekeningDAO bedrijfsrekeningDAO) {
+    public MoneyTransferController(PriverekeningDAO priverekeningDAO, BedrijfsrekeningDAO bedrijfsrekeningDAO, TransactieDAO transactieDAO) {
         this.priverekeningDAO = priverekeningDAO;
         this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
         this.transactieDAO = transactieDAO;
@@ -41,29 +42,26 @@ public class MoneyTransferController {
     }
 
     @PostMapping("/moneyTransfer")
-    public String moneyTransferHandler2(@ModelAttribute MoneyTransferBackingBean backingbean, Model model, @RequestParam String tegenrekeningIban, @RequestParam double bedrag, @RequestParam String omschrijving){
+    public String moneyTransferHandler2(@ModelAttribute MoneyTransferBackingBean backingbean, Model model){
 
-        Rekening mijnRekening = (Rekening) model.getAttribute("rekening");
-        Rekening tegenrekening = priverekeningDAO.getOneByIban(tegenrekeningIban);
+        Priverekening mijnRekening = (Priverekening) model.getAttribute("rekening");
+        Priverekening tegenrekening = priverekeningDAO.getOneByIban(backingbean.getTegenrekening());
+        System.out.println(backingbean);
+
+        double bedrag = backingbean.getBedrag();
         double eigenSaldo = mijnRekening.getSaldo();
         double tegenrekeningSaldo = tegenrekening.getSaldo();
 
-        nieuweTransactie = new Transactie(0, mijnRekening, bedrag,LocalDateTime.now(), omschrijving, tegenrekening);
+        nieuweTransactie = new Transactie(0, mijnRekening, bedrag,LocalDateTime.now(), backingbean.getOmschrijving(), priverekeningDAO.getOneByIban(backingbean.getTegenrekening()));
         System.out.println(nieuweTransactie);
 
         if (validatieSaldo(mijnRekening, bedrag, tegenrekening)){
-            double overtemaken = eigenSaldo - bedrag;
-            mijnRekening.setSaldo(overtemaken);
-            System.out.println(overtemaken);
-            System.out.println(eigenSaldo);
+            mijnRekening.setSaldo(eigenSaldo - bedrag);
             tegenrekening.setSaldo(tegenrekeningSaldo+ bedrag);
             transactieDAO.storeOne(nieuweTransactie);
-            System.out.println(eigenSaldo);
-            System.out.println(tegenrekeningSaldo);
-        } else {
-            System.out.println("test");
+            priverekeningDAO.updateOne(mijnRekening);
+            priverekeningDAO.updateOne(tegenrekening);
         }
-        System.out.println(nieuweTransactie + "hallo ik ben hemza");
         return "account";
     }
 
@@ -85,13 +83,13 @@ public class MoneyTransferController {
 
 
         if (mijnRekening.getSaldo() <= bedrag) {
-                    System.out.println("saldo te laag");
+            System.out.println("saldo te laag");
             return false;
         } else {
             System.out.println("voldoende saldo");
             return true;
 
-    }
+        }
 
 
     }
@@ -100,3 +98,4 @@ public class MoneyTransferController {
     //todo: nog voor bedrijf aanmaken
 
 }
+
