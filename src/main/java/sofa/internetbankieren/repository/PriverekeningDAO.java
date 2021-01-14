@@ -47,7 +47,7 @@ public class PriverekeningDAO implements GenericDAO<Priverekening> {
         return jdbcTemplate.query(sql, new PriverekeningRowMapper(), iban);
     }
 
-    public Rekening getOneByIban(String iban) {
+    public Priverekening getOneByIban(String iban) {
         final String sql = "select * from priverekening where iban=?";
         return jdbcTemplate.queryForObject(sql, new PriverekeningRowMapper(), iban);
     }
