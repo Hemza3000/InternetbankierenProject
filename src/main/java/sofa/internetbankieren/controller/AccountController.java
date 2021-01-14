@@ -51,6 +51,6 @@ public class AccountController {
         model.addAttribute("transacties", transacties);
         model.addAttribute("nu", LocalDateTime.now());
 
-        return "account";
+        return "account/account";
     }
 }
