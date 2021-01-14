@@ -45,9 +45,14 @@ public class BedrijfsrekeningDAO implements GenericDAO<Bedrijfsrekening> {
     }
 
     // toegevoegd door Wendy
-    public List<Bedrijfsrekening> getOneByIban(String iban) {
-        final String sql = "select * from internet_bankieren.bedrijfsrekening where iban=?";
+    public List<Bedrijfsrekening> getAllByIban(String iban) {
+        final String sql = "select * from bedrijfsrekening where iban=?";
         return jdbcTemplate.query(sql, new BedrijfsrekeningRowMapper(), iban);
+    }
+
+    public Bedrijfsrekening getOneByIban(String iban) {
+        final String sql = "select * from bedrijfsrekening where iban=?";
+        return jdbcTemplate.queryForObject(sql, new BedrijfsrekeningRowMapper(), iban);
     }
 
     // get All

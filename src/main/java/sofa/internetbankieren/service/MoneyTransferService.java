@@ -1,13 +1,16 @@
 package sofa.internetbankieren.service;
 
+import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import sofa.internetbankieren.backing_bean.MoneyTransferBackingBean;
+import sofa.internetbankieren.model.Bedrijfsrekening;
 import sofa.internetbankieren.model.Priverekening;
 import sofa.internetbankieren.model.Rekening;
 import sofa.internetbankieren.repository.BedrijfsrekeningDAO;
 import sofa.internetbankieren.repository.PriverekeningDAO;
 
-
+@Service
 @SessionAttributes("ingelogde")
 
 public class MoneyTransferService {
@@ -22,31 +25,17 @@ public class MoneyTransferService {
         this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
     }
 
-    Rekening tegenrekening;
-    Rekening rekeninghouder;
-
-    //todo tegenrekening klopt nog niet
-
-    {
-        assert moneyTransferBackingbean != null;
-        tegenrekening = (Rekening) priverekeningDAO.getOneByIban(moneyTransferBackingbean.getTegenrekening());
-    }
-
-    double tegenrekeningSaldo = tegenrekening.getSaldo();
-    double rekeninghouderSaldo = rekeninghouder.getSaldo();
-    
-
 //todo - ook voor bedrijfsrekeningen
 
-    public void deposit (String rekeninghouder, double bedrag, String tegenrekening, String omschrijving) {
+    public boolean validatieSaldo(Rekening mijnRekening, double bedrag, Rekening tegenrekening) {
 
-        if (bedrag <= 0) {
-            System.out.println("Bedrag moet hoger zijn dan 0 euro");
+        if (mijnRekening.getSaldo() < bedrag) {
+            System.out.println("saldo te laag");
+            return false;
         } else {
-            tegenrekeningSaldo = tegenrekeningSaldo + bedrag;
-            rekeninghouderSaldo = rekeninghouderSaldo - bedrag;
+            System.out.println("voldoende saldo");
+            return true;
         }
-        return;
-
     }
+
 }
