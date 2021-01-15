@@ -29,7 +29,7 @@ public class MoneyTransferService {
 
     public boolean validatieSaldo(Rekening mijnRekening, double bedrag, Rekening tegenrekening) {
 
-        if (mijnRekening.getSaldo() < bedrag) {
+        if (mijnRekening.getSaldo() < bedrag || bedrag <= 0 ) {
             System.out.println("saldo te laag");
             return false;
         } else {

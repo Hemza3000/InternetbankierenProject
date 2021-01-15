@@ -7,8 +7,6 @@ import sofa.internetbankieren.model.*;
 import sofa.internetbankieren.repository.*;
 import sofa.internetbankieren.service.AccountService;
 
-import java.util.List;
-
 /**
  * @author Wichert Tjekrstra
  *
@@ -58,7 +56,7 @@ public class NewAccountNumberController {
         } else {
             int bsn = Integer.parseInt(bsnContactpersoon);
             // validatie op uniek BSN nummer
-            if (!checkUniqueBSN(bsn)) {
+            if (!accountService.doesBsnExist(bsn)) {
                 model.addAttribute("IBAN", newIBAN);
                 model.addAttribute("isBedrijf", true);
                 model.addAttribute("doesExist", false);
@@ -71,10 +69,6 @@ public class NewAccountNumberController {
         return "overview";
     }
 
-    public boolean checkUniqueBSN(int bsn) {
-        return particulierDAO.getAllByBSN(bsn).size() == 1;
-    }
 
-    // TODO Toevoegen van rekeningnummers van een gebruiker die zich aan het registeren is.
 }
 
