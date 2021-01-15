@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import sofa.internetbankieren.model.Bedrijfsrekening;
 import sofa.internetbankieren.model.Priverekening;
 import sofa.internetbankieren.repository.BedrijfsrekeningDAO;
+import sofa.internetbankieren.repository.ParticulierDAO;
 import sofa.internetbankieren.repository.PriverekeningDAO;
 
 import java.util.List;
@@ -13,10 +14,13 @@ public class AccountService {
 
     private PriverekeningDAO priverekeningDAO;
     private BedrijfsrekeningDAO bedrijfsrekeningDAO;
+    private ParticulierDAO particulierDAO;
 
-    public AccountService(PriverekeningDAO priverekeningDAO, BedrijfsrekeningDAO bedrijfsrekeningDAO) {
+    public AccountService(PriverekeningDAO priverekeningDAO, BedrijfsrekeningDAO bedrijfsrekeningDAO,
+                          ParticulierDAO particulierDAO) {
         this.priverekeningDAO = priverekeningDAO;
         this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
+        this.particulierDAO = particulierDAO;
     }
 
     public String createRandomIBAN() {
@@ -34,5 +38,9 @@ public class AccountService {
         List<Priverekening> priverekeningList = priverekeningDAO.getAllByIban(IBAN);
         List<Bedrijfsrekening> bedrijfsrekeningList = bedrijfsrekeningDAO.getAllByIban(IBAN);
             return priverekeningList.isEmpty() && bedrijfsrekeningList.isEmpty();
+    }
+
+    public boolean doesBsnExist(int bsn) {
+        return particulierDAO.getAllByBSN(bsn).size() == 1;
     }
 }
