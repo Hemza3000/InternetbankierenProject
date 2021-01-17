@@ -10,8 +10,10 @@
 <h1>Welkom <span th:text="${ingelogde.getNaam()}"></span></h1>
 <h2>Je SOFA-rekeningen</h2>
 <p th:if="${ingelogde.getRekeningen.isEmpty()}">Er zijn geen rekeningen om weer te geven.</p>
-<p th:if="${ingelogde.getRekeningen.isEmpty()}"><a href="/newAccountNumberPage">klik hier</a> om een nieuwe rekening te open.</p>
-<p th:if="${!ingelogde.getRekeningen.isEmpty()}">Klik op een rekeningnummer om een overboeking te doen of je laatste transacties te zien.</p>
+<p th:if="${ingelogde.getRekeningen.isEmpty()}">Klik <a href="/newAccountNumberPage">hier</a> om een nieuwe rekening te
+    open.</p>
+<p th:unless="${ingelogde.getRekeningen.isEmpty()}">Klik op een rekeningnummer om een overboeking te doen of je laatste
+    transacties te zien.</p>
 <table th:unless="${ingelogde.getRekeningen().isEmpty()}">
     <tr>
         <th>IBAN</th>
@@ -24,7 +26,8 @@
         <td th:text="${#numbers.formatDecimal(rekening.saldo, 1, 2, 'COMMA')}"></td>
     </tr>
 </table>
-<p th:hidden="${ingelogde.rekeningen.isEmpty()}" ><a href="/newAccountNumberPage">Klik hier</a> om een extra rekening te openen.</p>
+<p th:hidden="${ingelogde.rekeningen.isEmpty()}">Klik <a href="/newAccountNumberPage">hier</a> om een extra rekening te
+    openen.</p>
 <p><a href="/home">Uitloggen</a></p>
 </body>
 </html>
