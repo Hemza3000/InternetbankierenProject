@@ -22,7 +22,7 @@
             <td><label for="Bedrag">Bedrag in Euro</label></td>
             <td><input type="number" id="bedrag" name="bedrag" th:field="*{bedrag}" placeholder="0,00" required/></td>
         </tr>
-        <!--<tr th:if="${ontoereikend}">
+        <!--<tr th:if="${rekening.getSaldo()} > 100"></span>
             <td></td>
             <td><font color="red">Saldo is ontoereikend, vul een kleiner bedrag in</font></td>
         </tr>-->
@@ -35,8 +35,10 @@
 </tr>
 <td></td>
 
+<p>Terug naar uw <a href="javascript:javascript:history.go(-1)">transactieoverzicht</a></p>
+
 </tr>
-<p><a href="/account">Terug</a> naar je transactieoverzicht</p>
+<p>Terug naar uw <a href="/overzicht">overzichtspagina</a></p> </p>
 <script>
     function msg() {
         alert('Overboeking is toegevoegd,\nJe gaat nu terug naar je transactieoverzicht.');

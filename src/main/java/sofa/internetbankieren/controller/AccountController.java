@@ -19,7 +19,7 @@ import java.util.List;
  * @author Wendy Ellens
  */
 @Controller
-@SessionAttributes("rekening")
+@SessionAttributes({"rekening"})
 public class AccountController {
 
     private static final int MAX_TRANSACTIES = 10; // lengte transactieoverzicht
@@ -32,7 +32,7 @@ public class AccountController {
         this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
     }
 
-    @GetMapping("/rekening/{IBAN}")
+    @GetMapping({"/rekening/{IBAN}"})
     public String accountHandler(Model model, @PathVariable("IBAN") String iban) {
 
         // Rekening opzoeken o.b.v. IBAN
