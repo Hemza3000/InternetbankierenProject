@@ -80,7 +80,7 @@ class TransactieDAOTest {
     private void setDBEntries() {
         medewerker = new Medewerker("Voornaam", "Achternaam", bedrijfDAO);
         bedrijf = new Bedrijf(0, "", "", "", 0, "",
-                "", "", 0, "", "", medewerker, new ArrayList<>(),
+                "", "", 0, Sector.ICT, "", medewerker, new ArrayList<>(),
                 bedrijfsrekeningDAO);
         particulier = new Particulier(0, "", "", "", 0,
                 "", "", "", "", "", LocalDate.now(), 1,

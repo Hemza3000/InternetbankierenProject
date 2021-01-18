@@ -54,6 +54,41 @@
         </tr>
     </table>
 </form>
+<p>Terug naar de <a href="/home">homepage</a></p>
 
+<script>
+    // toegevoegd door Wichert
+    // voegt automatisch straat + woonplaats in bij het invullen van Postcode en huisnummer
+    document.getElementById('pc_field').addEventListener('focusout', checkForAddressPart)
+    document.getElementById('nr_field').addEventListener('focusout', checkForAddressPart)
+
+    function checkForAddressPart() {
+        let regex = new RegExp(/^[1-9][0-9]{3}[\s]?[A-Za-z]{2}$/i);
+
+        let pc = document.getElementById('pc_field').value
+        let nr = document.getElementById('nr_field').value
+
+        if (regex.test(pc) && nr) {
+            fetch(`https://postcode.tech/api/v1/postcode?postcode=${pc}&number=${nr}`, {
+                headers: {
+                    'Authorization': 'Bearer b3ba02a8-2796-4225-a4d2-d982ad2d3ec1',
+                },
+            })
+                .then(response => response.json())
+                .then(json => processAddress(json))
+                .catch((error) => {
+                    console.error('foutje', error)
+                });
+        }
+    }
+
+    function processAddress(data){
+        console.log(data)
+        let addressPart = data
+        document.getElementById('street_field').value = addressPart.street
+        document.getElementById('city_field').value = addressPart.city
+    }
+
+</script>
 </body>
 </html>

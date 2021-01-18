@@ -21,7 +21,10 @@
         </tr>
         <tr>
             <td><label for="sector_field"> Sector</label></td>
-            <td><input type="text" id="sector_field" th:field="*{sector}" required/></td>
+            <td><select id="sector_field" name="sector">
+                <option th:each="sectorOpt : ${T(sofa.internetbankieren.model.Sector).values()}"
+                        th:value="${sectorOpt}" th:text="${sectorOpt.naam}"></option>
+            </select></td>
         </tr>
         <tr>
             <td><label for="kvk_field"> KVK nummer</label></td>
