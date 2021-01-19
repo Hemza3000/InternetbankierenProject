@@ -27,7 +27,6 @@ public class Priverekening extends Rekening{
         this.rekeninghouder = rekeninghouder;
     }
 
-
     // toegevoegd door Wendy
     @Override
     public String getTenaamstelling() {
