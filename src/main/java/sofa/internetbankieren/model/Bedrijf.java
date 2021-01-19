@@ -8,19 +8,18 @@ package sofa.internetbankieren.model;
 
 import sofa.internetbankieren.repository.BedrijfsrekeningDAO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Bedrijf extends Klant {
 
     private String bedrijfsnaam;
     private int KVKNummer;
-    private String sector;
+    private Sector sector; // gewijzigd in enum door Wendy
     private String BTWNummer;
     private Medewerker accountmanager;
 
     public Bedrijf(int idKlant, String gebruikersnaam, String wachtwoord, String straat, int huisnummer,
-                   String postcode, String woonplaats, String bedrijfsnaam, int KVKNummer, String sector,
+                   String postcode, String woonplaats, String bedrijfsnaam, int KVKNummer, Sector sector,
                    String BTWNummer, Medewerker accountmanager, List<Integer> rekeningIDs,
                    BedrijfsrekeningDAO bedrijfsrekeningDAO) {
         super(idKlant, gebruikersnaam, wachtwoord, straat, huisnummer, postcode, woonplaats, rekeningIDs,
@@ -30,13 +29,6 @@ public class Bedrijf extends Klant {
         this.sector = sector;
         this.BTWNummer = BTWNummer;
         this.accountmanager = accountmanager;
-    }
-
-    public Bedrijf(String straat, int huisnummer, String postcode, String woonplaats, String bedrijfsnaam,
-                   int KVKNummer, String sector, String BTWNummer, Medewerker accountmanager,
-                   BedrijfsrekeningDAO bedrijfsrekeningDAO) {
-        this(0, "", "", straat, huisnummer, postcode, woonplaats, bedrijfsnaam,
-                KVKNummer, sector, BTWNummer, accountmanager, new ArrayList<>(), bedrijfsrekeningDAO);
     }
 
     public Bedrijf(){
@@ -69,11 +61,11 @@ public class Bedrijf extends Klant {
         this.KVKNummer = KVKNummer;
     }
 
-    public String getSector() {
+    public Sector getSector() {
         return sector;
     }
 
-    public void setSector(String sector) {
+    public void setSector(Sector sector) {
         this.sector = sector;
     }
 

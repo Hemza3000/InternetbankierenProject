@@ -17,10 +17,6 @@ public class Transactie implements Comparable<Transactie> {
     private String omschrijving;
     private Rekening tegenRekening;
 
-    public Transactie() {
-        super();
-    }
-
     public Transactie(int idTransactie, Rekening verzender, double bedrag, LocalDateTime datum, String omschrijving,
                       Rekening ontvanger) {
         super();
@@ -39,18 +35,8 @@ public class Transactie implements Comparable<Transactie> {
 
     // Kloon maken
     public Transactie(Transactie andereTransactie) {
-        super();
-        this.idTransactie = andereTransactie.idTransactie;
-        this.rekening = andereTransactie.rekening;
-        this.bijschrijving = andereTransactie.bijschrijving;
-        this.bedrag = andereTransactie.bedrag;
-        this.datum = andereTransactie.datum;
-        this.omschrijving = andereTransactie.omschrijving;
-        this.tegenRekening = andereTransactie.tegenRekening;
-    }
-
-    public Transactie(String iban, double bedrag, String omschrijving) {
-
+        this(andereTransactie.idTransactie, andereTransactie.rekening, andereTransactie.bedrag,
+                andereTransactie.datum, andereTransactie.omschrijving, andereTransactie.tegenRekening);
     }
 
     public int getIdTransactie() {

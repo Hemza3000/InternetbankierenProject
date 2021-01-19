@@ -8,6 +8,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import sofa.internetbankieren.model.Bedrijf;
+import sofa.internetbankieren.model.Sector;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -88,7 +89,7 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
                 ps.setString(6, bedrijf.getWoonplaats());
                 ps.setString(7, bedrijf.getBedrijfsnaam());
                 ps.setInt(8, bedrijf.getKVKNummer());
-                ps.setString(9, bedrijf.getSector());
+                ps.setString(9, bedrijf.getSector().name());
                 ps.setString(10, bedrijf.getBTWNummer());
                 ps.setInt(11, bedrijf.getAccountmanager().getPersoneelsnummer());
                 return ps;
@@ -101,7 +102,7 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
     @Override
     public void updateOne(Bedrijf bedrijf) {
         jdbcTemplate.update("update bedrijf set gebruikersnaam=?, wachtwoord=?, straat=?, huisnummer=?, postcode=?, " +
-                        "woonplaats=?, bedrijfsnaam=?, KVKnummer=?, sector=?, BTWnummer=? + where idBedrijf=?",
+                        "woonplaats=?, bedrijfsnaam=?, KVKnummer=?, sector=?, BTWnummer=? where idBedrijf=?",
                 bedrijf.getGebruikersnaam(),
                 bedrijf.getWachtwoord(),
                 bedrijf.getStraat(),
@@ -135,7 +136,7 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
                     resultSet.getString("woonplaats"),
                     resultSet.getString("bedrijfsnaam"),
                     resultSet.getInt("KVKNummer"),
-                    resultSet.getString("sector"),
+                    Sector.valueOf(resultSet.getString("sector")),
                     resultSet.getString("BTWnummer"),
                     medewerkerDAO.getOneByID(resultSet.getInt("idAccountmanager")),
                     bedrijfsrekeningDAO.getAllIDsByBedrijf(resultSet.getInt("idBedrijf")),

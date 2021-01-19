@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import sofa.internetbankieren.backing_bean.LoginFormBackingBean;
 import sofa.internetbankieren.model.*;
 import sofa.internetbankieren.repository.*;
-import sofa.internetbankieren.service.AccountService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +51,7 @@ public class LoginController {
     }
 
     @GetMapping("/overzicht")
-    public String getInlogForm() {
+    public String getOverview() {
             return "overview";
     }
 

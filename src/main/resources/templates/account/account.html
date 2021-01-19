@@ -23,6 +23,7 @@
         <th>Bedrag</th>
         <th>Omschrijving</th>
         <th>Tegenrekening</th>
+        <th>Ten name van</th>
     </tr>
     <tr th:each="transactie : ${transacties}">
         <td th:text="${#temporals.format(transactie.datum, 'dd-MM-yyyy')}"></td>
@@ -30,11 +31,12 @@
         <td th:text="${#numbers.formatDecimal(transactie.bedrag, 1, 2, 'COMMA')}"></td>
         <td th:text="${transactie.omschrijving}"></td>
         <td th:text="${transactie.tegenRekening.IBAN}"></td>
+        <td th:text="${transactie.tegenRekening.tenaamstelling}"
     </tr>
 </table>
 
 <p>Klik <a href="/moneyTransfer">hier</a> om een bedrag over te boeken</p>
-<p>Terug naar het <a href="/overzicht">rekeningoverzicht</a></p>
+<p>Klik <a href="/overzicht">hier</a> om terug te gaan naar het overzicht van je rekeningen</p>
 <p><a href="/home">Uitloggen</a></p>
 </body>
 </html>
