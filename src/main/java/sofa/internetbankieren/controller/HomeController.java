@@ -17,7 +17,7 @@ public class HomeController {
 
     @GetMapping({"/", "/home"})
     public String startHandler() {
-        return "home";
+        return "home-bootstrap";
     }
 
     @GetMapping("/voorwaarden")
