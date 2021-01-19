@@ -20,6 +20,12 @@ public class HomeController {
         return "home-bootstrap";
     }
 
+    // tijdelijk TODO later weg halen
+    @GetMapping("/boot")
+    public String boot(){
+        return "home";
+    }
+
     @GetMapping("/voorwaarden")
     public String voorwaardenHandler(){
         return "voorwaarden";

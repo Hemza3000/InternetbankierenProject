@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -7,7 +7,7 @@
     <meta name="author" content="" />
     <title>Welkom bij de SOFA Bank</title>
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="static/img/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="../static/assets/img/favicon.ico" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
@@ -16,7 +16,7 @@
     <!-- Third party plugin CSS-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="/static/css/styles.css" rel="stylesheet" />
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
 </head>
 <body id="page-top">
 <!-- Navigation-->
@@ -26,7 +26,6 @@
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto my-2 my-lg-0">
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/login">Inloggen</a></li>
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#registeer">Registreren</a></li>
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#service">Service </a></li>
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contact</a></li>
@@ -46,7 +45,9 @@
             </div>
             <div class="col-lg-8 align-self-baseline">
                 <p class="text-white-75 font-weight-light mb-5">SOFA is de bank waar alles om jou draait. We zijn dus niet de zoveelste transparante, sociaal duurzame bank, maar gaan een stapje verder: we zijn het Zwitserse zakmes voor al je geldzaken, zodat je de vrijheid krijgt om je geld uit te geven, te sparen en te investeren zoals jij dat wil.</p>
-                <a class="btn btn-primary btn-xl js-scroll-trigger" href="#ontdek">Ontdek meer SOFA</a>
+                <a class="btn btn-primary btn-xl js-scroll-trigger" href="#ontdek" onclick="alert('Nog even geduld. Website is in de maak!')" >Ontdek meer SOFA</a>
+                <a class="text-white-75 font-weight-light mb-5"> OF </a>
+                <a class="btn btn-primary btn-xl js-scroll-trigger" href="/login">log direct in</a>
             </div>
         </div>
     </div>
@@ -56,10 +57,10 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8 text-center">
-                <h2 class="text-white mt-0">Wij hebben wat jij nodig hebt.</h2>
+                <h2 class="text-white mt-0">Registreer vandaag nog!</h2>
                 <hr class="divider light my-4" />
-                <p class="text-white-50 mb-4">Beleef SOFA vandaag nog! Een bankrekening voor jezelf of als zakelijke klant? Kies hier wat je graag wilt. </p>
-                <a class="btn btn-light btn-xl js-scroll-trigger" href="/register/particulierOfBedrijf">Registreer</a>
+                <p class="text-white-50 mb-4">Wij hebben wat jij nodig hebt!<br>Beleef SOFA vandaag nog. Een bankrekening voor jezelf of als zakelijke klant?<br>Kies hier wat je graag wilt. </p>
+                <a class="btn btn-light btn-xl js-scroll-trigger" href="/particulier">Particulier</a> <a class="btn btn-light btn-xl js-scroll-trigger" href="/zakelijk"> Zakelijk</a>
             </div>
         </div>
     </div>
@@ -89,7 +90,7 @@
                 <div class="mt-5">
                     <i class="fas fa-4x fa-laptop-code text-primary mb-4"></i>
                     <h3 class="h4 mb-2">Up to Date</h3>
-                    <p class="text-muted mb-0">All dependencies are kept current to keep things fresh.</p>
+                    <p class="text-muted mb-0">De financiële markt is een dynamische markt die snel verandert. Daarom is het belangrijk dat onze informatie en advies altijd up to date is.</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 text-center">
@@ -108,67 +109,40 @@
     <div class="container-fluid p-0">
         <div class="row no-gutters">
             <div class="col-lg-4 col-sm-6">
-                <a class="portfolio-box" href="../static/img/portfolio/fullsize/1.jpg">
-                    <img class="img-fluid" src="../static/img/portfolio/thumbnails/1.jpg" alt="" />
+                <a class="portfolio-box" href="#">
+                    <img class="img-fluid" src="/assets/img/portfolio/thumbnails/1.jpg" alt="" />
                     <div class="portfolio-box-caption">
-                        <div class="project-category text-white-50">Category</div>
-                        <div class="project-name">Project Name</div>
+                        <div class="project-category text-white-50">klik voor meer info</div>
+                        <div class="project-name">Groen verzekeren</div>
                     </div>
                 </a>
             </div>
             <div class="col-lg-4 col-sm-6">
-                <a class="portfolio-box" href="../static/img/portfolio/fullsize/2.jpg">
-                    <img class="img-fluid" src="../static/img/portfolio/thumbnails/2.jpg" alt="" />
+                <a class="portfolio-box" href="#">
+                    <img class="img-fluid" src="/assets/img/portfolio/thumbnails/2.jpg" alt="" />
                     <div class="portfolio-box-caption">
-                        <div class="project-category text-white-50">Category</div>
-                        <div class="project-name">Project Name</div>
+                        <div class="project-category text-white-50">klik voor meer info</div>
+                        <div class="project-name">Duurzaam sparen</div>
                     </div>
                 </a>
             </div>
             <div class="col-lg-4 col-sm-6">
-                <a class="portfolio-box" href="../static/img/portfolio/fullsize/3.jpg">
-                    <img class="img-fluid" src="../static/img/portfolio/thumbnails/3.jpg" alt="" />
+                <a class="portfolio-box" href="#">
+                    <img class="img-fluid" src="/assets/img/portfolio/thumbnails/3.jpg" alt="" />
                     <div class="portfolio-box-caption">
-                        <div class="project-category text-white-50">Category</div>
-                        <div class="project-name">Project Name</div>
+                        <div class="project-category text-white-50">klik voor meer info</div>
+                        <div class="project-name">Groene hypotheek</div>
                     </div>
                 </a>
             </div>
-            <!--<div class="col-lg-4 col-sm-6">
-                <a class="portfolio-box" href="img/portfolio/fullsize/4.jpg">
-                    <img class="img-fluid" src="img/portfolio/thumbnails/4.jpg" alt="" />
-                    <div class="portfolio-box-caption">
-                        <div class="project-category text-white-50">Category</div>
-                        <div class="project-name">Project Name</div>
-                    </div>
-                </a>
-            </div>-->
-            <!--<div class="col-lg-4 col-sm-6">
-                <a class="portfolio-box" href="img/portfolio/fullsize/5.jpg">
-                    <img class="img-fluid" src="img/portfolio/thumbnails/5.jpg" alt="" />
-                    <div class="portfolio-box-caption">
-                        <div class="project-category text-white-50">Category</div>
-                        <div class="project-name">Project Name</div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <a class="portfolio-box" href="img/portfolio/fullsize/6.jpg">
-                    <img class="img-fluid" src="img/portfolio/thumbnails/6.jpg" alt="" />
-                    <div class="portfolio-box-caption p-3">
-                        <div class="project-category text-white-50">Category</div>
-                        <div class="project-name">Project Name</div>
-                    </div>
-                </a>
-            </div>-->
         </div>
     </div>
 </div>
 <!-- Call to action-->
 <section class="page-section bg-dark text-white">
     <div class="container text-center">
-        <h2 class="mb-4">Free Download at Start Bootstrap!</h2>
-        <a class="btn btn-light btn-xl" href="https://startbootstrap.com/theme/creative/">Download Now!</a>
+        <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In at quam orci. Proin vestibulum consequat pulvinar. Vivamus consequat aliquam congue. Etiam varius euismod faucibus. Quisque pretium euismod lacus at vestibulum. Cras a ligula condimentum, rutrum metus quis, maximus erat. Nulla facilisi. Pellentesque eu tellus eu magna facilisis gravida. Quisque vitae velit fringilla, eleifend lacus a, aliquet neque. Nulla massa enim, placerat at pharetra non, posuere vel est. Praesent et dignissim justo, eget gravida quam. </p>
+        <a class="btn btn-light btn-xl" href="#linkOfiets">Wat komt hier?</a>
     </div>
 </section>
 <!-- Contact-->
@@ -178,7 +152,7 @@
             <div class="col-lg-8 text-center">
                 <h2 class="mt-0">Persoonlijke service</h2>
                 <hr class="divider my-4" />
-                <p class="text-muted mb-5">Heb je liever persoonlijk contact? Dan staan onze service-medewerkers voor je klaar!</p>
+                <p class="text-muted mb-5">De meeste bankzaken regel je gewoon online. Daar vind je ook het antwoord op veel van je vragen. Toch niet gelukt of heb je liever persoonlijk contact? Dan staan onze service-medewerkers voor je klaar!</p>
             </div>
         </div>
         <div class="row">
@@ -196,7 +170,7 @@
 </section>
 <!-- Footer-->
 <footer class="bg-light py-5">
-    <div class="container"><div class="small text-center text-muted">Copyright SOFA N.V.© <a href="#disclaimer">disclaimer</a> |
+    <div class="container"><div class="small text-center text-muted">Copyright © SOFA N.V. <a href="#disclaimer">disclaimer</a> |
         <a href="#privacy">privacy & cookies</a> - SOFA Bank Amsterdam 2020 </div></div>
 </footer>
 <!-- Bootstrap core JS-->
@@ -206,6 +180,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
 <!-- Core theme JS-->
-<script src="/static/js/scripts.js"></script>
+<script th:src="@{/js/scripts.js}"></script>
 </body>
 </html>

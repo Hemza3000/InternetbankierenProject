@@ -13,28 +13,22 @@ import sofa.internetbankieren.service.AccountService;
  */
 
 @Controller
-@SessionAttributes("ingelogde")
+@SessionAttributes({"ingelogde", "IBAN"})
 public class NewAccountNumberController {
-    private PriverekeningDAO priverekeningDAO;
-    private BedrijfsrekeningDAO bedrijfsrekeningDAO;
     private ParticulierDAO particulierDAO;
     private TransactieDAO transactieDAO;
     private AccountService accountService;
-    private String newIBAN;
 
-    public NewAccountNumberController(PriverekeningDAO priverekeningDAO, TransactieDAO transactieDAO,
-    BedrijfsrekeningDAO bedrijfsrekeningDAO, ParticulierDAO particulierDAO, AccountService accountService) {
-        this.priverekeningDAO = priverekeningDAO;
-        this.transactieDAO = transactieDAO;
-        this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
+    public NewAccountNumberController(ParticulierDAO particulierDAO, TransactieDAO transactieDAO, AccountService accountService) {
         this.particulierDAO = particulierDAO;
+        this.transactieDAO = transactieDAO;
         this.accountService = accountService;
     }
 
     // Toevoegen van rekeningnummers van een ingelogde gebruiker
     @GetMapping("/newAccountNumberPage")
     public String newAccountNumberPageHandler(Model model, @ModelAttribute(name="ingelogde") Klant ingelogde){
-        newIBAN = accountService.createRandomIBAN();
+        String newIBAN = accountService.createRandomIBAN();
         model.addAttribute("IBAN", newIBAN);
         model.addAttribute("ingelogde", ingelogde);
         // check of ingelogde is een particulier of een bedrijf.
@@ -49,9 +43,11 @@ public class NewAccountNumberController {
 
     @PostMapping("/formNewAccountNumber")
     public String form(Model model, @ModelAttribute(name="ingelogde") Klant ingelogde, @RequestParam String bsnContactpersoon) {
+        String newIBAN = (String) model.getAttribute("IBAN");
+        // registeren van een Priverekening
         if (ingelogde instanceof Particulier) {
             Priverekening priverekening = new Priverekening(0, newIBAN, transactieDAO, (Particulier) ingelogde);
-            priverekeningDAO.storeOne(priverekening);
+            accountService.saveNewAccountNumber(priverekening, ingelogde);
             // registeren van bedrijfsrekening
         } else {
             int bsn = Integer.parseInt(bsnContactpersoon);
@@ -64,7 +60,7 @@ public class NewAccountNumberController {
             }
             Bedrijfsrekening bedrijfsrekening = new Bedrijfsrekening(0, newIBAN, transactieDAO,
                     particulierDAO.getByBSN(bsn), (Bedrijf) ingelogde);
-            bedrijfsrekeningDAO.storeOne(bedrijfsrekening);
+            accountService.saveNewAccountNumber(bedrijfsrekening, ingelogde);
         }
         return "overview";
     }
