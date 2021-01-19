@@ -71,6 +71,21 @@ public class RegistrationController {
     }
 
 
+    // voor bootstrap
+    @GetMapping("/particulier")
+    public String particulierHandler(Model model){
+        model.addAttribute("backingBean", new RegisterFormPartBackingBean());
+        return "register/particulier";
+    }
+
+    // voor bootstrap
+    @GetMapping("/zakelijk")
+    public String zakelijkHandler(Model model){
+        model.addAttribute("klant", new Bedrijf());
+        return "register/bedrijf";
+    }
+
+
     // Registratie particulier
     // Stap 2: verwerken ingevoerde klantgegevens
     @PostMapping("/register_particulier")
@@ -92,13 +107,11 @@ public class RegistrationController {
 
     // Stap 4: verwerken ingevoerde logingegevens
     @PostMapping("/usernameForm")
-    public String confirm(Model model, @ModelAttribute LoginFormBackingBean usernameForm,
-                          @ModelAttribute(name="klant") Particulier p){
+    public String confirm(Model model, @ModelAttribute LoginFormBackingBean usernameForm){
         Klant klant = (Klant) model.getAttribute("klant");
         // validatie voor unieke gebruikersnaam
         if (!registerService.checkUniqueUsername(usernameForm.getUserName())) {
-            LoginFormBackingBean usernameExist = new LoginFormBackingBean("", "");
-            model.addAttribute("usernameForm", usernameExist);
+            model.addAttribute("usernameForm", new LoginFormBackingBean("", ""));
             model.addAttribute("doesExist", true);
             return "register/registerUsername";
         }

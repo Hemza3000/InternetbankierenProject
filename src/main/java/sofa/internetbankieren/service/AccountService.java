@@ -3,6 +3,7 @@ package sofa.internetbankieren.service;
 import org.springframework.stereotype.Service;
 import sofa.internetbankieren.model.*;
 import sofa.internetbankieren.repository.BedrijfDAO;
+import sofa.internetbankieren.model.*;
 import sofa.internetbankieren.repository.BedrijfsrekeningDAO;
 import sofa.internetbankieren.repository.ParticulierDAO;
 import sofa.internetbankieren.repository.PriverekeningDAO;
@@ -45,6 +46,7 @@ public class AccountService {
             return priverekeningList.isEmpty() && bedrijfsrekeningList.isEmpty();
     }
 
+    // controle in BSN in database bestaat.
     public boolean doesBsnExist(int bsn) {
         return particulierDAO.getAllByBSN(bsn).size() == 1;
     }
@@ -68,4 +70,14 @@ public class AccountService {
         return alleklanten.get(0);
     }
 
+
+
+    // methode om rekening op te slaan. Met check of het om een bedrijf of particulier gaat.
+    public void saveNewAccountNumber(Rekening rekening, Klant ingelogde) {
+        if ( ingelogde instanceof Particulier) {
+            priverekeningDAO.storeOne((Priverekening) rekening);
+        } else if ( ingelogde instanceof  Bedrijf) {
+            bedrijfsrekeningDAO.storeOne((Bedrijfsrekening) rekening);
+        }
+    }
 }

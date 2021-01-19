@@ -1,17 +1,16 @@
 package sofa.internetbankieren.controller;
 
-
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
-/**
- * @Author Wichert Tjerkstra
- *
- */
+import static org.junit.jupiter.api.Assertions.*;
 
-@WebMvcTest(NewAccountNumberController.class)
-public class NewAccountNumberControllerTest {
+class NewAccountNumberControllerTest {
 
+    @Test
+    void newAccountNumberPageHandler() {
+    }
 
+    @Test
+    void form() {
+    }
 }
