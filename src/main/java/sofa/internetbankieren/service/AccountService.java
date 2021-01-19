@@ -1,12 +1,15 @@
 package sofa.internetbankieren.service;
 
 import org.springframework.stereotype.Service;
-import sofa.internetbankieren.model.Bedrijfsrekening;
-import sofa.internetbankieren.model.Priverekening;
+import sofa.internetbankieren.model.*;
+import sofa.internetbankieren.repository.BedrijfDAO;
 import sofa.internetbankieren.repository.BedrijfsrekeningDAO;
 import sofa.internetbankieren.repository.ParticulierDAO;
 import sofa.internetbankieren.repository.PriverekeningDAO;
 
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,12 +18,14 @@ public class AccountService {
     private PriverekeningDAO priverekeningDAO;
     private BedrijfsrekeningDAO bedrijfsrekeningDAO;
     private ParticulierDAO particulierDAO;
+    private BedrijfDAO bedrijfDAO;
 
     public AccountService(PriverekeningDAO priverekeningDAO, BedrijfsrekeningDAO bedrijfsrekeningDAO,
-                          ParticulierDAO particulierDAO) {
+                          ParticulierDAO particulierDAO, BedrijfDAO bedrijfDAO) {
         this.priverekeningDAO = priverekeningDAO;
         this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
         this.particulierDAO = particulierDAO;
+        this.bedrijfDAO = bedrijfDAO;
     }
 
     public String createRandomIBAN() {
@@ -43,4 +48,25 @@ public class AccountService {
     public boolean doesBsnExist(int bsn) {
         return particulierDAO.getAllByBSN(bsn).size() == 1;
     }
+
+    public Rekening getRekeningbyIban(String iban){
+
+        List<Rekening> rekeningen = new ArrayList<>();
+        rekeningen.addAll(priverekeningDAO.getAllByIban(iban));
+        rekeningen.addAll(bedrijfsrekeningDAO.getAllByIban(iban));
+        Rekening rekening = rekeningen.get(0);
+        return rekening;
+    }
+
+    public Klant getKlantbyGebruikersnaamWachtwoord (String gebruikersnaam, String wachtwoord){
+        List<Particulier> particuliereklanten =
+                particulierDAO.getOneByGebruikersnaamWachtwoord(gebruikersnaam, wachtwoord);
+        List<Bedrijf> bedrijfsklanten =
+                bedrijfDAO.getOneByGebruikersnaamWachtwoord(gebruikersnaam, wachtwoord);
+        List<Klant> alleklanten = new ArrayList<>();
+        alleklanten.addAll(particuliereklanten);
+        alleklanten.addAll(bedrijfsklanten);
+        return alleklanten.get(0);
+    }
+
 }

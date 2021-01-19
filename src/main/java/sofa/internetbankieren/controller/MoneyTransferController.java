@@ -10,6 +10,7 @@ import sofa.internetbankieren.model.*;
 import sofa.internetbankieren.repository.BedrijfsrekeningDAO;
 import sofa.internetbankieren.repository.PriverekeningDAO;
 import sofa.internetbankieren.repository.TransactieDAO;
+import sofa.internetbankieren.service.AccountService;
 import sofa.internetbankieren.service.MoneyTransferService;
 //import sofa.internetbankieren.service.MoneyTransferService;
 
@@ -25,18 +26,18 @@ import java.util.List;
 public class MoneyTransferController {
 
     private TransactieDAO transactieDAO;
-    Transactie nieuweTransactie;
-    private Transactie transactie;
     private PriverekeningDAO priverekeningDAO;
     private BedrijfsrekeningDAO bedrijfsrekeningDAO;
     private MoneyTransferService moneyTransferService;
+    private AccountService accountService;
     private static final int MAX_TRANSACTIES = 10;
 
-    public MoneyTransferController(PriverekeningDAO priverekeningDAO, BedrijfsrekeningDAO bedrijfsrekeningDAO, TransactieDAO transactieDAO, MoneyTransferService moneyTransferService) {
+    public MoneyTransferController(PriverekeningDAO priverekeningDAO, BedrijfsrekeningDAO bedrijfsrekeningDAO, TransactieDAO transactieDAO, MoneyTransferService moneyTransferService, AccountService accountService) {
         this.priverekeningDAO = priverekeningDAO;
         this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
         this.transactieDAO = transactieDAO;
         this.moneyTransferService = moneyTransferService;
+        this.accountService = accountService;
     }
 
     @GetMapping({"/moneyTransfer"})
@@ -49,17 +50,14 @@ public class MoneyTransferController {
     @PostMapping("/moneyTransfer")
     public String moneyTransferHandler2(@ModelAttribute MoneyTransferBackingBean backingbean, Model model) {
 
-        List<Rekening> rekeningen = new ArrayList<>();
-        rekeningen.addAll(priverekeningDAO.getAllByIban(backingbean.getTegenrekening()));
-        rekeningen.addAll(bedrijfsrekeningDAO.getAllByIban(backingbean.getTegenrekening()));
-        Rekening tegenrekening = rekeningen.get(0);
+        Rekening tegenrekening = accountService.getRekeningbyIban(backingbean.getTegenrekening());
         Rekening mijnRekening = (Rekening) model.getAttribute("rekening");
         double bedrag = backingbean.getBedrag();
         double eigenSaldo = mijnRekening.getSaldo();
         double tegenrekeningSaldo = tegenrekening.getSaldo();
-        nieuweTransactie = new Transactie(0, mijnRekening, bedrag, LocalDateTime.now(), backingbean.getOmschrijving(), tegenrekening);
+        Transactie nieuweTransactie = new Transactie(0, mijnRekening, bedrag, LocalDateTime.now(), backingbean.getOmschrijving(), tegenrekening);
 
-        if (moneyTransferService.validatieSaldo(mijnRekening, bedrag, tegenrekening)) {
+        if (moneyTransferService.validatieSaldo(mijnRekening, bedrag)) {
             mijnRekening.setSaldo(eigenSaldo - bedrag);
             tegenrekening.setSaldo(tegenrekeningSaldo + bedrag);
 
@@ -82,7 +80,6 @@ public class MoneyTransferController {
         return "account/account";
     }
 }
-
     //todo: nog voor bedrijf aanmaken
 
 

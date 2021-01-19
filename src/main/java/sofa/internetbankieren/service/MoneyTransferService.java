@@ -27,7 +27,7 @@ public class MoneyTransferService {
 
 //todo - ook voor bedrijfsrekeningen
 
-    public boolean validatieSaldo(Rekening mijnRekening, double bedrag, Rekening tegenrekening) {
+    public boolean validatieSaldo(Rekening mijnRekening, double bedrag) {
 
         if (mijnRekening.getSaldo() < bedrag || bedrag <= 0 ) {
             System.out.println("saldo te laag");
