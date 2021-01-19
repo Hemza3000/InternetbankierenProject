@@ -2,6 +2,7 @@ package sofa.internetbankieren.service;
 
 import org.springframework.stereotype.Service;
 import sofa.internetbankieren.model.*;
+import sofa.internetbankieren.model.*;
 import sofa.internetbankieren.repository.BedrijfDAO;
 import sofa.internetbankieren.model.*;
 import sofa.internetbankieren.repository.BedrijfsrekeningDAO;
