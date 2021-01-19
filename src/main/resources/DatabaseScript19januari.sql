@@ -93,7 +93,7 @@ create table if not exists `internet_bankieren`.`bedrijfsrekening`
     `idbedrijfsrekening` int         not null auto_increment,
     `idcontactpersoon`   int         not null,
     `iban`               varchar(45) not null,
-    `saldo`              int         not null,
+    `saldo`              decimal(10,2)         not null,
     primary key (`idbedrijfsrekening`),
     index `verzinzelf7_idx` (`idbedrijf` asc) visible,
     index `verzinzelf10_idx` (`idcontactpersoon` asc) visible,
@@ -121,7 +121,7 @@ create table if not exists `internet_bankieren`.`priverekening`
     `idrekeninghouder` int         not null,
     `idpriverekening`  int         not null auto_increment,
     `iban`             varchar(45) not null,
-    `saldo`            varchar(45) not null,
+    `saldo`            decimal(10, 2) not null,
     primary key (`idpriverekening`),
     index `verzinzelf6_idx` (`idrekeninghouder` asc) visible,
     constraint `verzinzelf6`
