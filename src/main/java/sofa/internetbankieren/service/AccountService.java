@@ -54,8 +54,7 @@ public class AccountService {
         List<Rekening> rekeningen = new ArrayList<>();
         rekeningen.addAll(priverekeningDAO.getAllByIban(iban));
         rekeningen.addAll(bedrijfsrekeningDAO.getAllByIban(iban));
-        Rekening rekening = rekeningen.get(0);
-        return rekening;
+        return rekeningen.get(0);
     }
 
     public Klant getKlantbyGebruikersnaamWachtwoord (String gebruikersnaam, String wachtwoord){
