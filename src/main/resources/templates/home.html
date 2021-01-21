@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
 </head>
 <body>
+<div th:insert="fragments/navBar :: navBar"></div>
 
 <div class="page-header">
-<h1>Welkom bij SOFA</h1>
+    <h1>Welkom bij SOFA</h1>
 </div>
-
 <h4>Vooral uw bankzaken</h4>
 <p>Maak een keuze: </p>
 <p>Ben je al klant bij SOFA? <a href="/login"> Inloggen</a></p>
 <p>Wil je klant worden? <a href="/register">Registreer</a></p>
 <p>Ben je een werknemer? <a href="/login_medewerker"> Klik dan hier om in te loggen</a></p>
 
+<div th:insert="fragments/footer :: footer"></div>
 </body>
 </html>
 
