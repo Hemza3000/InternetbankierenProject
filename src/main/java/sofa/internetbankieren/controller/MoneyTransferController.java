@@ -9,8 +9,6 @@ import sofa.internetbankieren.model.*;
 import sofa.internetbankieren.service.AccountService;
 import sofa.internetbankieren.service.MoneyTransferService;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
 
 
 @Controller
@@ -20,7 +18,6 @@ public class MoneyTransferController {
 
     private MoneyTransferService moneyTransferService;
     private AccountService accountService;
-    private static final int MAX_TRANSACTIES = 10;
 
     public MoneyTransferController(MoneyTransferService moneyTransferService, AccountService accountService) {
         this.moneyTransferService = moneyTransferService;
@@ -53,7 +50,7 @@ public class MoneyTransferController {
         }
         moneyTransferService.slaTransactieOp(nieuweTransactie);
         moneyTransferService.updateRekeningen(mijnRekening, tegenrekening);
-        model.addAttribute("transacties", moneyTransferService.toonTransacties(mijnRekening));
+        model.addAttribute("transacties", accountService.toonTransacties(mijnRekening));
 
         return "account/account";
     }
