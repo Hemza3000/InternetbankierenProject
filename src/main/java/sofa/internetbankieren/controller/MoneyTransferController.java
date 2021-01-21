@@ -31,6 +31,7 @@ public class MoneyTransferController {
     public String moneyTransferHandler(Model model, @ModelAttribute(name = "ingelogde") Klant ingelogde, @ModelAttribute(name = "rekening") Rekening rekening) {
         MoneyTransferBackingBean moneyTransferBackingbean = new MoneyTransferBackingBean(0, "", "");
         model.addAttribute("MoneyTransferBackingbean", moneyTransferBackingbean);
+        model.addAttribute("saldoOntoereikend", false);
         return "moneyTransfer";
     }
 
@@ -44,11 +45,16 @@ public class MoneyTransferController {
         double tegenrekeningSaldo = tegenrekening.getSaldo();
         Transactie nieuweTransactie = new Transactie(0, mijnRekening, bedrag, LocalDateTime.now(), backingbean.getOmschrijving(), tegenrekening);
 
-        if (moneyTransferService.validatieSaldo(mijnRekening, tegenrekening, bedrag, eigenSaldo, tegenrekeningSaldo)) {
-            moneyTransferService.slaTransactieOp(nieuweTransactie);
-            moneyTransferService.updateRekeningen(mijnRekening, tegenrekening);
+        if (!moneyTransferService.validatieSaldo(mijnRekening, tegenrekening, bedrag, eigenSaldo, tegenrekeningSaldo)) {
+            model.addAttribute("saldoOntoereikend", true);
+            MoneyTransferBackingBean moneyTransferBackingbean = new MoneyTransferBackingBean(0, "", "");
+            model.addAttribute("MoneyTransferBackingbean", moneyTransferBackingbean);
+            return "moneyTransfer";
         }
+        moneyTransferService.slaTransactieOp(nieuweTransactie);
+        moneyTransferService.updateRekeningen(mijnRekening, tegenrekening);
         model.addAttribute("transacties", moneyTransferService.toonTransacties(mijnRekening));
+
         return "account/account";
     }
 }
