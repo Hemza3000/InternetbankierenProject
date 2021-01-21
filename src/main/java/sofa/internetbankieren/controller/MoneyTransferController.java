@@ -9,6 +9,8 @@ import sofa.internetbankieren.model.*;
 import sofa.internetbankieren.service.AccountService;
 import sofa.internetbankieren.service.MoneyTransferService;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 
 
 @Controller
@@ -44,14 +46,9 @@ public class MoneyTransferController {
 
         if (moneyTransferService.validatieSaldo(mijnRekening, tegenrekening, bedrag, eigenSaldo, tegenrekeningSaldo)) {
             moneyTransferService.slaTransactieOp(nieuweTransactie);
-            moneyTransferService.updateRekeningen(mijnRekening, tegenrekening); }
-
-        //todo deze transactiemethode in een service zetten
-//        List<Transactie> transacties = mijnRekening.getTransacties();
-//        Collections.sort(transacties, Collections.reverseOrder());
-//        if (transacties.size() > 0)
-//            transacties = transacties.subList(0, Math.min(transacties.size(), MAX_TRANSACTIES));
-//        model.addAttribute("transacties", transacties);
+            moneyTransferService.updateRekeningen(mijnRekening, tegenrekening);
+        }
+        model.addAttribute("transacties", moneyTransferService.toonTransacties(mijnRekening));
         return "account/account";
     }
 }
