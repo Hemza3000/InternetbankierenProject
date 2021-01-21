@@ -20,12 +20,12 @@
         </tr>
         <tr>
             <td><label for="Bedrag">Bedrag in Euro</label></td>
-            <td><input type="number" id="bedrag" name="bedrag" th:field="*{bedrag}" placeholder="0,00" required/></td>
+            <td><input type="number" id="bedrag" name="bedrag" step="any" th:field="*{bedrag}" placeholder="0,00" required/></td>
         </tr>
-        <!--<tr th:if="${ontoereikend}">
+        <tr th:if="${saldoOntoereikend}">
             <td></td>
-            <td><font color="red">Saldo is ontoereikend, vul een kleiner bedrag in</font></td>
-        </tr>-->
+            <td><font color="red">Uw saldo is te laag voor deze overboeking. Voer een kleiner bedrag in.</font></td>
+        <tr>
             <td><label for="Omschrijving">Omschrijving overboeking</label></td>
             <td><input type="text" id="omschrijving" th:field="*{omschrijving}" placeholder="Omschrijving" required/></td>
         </tr>
@@ -35,24 +35,9 @@
 </tr>
 <td></td>
 
+<p>Terug naar uw <a href="javascript:javascript:history.go(-1)">transactieoverzicht</a></p>
+
 </tr>
-<p><a href="/account">Terug</a> naar je transactieoverzicht</p>
-<script>
-    function msg() {
-        alert('Overboeking is toegevoegd,\nJe gaat nu terug naar je transactieoverzicht.');
-    }
-</script>
-<!--
-<script>
-    function validate() {
-        if (th:field="*{bedrag}").val() < $("bedrag").val()) {
-
-            alert("min_value field > max_value");
-        } else {
-            alert("max_value field > min_value");
-        }
-    }
-</script>-->
-
+<p>Terug naar uw <a href="/overzicht">overzichtspagina</a></p> </p>
 </body>
 </html>

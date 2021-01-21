@@ -8,6 +8,7 @@ import sofa.internetbankieren.repository.ParticulierDAO;
 import sofa.internetbankieren.repository.PriverekeningDAO;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -16,6 +17,7 @@ import java.util.List;
 @Service
 public class AccountService {
 
+    private static final int MAX_TRANSACTIES = 10; // lengte transactieoverzicht
     private PriverekeningDAO priverekeningDAO;
     private BedrijfsrekeningDAO bedrijfsrekeningDAO;
     private ParticulierDAO particulierDAO;
@@ -46,6 +48,7 @@ public class AccountService {
             return priverekeningList.isEmpty() && bedrijfsrekeningList.isEmpty();
     }
 
+    // controle in BSN in database bestaat.
     public boolean doesBsnExist(int bsn) {
         return particulierDAO.getAllByBSN(bsn).size() == 1;
     }
@@ -55,8 +58,7 @@ public class AccountService {
         List<Rekening> rekeningen = new ArrayList<>();
         rekeningen.addAll(priverekeningDAO.getAllByIban(iban));
         rekeningen.addAll(bedrijfsrekeningDAO.getAllByIban(iban));
-        Rekening rekening = rekeningen.get(0);
-        return rekening;
+        return rekeningen.get(0);
     }
 
     public Klant getKlantbyGebruikersnaamWachtwoord (String gebruikersnaam, String wachtwoord){
@@ -70,4 +72,22 @@ public class AccountService {
         return alleklanten.get(0);
     }
 
+    // methode om rekening op te slaan. Met check of het om een bedrijf of particulier gaat.
+    public void saveNewAccountNumber(Rekening rekening, Klant ingelogde) {
+        if ( ingelogde instanceof Particulier) {
+            priverekeningDAO.storeOne((Priverekening) rekening);
+        } else if ( ingelogde instanceof  Bedrijf) {
+            bedrijfsrekeningDAO.storeOne((Bedrijfsrekening) rekening);
+        }
+    }
+
+    // Geschreven door Wendy
+    // Geeft een lijst van de laatste maximaal MAX_TRANSACTIES transacties met de meest recente vooraan
+    public List<Transactie> toonTransacties(Rekening mijnRekening){
+        List<Transactie> transacties = mijnRekening.getTransacties();
+        Collections.sort(transacties, Collections.reverseOrder());
+        if (transacties.size() > 0)
+            transacties = transacties.subList(0, Math.min(transacties.size(), MAX_TRANSACTIES));
+        return transacties;
+    }
 }

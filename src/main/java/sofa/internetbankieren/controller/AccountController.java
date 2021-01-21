@@ -6,12 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import sofa.internetbankieren.model.Rekening;
-import sofa.internetbankieren.model.Transactie;
 import sofa.internetbankieren.service.AccountService;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author Wendy Ellens
@@ -20,7 +17,6 @@ import java.util.List;
 @SessionAttributes("rekening")
 public class AccountController {
 
-    private static final int MAX_TRANSACTIES = 10; // lengte transactieoverzicht
     private final AccountService accountService;
 
     public AccountController(AccountService accountService) {
@@ -33,14 +29,8 @@ public class AccountController {
 
         Rekening rekening = accountService.getRekeningbyIban(iban);
 
-        // Lijst maken van laatste maximaal MAX_TRANSACTIES transacties met meeste recente vooraan
-        List<Transactie> transacties = rekening.getTransacties();
-        Collections.sort(transacties, Collections.reverseOrder());
-        if (transacties.size() > 0)
-            transacties = transacties.subList(0, Math.min(transacties.size(), MAX_TRANSACTIES));
-
         model.addAttribute("rekening", rekening);
-        model.addAttribute("transacties", transacties);
+        model.addAttribute("transacties", accountService.toonTransacties(rekening));
         model.addAttribute("nu", LocalDateTime.now());
 
         return "account/account";
