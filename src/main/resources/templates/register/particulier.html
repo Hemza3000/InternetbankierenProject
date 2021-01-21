@@ -4,8 +4,13 @@
     <meta charset="UTF-8">
     <title>Sofa - registreren</title>
     <meta name="author" content="Wichert Tjerkstra, Hemza Lasri">
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
 </head>
 <body>
+<!--
+<div th:insert="fragments/navBar :: navBar"></div>
+-->
+<!--<div class="container" style="padding-top: 100px;" >-->
 <h1>Registreer je hier als particuliere klant</h1>
 <p>Stap 2/4</p>
 <p>Vul hieronder je persoonlijke gegevens in</p>
@@ -30,7 +35,7 @@
         </tr>
         <tr>
             <td><label for="BSN">Burgerservicenummer</label></td>
-            <td><input type="text" th:field="*{BSN}" name="BSN" required/></td>
+            <td><input type="text" th:field="*{BSN}" idname="BSN" required/></td>
         </tr>
         <tr>
             <td><label for="Postal_code">Postcode</label></td>
@@ -55,7 +60,8 @@
     </table>
 </form>
 <p>Terug naar de <a href="/home">homepage</a></p> </p>
-
+<!--</div>
+<div th:insert="fragments/footer :: footer"></div>-->
 <script>
     // toegevoegd door Wichert
     // voegt automatisch straat + woonplaats in bij het invullen van Postcode en huisnummer

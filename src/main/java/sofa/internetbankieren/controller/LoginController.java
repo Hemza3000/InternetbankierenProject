@@ -8,9 +8,6 @@ import sofa.internetbankieren.model.*;
 import sofa.internetbankieren.repository.*;
 import sofa.internetbankieren.service.AccountService;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  *
  */
