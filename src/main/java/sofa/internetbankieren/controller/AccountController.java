@@ -7,11 +7,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import sofa.internetbankieren.model.Rekening;
 import sofa.internetbankieren.model.Transactie;
-import sofa.internetbankieren.repository.BedrijfsrekeningDAO;
-import sofa.internetbankieren.repository.PriverekeningDAO;
+import sofa.internetbankieren.service.AccountService;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,23 +21,17 @@ import java.util.List;
 public class AccountController {
 
     private static final int MAX_TRANSACTIES = 10; // lengte transactieoverzicht
-    private final PriverekeningDAO priverekeningDAO;
-    private final BedrijfsrekeningDAO bedrijfsrekeningDAO;
+    private final AccountService accountService;
 
-    public AccountController(PriverekeningDAO priverekeningDAO, BedrijfsrekeningDAO bedrijfsrekeningDAO) {
+    public AccountController(AccountService accountService) {
         super();
-        this.priverekeningDAO = priverekeningDAO;
-        this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
+        this.accountService = accountService;
     }
 
     @GetMapping("/rekening/{IBAN}")
     public String accountHandler(Model model, @PathVariable("IBAN") String iban) {
 
-        // Rekening opzoeken o.b.v. IBAN
-        List<Rekening> rekeningen = new ArrayList<>();
-        rekeningen.addAll(priverekeningDAO.getAllByIban(iban));
-        rekeningen.addAll(bedrijfsrekeningDAO.getAllByIban(iban));
-        Rekening rekening = rekeningen.get(0);
+        Rekening rekening = accountService.getRekeningbyIban(iban);
 
         // Lijst maken van laatste maximaal MAX_TRANSACTIES transacties met meeste recente vooraan
         List<Transactie> transacties = rekening.getTransacties();

@@ -7,10 +7,7 @@ import sofa.internetbankieren.backing_bean.LoginFormBackingBean;
 import sofa.internetbankieren.backing_bean.RegisterFormPartBackingBean;
 import sofa.internetbankieren.model.*;
 import sofa.internetbankieren.repository.*;
-import sofa.internetbankieren.service.AccountService;
 import sofa.internetbankieren.service.RegisterService;
-
-import java.util.ArrayList;
 
 /**
  * @author Wichert Tjerkstra (particulier), Wendy Ellens (bedrijf)
@@ -28,27 +25,22 @@ public class RegistrationController {
 
     // Zoals aangegeven door de PO, is het hoofd MKB (medewerker 2) altijd de accountmanager.
     public final static int ID_ACCOUNTMANAGER = 2;
-    private String newIBAN;
-    private final AccountService accountService;
     private final ParticulierDAO particulierDAO;
     private final BedrijfDAO bedrijfDAO;
     private final MedewerkerDAO medewerkerDAO;
     private final BedrijfsrekeningDAO bedrijfsrekeningDAO;
     private final PriverekeningDAO priverekeningDAO;
-    private final TransactieDAO transactieDAO;
     private final RegisterService registerService;
 
     public RegistrationController(ParticulierDAO particulierDAO, BedrijfDAO bedrijfDAO, MedewerkerDAO medewerkerDAO,
                                   BedrijfsrekeningDAO bedrijfsrekeningDAO, PriverekeningDAO priverekeningDAO,
-                                  AccountService accountService, TransactieDAO transactieDAO, RegisterService registerService) {
+                                  RegisterService registerService) {
         super();
         this.particulierDAO = particulierDAO;
         this.bedrijfDAO = bedrijfDAO;
         this.medewerkerDAO = medewerkerDAO;
         this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
         this.priverekeningDAO = priverekeningDAO;
-        this.accountService = accountService;
-        this.transactieDAO = transactieDAO;
         this.registerService = registerService;
     }
 
@@ -134,9 +126,7 @@ public class RegistrationController {
         bedrijf.setAccountmanager(medewerkerDAO.getOneByID(ID_ACCOUNTMANAGER));
         bedrijf.setBedrijfsrekeningDAO(bedrijfsrekeningDAO);
         bedrijfDAO.storeOne(bedrijf);
-        Klant klant = bedrijf;
-        model.addAttribute("ingelogde", klant);
+        model.addAttribute("ingelogde", bedrijf);
         return "register/completed";
     }
-
 }

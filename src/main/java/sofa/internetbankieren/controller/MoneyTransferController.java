@@ -1,7 +1,5 @@
 package sofa.internetbankieren.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,14 +10,14 @@ import sofa.internetbankieren.repository.PriverekeningDAO;
 import sofa.internetbankieren.repository.TransactieDAO;
 import sofa.internetbankieren.service.AccountService;
 import sofa.internetbankieren.service.MoneyTransferService;
-//import sofa.internetbankieren.service.MoneyTransferService;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
-import java.util.List;
 
+/**
+ * @author Taco Jongkind & Hemza Lasri
+ */
 @Controller
 @SessionAttributes({"ingelogde", "rekening"})
 
