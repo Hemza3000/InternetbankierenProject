@@ -19,6 +19,10 @@
             <td><label for="username_field">Gebruikersnaam</label></td>
             <td><input type="text" id="username_field" th:field="*{gebruikersnaam}" required/></td>
         </tr>
+        <tr th:if="${doesExist}">
+            <td></td>
+            <td style='color:red'>Gebruikersnaam bestaat al: kies een andere gebruikersnaam</td>
+        </tr>
         <tr>
             <td><label for="password_field">Password</label></td>
             <td><input type="password" id="password_field" th:field="*{wachtwoord}" required/></td>
@@ -36,8 +40,8 @@
 
 <p>Terug naar de <a href="/home">homepage</a></p>
 
-// Toegevoegd door Wichert
 <script>
+    // Toegevoegd door Hemza
     document.getElementById("password_field").addEventListener("focusout", validatie);
 
     function validatie() {

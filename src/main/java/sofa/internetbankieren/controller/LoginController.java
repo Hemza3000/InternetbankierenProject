@@ -9,7 +9,7 @@ import sofa.internetbankieren.repository.*;
 import sofa.internetbankieren.service.AccountService;
 
 /**
- *
+ * @author Hemza Lasri
  */
 @Controller
 @SessionAttributes("ingelogde")

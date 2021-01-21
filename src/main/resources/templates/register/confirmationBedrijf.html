@@ -13,7 +13,7 @@
 <p>Stap 3/4</p>
 <p>Controleer hieronder of je gegevens kloppen.</p>
 
-<form action="confirmBedrijf" method="post" th:object="${klant}">
+<form action="confirmBedrijf" method="post" th:object="${klant}" onsubmit="return validateBedrijf()">
     <table>
         <tr>
             <td><label for="name_field"> Bedrijfsnaam</label></td>
@@ -92,6 +92,40 @@
         document.getElementById('city_field').value = addressPart.city
     }
 
+    // Controleert de KvK- en BTW-nummers
+    function validateBedrijf() {
+        // Het KvK-nummer moet uit 8 cijfers bestaan.
+        let kvk = document.getElementById('kvk_field').value;
+        let regexKvk = /^\d{8}$/; // /^[0-9]{8}$/
+        if ( regexKvk.test(kvk) === false ) {
+            alert('Voer een geldig KvK-nummer in')
+            return false;
+        }
+
+        // Het BTW-nummer moet er zo uitzien: landcode NL, 9 cijfers, letter B, en een controlegetal van 2 cijfers.
+        let btw = document.getElementById('btw_field').value;
+        let regexBtw = /^NL[0-9]{9}B[0-9]{2}$/;
+        if ( regexBtw.test(btw) === false ) {
+            alert('Voer een geldig BTW-nummer in')
+            return false;
+        }
+        // Controle of het BTW-nummer in gebruik is m.b.v. de database van de Europese Commissie.
+        // Todo later toevoegen, nu niet in gebruik om look-ups te besparen (na 100x betalen)
+        // else {
+        //     let key = '9e401e60a123e3125372ac83e026fc15';
+        //     fetch(`http://apilayer.net/api/validate?access_key=${key}&vat_number=${kvk}`)
+        //         .then(response => response.json())
+        //         .then (json => processResponse(json))
+        // }
+    }
+
+    // todo functie verwijderen
+    function processResponse(data){
+        if (data.valid) {
+            alert('Voer een geldig BTW-nummer in')
+            return false;
+        }
+    }
 </script>
 </body>
 </html>
