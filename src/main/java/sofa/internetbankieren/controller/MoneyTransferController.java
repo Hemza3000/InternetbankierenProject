@@ -53,7 +53,7 @@ public class MoneyTransferController {
         }
         moneyTransferService.slaTransactieOp(nieuweTransactie);
         moneyTransferService.updateRekeningen(mijnRekening, tegenrekening);
-        model.addAttribute("transacties", accountService.toonTransacties(mijnRekening));
+        model.addAttribute("transacties", accountService.geefTransactieHistorie(mijnRekening));
 
         return "account/account";
     }

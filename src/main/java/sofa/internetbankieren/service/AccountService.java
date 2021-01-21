@@ -48,13 +48,12 @@ public class AccountService {
             return priverekeningList.isEmpty() && bedrijfsrekeningList.isEmpty();
     }
 
-    // controle in BSN in database bestaat.
+    // controle of BSN in database bestaat.
     public boolean doesBsnExist(int bsn) {
-        return particulierDAO.getAllByBSN(bsn).size() == 1;
+        return particulierDAO.getOneByBSN(bsn).size() == 1;
     }
 
     public Rekening getRekeningbyIban(String iban){
-
         List<Rekening> rekeningen = new ArrayList<>();
         rekeningen.addAll(priverekeningDAO.getAllByIban(iban));
         rekeningen.addAll(bedrijfsrekeningDAO.getAllByIban(iban));
@@ -83,7 +82,7 @@ public class AccountService {
 
     // Geschreven door Wendy
     // Geeft een lijst van de laatste maximaal MAX_TRANSACTIES transacties met de meest recente vooraan
-    public List<Transactie> toonTransacties(Rekening mijnRekening){
+    public List<Transactie> geefTransactieHistorie(Rekening mijnRekening){
         List<Transactie> transacties = mijnRekening.getTransacties();
         Collections.sort(transacties, Collections.reverseOrder());
         if (transacties.size() > 0)

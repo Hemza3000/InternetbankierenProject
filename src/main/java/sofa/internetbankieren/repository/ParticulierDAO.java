@@ -45,13 +45,13 @@ public class ParticulierDAO {
     }
 
     // get all by gebruikersnaam
-    public List<Particulier> getAllByGebruikersnaam(String gebruikersnaam){
+    public List<Particulier> getOneByGebruikersnaam(String gebruikersnaam){
         final String sql = "select * from particulier where gebruikersnaam=?";
         return jdbcTemplate.query(sql, new ParticulierRowMapper(), gebruikersnaam);
     }
 
     // get all by bsn
-    public List<Particulier> getAllByBSN(int bsn){
+    public List<Particulier> getOneByBSN(int bsn){
         final String sql = "select * from particulier where bsn=?";
         return jdbcTemplate.query(sql, new ParticulierRowMapper(), bsn);
     }

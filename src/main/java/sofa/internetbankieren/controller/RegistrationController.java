@@ -7,6 +7,7 @@ import sofa.internetbankieren.backing_bean.LoginFormBackingBean;
 import sofa.internetbankieren.backing_bean.RegisterFormPartBackingBean;
 import sofa.internetbankieren.model.*;
 import sofa.internetbankieren.repository.*;
+import sofa.internetbankieren.service.AccountService;
 import sofa.internetbankieren.service.RegisterService;
 
 /**
@@ -31,10 +32,11 @@ public class RegistrationController {
     private final BedrijfsrekeningDAO bedrijfsrekeningDAO;
     private final PriverekeningDAO priverekeningDAO;
     private final RegisterService registerService;
+    private final AccountService accountService;
 
     public RegistrationController(ParticulierDAO particulierDAO, BedrijfDAO bedrijfDAO, MedewerkerDAO medewerkerDAO,
                                   BedrijfsrekeningDAO bedrijfsrekeningDAO, PriverekeningDAO priverekeningDAO,
-                                  RegisterService registerService) {
+                                  RegisterService registerService, AccountService accountService) {
         super();
         this.particulierDAO = particulierDAO;
         this.bedrijfDAO = bedrijfDAO;
@@ -42,6 +44,7 @@ public class RegistrationController {
         this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
         this.priverekeningDAO = priverekeningDAO;
         this.registerService = registerService;
+        this.accountService = accountService;
     }
 
     @GetMapping("/register")
@@ -62,7 +65,6 @@ public class RegistrationController {
         return null;
     }
 
-
     // voor bootstrap
     @GetMapping("/particulier")
     public String particulierHandler(Model model){
@@ -79,6 +81,7 @@ public class RegistrationController {
 
 
     // Registratie particulier
+
     // Stap 2: verwerken ingevoerde klantgegevens
     @PostMapping("/register_particulier")
     public String newParticulierHandler(Model model, @ModelAttribute(name = "backingBean") RegisterFormPartBackingBean dummy) {
@@ -103,7 +106,7 @@ public class RegistrationController {
         Klant klant = (Klant) model.getAttribute("klant");
         // validatie voor unieke gebruikersnaam
         if (!registerService.checkUniqueUsername(usernameForm.getUserName())) {
-            model.addAttribute("usernameForm", new LoginFormBackingBean("", ""));
+            model.addAttribute("usernameForm", usernameForm);
             model.addAttribute("doesExist", true);
             return "register/registerUsername";
         }
@@ -116,6 +119,7 @@ public class RegistrationController {
         model.addAttribute("ingelogde", klant);
         return "register/completed";
     }
+
 
     // Registratie bedrijf
 
@@ -130,12 +134,21 @@ public class RegistrationController {
     @PostMapping("/confirmBedrijf")
     public String confirmBedrijfHandler(@ModelAttribute("klant") Bedrijf bedrijf, Model model) {
         model.addAttribute("klant", bedrijf);
+        model.addAttribute("doesExist", false);
         return "register/registerLogin";
     }
 
     // Stap 4: verwerken ingevoerde logingegevens
     @PostMapping("/storeLogin")
     public String confirm(@ModelAttribute("klant") Bedrijf bedrijf, Model model) {
+
+        // validatie voor unieke gebruikersnaam
+        if (!registerService.checkUniqueUsername(bedrijf.getGebruikersnaam())) {
+            model.addAttribute("klant", bedrijf);
+            model.addAttribute("doesExist", true);
+            return "register/registerLogin";
+        }
+
         bedrijf.setAccountmanager(medewerkerDAO.getOneByID(ID_ACCOUNTMANAGER));
         bedrijf.setBedrijfsrekeningDAO(bedrijfsrekeningDAO);
         bedrijfDAO.storeOne(bedrijf);

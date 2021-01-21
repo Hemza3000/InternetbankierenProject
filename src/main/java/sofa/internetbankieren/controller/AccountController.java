@@ -26,13 +26,10 @@ public class AccountController {
 
     @GetMapping("/rekening/{IBAN}")
     public String accountHandler(Model model, @PathVariable("IBAN") String iban) {
-
         Rekening rekening = accountService.getRekeningbyIban(iban);
-
         model.addAttribute("rekening", rekening);
-        model.addAttribute("transacties", accountService.toonTransacties(rekening));
+        model.addAttribute("transacties", accountService.geefTransactieHistorie(rekening));
         model.addAttribute("nu", LocalDateTime.now());
-
         return "account/account";
     }
 }

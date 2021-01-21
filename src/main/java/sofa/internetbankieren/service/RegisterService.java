@@ -20,7 +20,7 @@ public class RegisterService {
     }
 
     public boolean checkUniqueUsername(String username) {
-        List<Particulier> particulierList = particulierDAO.getAllByGebruikersnaam(username);
+        List<Particulier> particulierList = particulierDAO.getOneByGebruikersnaam(username);
         List<Bedrijf> bedrijfList = bedrijfDAO.getOneByGebruikersnaam(username);
         return particulierList.isEmpty() && bedrijfList.isEmpty();
     }
