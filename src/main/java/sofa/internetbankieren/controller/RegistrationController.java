@@ -57,6 +57,7 @@ public class RegistrationController {
     public String choiceHandler(@RequestParam(name = "zakelijkOfParticulier") int value, Model model) {
         if (value == 0) {
             model.addAttribute("backingBean", new RegisterFormPartBackingBean());
+            model.addAttribute("BsnExists", false);
             return "register/particulier";
         } else if (value == 1) {
             model.addAttribute("klant", new Bedrijf());
@@ -69,6 +70,7 @@ public class RegistrationController {
     @GetMapping("/particulier")
     public String particulierHandler(Model model){
         model.addAttribute("backingBean", new RegisterFormPartBackingBean());
+        model.addAttribute("BsnExists", false);
         return "register/particulier";
     }
 
@@ -86,12 +88,26 @@ public class RegistrationController {
     @PostMapping("/register_particulier")
     public String newParticulierHandler(Model model, @ModelAttribute(name = "backingBean") RegisterFormPartBackingBean dummy) {
         model.addAttribute("backingBean", dummy);
+        // toegevoegd door Wendy
+        // validatie voor unieke BSN
+        if (accountService.doesBsnExist(dummy.getBSN())) {
+            model.addAttribute("BsnExists", true);
+            return "register/particulier";
+        }
+        model.addAttribute("BsnExists", false);
         return "register/confirmationParticulier";
     }
 
     // Stap 3: verwerken eventuele wijzigingen in klantgegevens na controle door klant
     @PostMapping("/confirmParticulier")
     public String confirmHandler(@ModelAttribute RegisterFormPartBackingBean backingBean, Model model) {
+        // toegevoegd door Wendy
+        // validatie voor unieke BSN
+        if (accountService.doesBsnExist(backingBean.getBSN())) {
+            model.addAttribute("backingBean", backingBean);
+            model.addAttribute("BsnExists", true);
+            return "register/confirmationParticulier";
+        }
         Particulier p = new Particulier(backingBean, bedrijfsrekeningDAO, priverekeningDAO);
         model.addAttribute("klant", p);
         LoginFormBackingBean usernameForm = new LoginFormBackingBean("","");

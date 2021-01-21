@@ -50,7 +50,7 @@ public class AccountService {
 
     // controle of BSN in database bestaat.
     public boolean doesBsnExist(int bsn) {
-        return particulierDAO.getOneByBSN(bsn).size() == 1;
+        return !particulierDAO.getOneByBSN(bsn).isEmpty();
     }
 
     public Rekening getRekeningbyIban(String iban){

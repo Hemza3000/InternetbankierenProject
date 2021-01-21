@@ -32,6 +32,10 @@
             <td><label for="BSN">Burgerservicenummer</label></td>
             <td><input type="text" th:field="*{BSN}" name="BSN" required/></td>
         </tr>
+        <tr th:if="${BsnExists}">
+            <td></td>
+            <td style='color:red'>Er is al een geregistreerde klant met dit BSN</td>
+        </tr>
         <tr>
             <td><label for="Postal_code">Postcode</label></td>
             <td><input type="text" id="pc_field" th:field="*{postcode}" name="Postal_code" required/></td>
