@@ -109,12 +109,13 @@
             return false;
         }
         // Controle of het BTW-nummer in gebruik is m.b.v. de database van de Europese Commissie.
-        else {
-            let key = '9e401e60a123e3125372ac83e026fc15';
-            fetch(`http://apilayer.net/api/validate?access_key=${key}&vat_number=${kvk}`)
-                .then(response => response.json())
-                .then (json => processResponse(json))
-        }
+        // Todo later toevoegen, nu niet in gebruik om look-ups te besparen (na 100x betalen)
+        // else {
+        //     let key = '9e401e60a123e3125372ac83e026fc15';
+        //     fetch(`http://apilayer.net/api/validate?access_key=${key}&vat_number=${kvk}`)
+        //         .then(response => response.json())
+        //         .then (json => processResponse(json))
+        // }
     }
 
     // todo functie verwijderen
