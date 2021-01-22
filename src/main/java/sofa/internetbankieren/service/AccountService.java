@@ -60,7 +60,7 @@ public class AccountService {
         return rekeningen.get(0);
     }
 
-    public Klant getKlantbyGebruikersnaamWachtwoord (String gebruikersnaam, String wachtwoord){
+    public List getKlantenbyGebruikersnaamWachtwoord (String gebruikersnaam, String wachtwoord){
         List<Particulier> particuliereklanten =
                 particulierDAO.getOneByGebruikersnaamWachtwoord(gebruikersnaam, wachtwoord);
         List<Bedrijf> bedrijfsklanten =
@@ -68,7 +68,7 @@ public class AccountService {
         List<Klant> alleklanten = new ArrayList<>();
         alleklanten.addAll(particuliereklanten);
         alleklanten.addAll(bedrijfsklanten);
-        return alleklanten.get(0);
+        return alleklanten;
     }
 
     // methode om rekening op te slaan. Met check of het om een bedrijf of particulier gaat.
