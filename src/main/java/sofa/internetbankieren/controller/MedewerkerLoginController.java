@@ -33,10 +33,10 @@ public class MedewerkerLoginController {
     public String inlogMedewerkerHandler(Model model) {
         LoginFormBackingBean userDummy = new LoginFormBackingBean("", "");
         model.addAttribute("backingBean", userDummy);
-        return "login_medewerker";
+        return "login-medewerker-bootstrap";
     }
 
-    @PostMapping("/login_medewerker")
+    @PostMapping("/login-medewerker")
     public String postInlogForm(Model model, @ModelAttribute LoginFormBackingBean dummy) {
         List<Medewerker> medewerkers =
                 medewerkerDAO.getOneByGebruikersnaamWachtwoord(dummy.getUserName(), dummy.getPassword());
