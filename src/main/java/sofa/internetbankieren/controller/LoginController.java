@@ -8,6 +8,8 @@ import sofa.internetbankieren.model.*;
 import sofa.internetbankieren.repository.*;
 import sofa.internetbankieren.service.AccountService;
 
+import java.util.List;
+
 /**
  *
  */
@@ -34,12 +36,11 @@ public class LoginController {
 
     @PostMapping("/overzicht")
     public String postInlogForm(Model model, @ModelAttribute LoginFormBackingBean dummy) {
-        Klant inlogger = accountService.getKlantbyGebruikersnaamWachtwoord(dummy.getUserName(), dummy.getPassword());
-        System.out.println(inlogger);
-        if(inlogger == null){ // Geen klant met deze inloggegevens
+        List inloggerslijst = accountService.getKlantenbyGebruikersnaamWachtwoord(dummy.getUserName(), dummy.getPassword());
+        if(inloggerslijst.isEmpty()){ // Geen klant met deze inloggegevens
             return "foutingelogd";
         } else{
-        model.addAttribute("ingelogde", inlogger);
+        model.addAttribute("ingelogde", inloggerslijst.get(0));
             return "overview";
         }
     }
