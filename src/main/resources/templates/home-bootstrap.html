@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -181,5 +181,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
 <!-- Core theme JS-->
 <script th:src="@{/js/scripts.js}"></script>
+<script
+        var alertList = document.querySelectorAll('.alert')
+        alertList.forEach(function (alert) {
+        new bootstrap.Alert(alert)
+        })>
+</script>
 </body>
 </html>

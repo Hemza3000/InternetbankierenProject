@@ -34,11 +34,10 @@ public class RegistrationController {
     private final RegisterService registerService;
     private final AccountService accountService;
 
-    public RegistrationController(ParticulierDAO particulierDAO, BedrijfDAO bedrijfDAO, MedewerkerDAO medewerkerDAO,
+    public RegistrationController(BedrijfDAO bedrijfDAO, MedewerkerDAO medewerkerDAO,
                                   BedrijfsrekeningDAO bedrijfsrekeningDAO, PriverekeningDAO priverekeningDAO,
                                   RegisterService registerService, AccountService accountService) {
         super();
-        this.particulierDAO = particulierDAO;
         this.bedrijfDAO = bedrijfDAO;
         this.medewerkerDAO = medewerkerDAO;
         this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
@@ -128,10 +127,7 @@ public class RegistrationController {
         }
         klant.setGebruikersnaam(usernameForm.getUserName());
         klant.setWachtwoord(usernameForm.getPassword());
-        if (klant instanceof Particulier) {
-            particulierDAO.storeOne((Particulier) klant);
-        } else
-            bedrijfDAO.storeOne((Bedrijf) klant);
+        registerService.storeKlant(klant);
         model.addAttribute("ingelogde", klant);
         return "register/completed";
     }
