@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.com" >
+<html lang="en"  xmlns:th="http://www.thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
     <title>Sofa - registreren</title>
@@ -15,7 +15,7 @@
 <p>Stap 2/4</p>
 <p>Vul hieronder je persoonlijke gegevens in</p>
 
-<form name="particulierForm" action="register_particulier" method="post" th:object="${backingBean}" onsubmit="return validateForm()">
+<form name="particulierForm" action="register" method="post" th:object="${klant}" onsubmit="return validateForm()">
     <table>
         <tr>
             <td><label for="First_name">Voornaam</label></td>
@@ -37,7 +37,7 @@
             <td><label for="BSN">Burgerservicenummer</label></td>
             <td><input type="text" th:field="*{BSN}" idname="BSN" required/></td>
         </tr>
-        <tr th:if="${BsnExists}">
+        <tr th:if="${fieldExists}">
             <td></td>
             <td style='color:red'>Er is al een geregistreerde klant met dit BSN</td>
         </tr>

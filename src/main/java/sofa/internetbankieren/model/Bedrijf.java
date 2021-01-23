@@ -31,8 +31,9 @@ public class Bedrijf extends Klant {
         this.accountmanager = accountmanager;
     }
 
-    public Bedrijf(){
-
+    public Bedrijf(BedrijfsrekeningDAO bedrijfsrekeningDAO, Medewerker accountmanager) {
+        super(bedrijfsrekeningDAO);
+        this.accountmanager = accountmanager;
     }
 
     // toegevoegd door Wendy

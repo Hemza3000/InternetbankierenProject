@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sofa - registreren</title>
-    <meta name="author" content="Wendy Ellens">
+    <meta name="author" content="Wichert Tjerkstra, Wendy Ellens">
 </head>
 
 <body>
@@ -19,7 +19,7 @@
             <td><label for="username_field">Gebruikersnaam</label></td>
             <td><input type="text" id="username_field" th:field="*{gebruikersnaam}" required/></td>
         </tr>
-        <tr th:if="${doesExist}">
+        <tr th:if="${fieldExists}">
             <td></td>
             <td style='color:red'>Gebruikersnaam bestaat al: kies een andere gebruikersnaam</td>
         </tr>
