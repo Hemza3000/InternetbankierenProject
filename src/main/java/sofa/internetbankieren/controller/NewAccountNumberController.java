@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import sofa.internetbankieren.model.*;
 import sofa.internetbankieren.repository.*;
 import sofa.internetbankieren.service.AccountService;
+import sofa.internetbankieren.service.CustomerService;
 
 /**
  * @author Wichert Tjekrstra
@@ -18,11 +19,15 @@ public class NewAccountNumberController {
     private ParticulierDAO particulierDAO;
     private TransactieDAO transactieDAO;
     private AccountService accountService;
+    private CustomerService customerService;
 
-    public NewAccountNumberController(ParticulierDAO particulierDAO, TransactieDAO transactieDAO, AccountService accountService) {
+    public NewAccountNumberController(ParticulierDAO particulierDAO, TransactieDAO transactieDAO,
+                                      AccountService accountService, CustomerService customerService) {
+        super();
         this.particulierDAO = particulierDAO;
         this.transactieDAO = transactieDAO;
         this.accountService = accountService;
+        this.customerService = customerService;
     }
 
     // Toevoegen van rekeningnummers van een ingelogde gebruiker
@@ -52,7 +57,7 @@ public class NewAccountNumberController {
         } else {
             int bsn = Integer.parseInt(bsnContactpersoon);
             // validatie op uniek BSN nummer
-            if (!accountService.doesBsnExist(bsn)) {
+            if (!customerService.doesBsnExist(bsn)) {
                 model.addAttribute("IBAN", newIBAN);
                 model.addAttribute("isBedrijf", true);
                 model.addAttribute("doesExist", false);

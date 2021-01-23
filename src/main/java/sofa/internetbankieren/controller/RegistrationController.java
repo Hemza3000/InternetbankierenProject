@@ -5,8 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sofa.internetbankieren.model.*;
 import sofa.internetbankieren.repository.*;
-import sofa.internetbankieren.service.AccountService;
-import sofa.internetbankieren.service.RegisterService;
+import sofa.internetbankieren.service.CustomerService;
 
 /**
  * @author Wichert Tjerkstra (particulier), Wendy Ellens (bedrijf)
@@ -23,25 +22,18 @@ public class RegistrationController {
 
     // Zoals aangegeven door de PO, is het hoofd MKB (medewerker 2) altijd de accountmanager.
     public final static int ID_ACCOUNTMANAGER = 2;
-    private final ParticulierDAO particulierDAO;
-    private final BedrijfDAO bedrijfDAO;
     private final MedewerkerDAO medewerkerDAO;
     private final BedrijfsrekeningDAO bedrijfsrekeningDAO;
     private final PriverekeningDAO priverekeningDAO;
-    private final RegisterService registerService;
-    private final AccountService accountService;
+    private final CustomerService customerService;
 
-    public RegistrationController(ParticulierDAO particulierDAO, BedrijfDAO bedrijfDAO, MedewerkerDAO medewerkerDAO,
-                                  BedrijfsrekeningDAO bedrijfsrekeningDAO, PriverekeningDAO priverekeningDAO,
-                                  RegisterService registerService, AccountService accountService) {
+    public RegistrationController(MedewerkerDAO medewerkerDAO, BedrijfsrekeningDAO bedrijfsrekeningDAO,
+                                  PriverekeningDAO priverekeningDAO, CustomerService customerService) {
         super();
-        this.particulierDAO = particulierDAO;
-        this.bedrijfDAO = bedrijfDAO;
         this.medewerkerDAO = medewerkerDAO;
         this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
         this.priverekeningDAO = priverekeningDAO;
-        this.registerService = registerService;
-        this.accountService = accountService;
+        this.customerService = customerService;
     }
 
     // Stap 1 particulier: ophalen van registratiepagina
@@ -89,25 +81,20 @@ public class RegistrationController {
     public String confirmLogin(@ModelAttribute("klant") Klant klant, Model model){
 
         // Controleert of er in de database al klant met deze gebruikersnaam is
-        if (!registerService.checkUniqueUsername(klant.getGebruikersnaam())) {
+        if (!customerService.checkUniqueUsername(klant.getGebruikersnaam())) {
             model.addAttribute("klant", klant);
             model.addAttribute("fieldExists", true);
             return "register/registerLogin";
         }
 
-        if (klant instanceof Particulier) {
-            particulierDAO.storeOne((Particulier) klant);
-        }
-        else if (klant instanceof Bedrijf) {
-            bedrijfDAO.storeOne((Bedrijf) klant);
-        }
+        customerService.storeNewCustomer(klant);
         model.addAttribute("klant", klant);
         return "register/completed";
     }
 
-    // Controleert of er in de database al particuliere klant met dit BSN is
+    // Controleert of er in de database al een particuliere klant met dit BSN is
     private boolean doesBsnExist(Particulier particulier, Model model) {
-        if (accountService.doesBsnExist(particulier.getBSN())) {
+        if (customerService.doesBsnExist(particulier.getBSN())) {
             model.addAttribute("fieldExists", true);
             return true;
         }
@@ -115,5 +102,3 @@ public class RegistrationController {
         return false;
     }
 }
-
-// TODO opslaan met DAO's naar Service

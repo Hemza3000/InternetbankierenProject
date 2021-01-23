@@ -48,27 +48,11 @@ public class AccountService {
             return priverekeningList.isEmpty() && bedrijfsrekeningList.isEmpty();
     }
 
-    // controle of BSN in database bestaat.
-    public boolean doesBsnExist(int bsn) {
-        return !particulierDAO.getOneByBSN(bsn).isEmpty();
-    }
-
     public Rekening getRekeningbyIban(String iban){
         List<Rekening> rekeningen = new ArrayList<>();
         rekeningen.addAll(priverekeningDAO.getAllByIban(iban));
         rekeningen.addAll(bedrijfsrekeningDAO.getAllByIban(iban));
         return rekeningen.get(0);
-    }
-
-    public Klant getKlantbyGebruikersnaamWachtwoord (String gebruikersnaam, String wachtwoord){
-        List<Particulier> particuliereklanten =
-                particulierDAO.getOneByGebruikersnaamWachtwoord(gebruikersnaam, wachtwoord);
-        List<Bedrijf> bedrijfsklanten =
-                bedrijfDAO.getOneByGebruikersnaamWachtwoord(gebruikersnaam, wachtwoord);
-        List<Klant> alleklanten = new ArrayList<>();
-        alleklanten.addAll(particuliereklanten);
-        alleklanten.addAll(bedrijfsklanten);
-        return alleklanten.get(0);
     }
 
     // methode om rekening op te slaan. Met check of het om een bedrijf of particulier gaat.

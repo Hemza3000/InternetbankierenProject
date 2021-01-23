@@ -5,8 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sofa.internetbankieren.backing_bean.LoginFormBackingBean;
 import sofa.internetbankieren.model.*;
-import sofa.internetbankieren.repository.*;
-import sofa.internetbankieren.service.AccountService;
+import sofa.internetbankieren.service.CustomerService;
 
 /**
  * @author Hemza Lasri
@@ -14,15 +13,11 @@ import sofa.internetbankieren.service.AccountService;
 @Controller
 @SessionAttributes("klant")
 public class LoginController {
-    private final ParticulierDAO particulierDAO;
-    private final BedrijfDAO bedrijfDAO;
-    private AccountService accountService;
+    private CustomerService customerService;
 
-
-    public LoginController(ParticulierDAO particulierDAO, BedrijfDAO bedrijfDAO, AccountService accountService) {
-        this.particulierDAO = particulierDAO;
-        this.bedrijfDAO = bedrijfDAO;
-        this.accountService = accountService;
+    public LoginController(CustomerService customerService) {
+        super();
+        this.customerService = customerService;
     }
 
     @GetMapping("/login")
@@ -34,7 +29,7 @@ public class LoginController {
 
     @PostMapping("/overzicht")
     public String postInlogForm(Model model, @ModelAttribute LoginFormBackingBean dummy) {
-        Klant inlogger = accountService.getKlantbyGebruikersnaamWachtwoord(dummy.getUserName(), dummy.getPassword());
+        Klant inlogger = customerService.getKlantbyGebruikersnaamWachtwoord(dummy.getUserName(), dummy.getPassword());
         System.out.println(inlogger);
         if(inlogger == null){ // Geen klant met deze inloggegevens
             return "foutingelogd";
