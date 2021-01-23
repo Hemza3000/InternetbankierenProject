@@ -28,27 +28,20 @@ public class RegistrationController {
 
     // Zoals aangegeven door de PO, is het hoofd MKB (medewerker 2) altijd de accountmanager.
     public final static int ID_ACCOUNTMANAGER = 2;
-    private String newIBAN;
-    private final AccountService accountService;
-    private final ParticulierDAO particulierDAO;
     private final BedrijfDAO bedrijfDAO;
     private final MedewerkerDAO medewerkerDAO;
     private final BedrijfsrekeningDAO bedrijfsrekeningDAO;
     private final PriverekeningDAO priverekeningDAO;
-    private final TransactieDAO transactieDAO;
     private final RegisterService registerService;
 
-    public RegistrationController(ParticulierDAO particulierDAO, BedrijfDAO bedrijfDAO, MedewerkerDAO medewerkerDAO,
+    public RegistrationController(BedrijfDAO bedrijfDAO, MedewerkerDAO medewerkerDAO,
                                   BedrijfsrekeningDAO bedrijfsrekeningDAO, PriverekeningDAO priverekeningDAO,
-                                  AccountService accountService, TransactieDAO transactieDAO, RegisterService registerService) {
+                                  RegisterService registerService) {
         super();
-        this.particulierDAO = particulierDAO;
         this.bedrijfDAO = bedrijfDAO;
         this.medewerkerDAO = medewerkerDAO;
         this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
         this.priverekeningDAO = priverekeningDAO;
-        this.accountService = accountService;
-        this.transactieDAO = transactieDAO;
         this.registerService = registerService;
     }
 
@@ -117,10 +110,7 @@ public class RegistrationController {
         }
         klant.setGebruikersnaam(usernameForm.getUserName());
         klant.setWachtwoord(usernameForm.getPassword());
-        if (klant instanceof Particulier) {
-            particulierDAO.storeOne((Particulier) klant);
-        } else
-            bedrijfDAO.storeOne((Bedrijf) klant);
+        registerService.storeKlant(klant);
         model.addAttribute("ingelogde", klant);
         return "register/completed";
     }

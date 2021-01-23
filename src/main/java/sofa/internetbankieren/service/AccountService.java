@@ -2,15 +2,11 @@ package sofa.internetbankieren.service;
 
 import org.springframework.stereotype.Service;
 import sofa.internetbankieren.model.*;
-import sofa.internetbankieren.model.*;
 import sofa.internetbankieren.repository.BedrijfDAO;
-import sofa.internetbankieren.model.*;
 import sofa.internetbankieren.repository.BedrijfsrekeningDAO;
 import sofa.internetbankieren.repository.ParticulierDAO;
 import sofa.internetbankieren.repository.PriverekeningDAO;
 
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +49,6 @@ public class AccountService {
     }
 
     public Rekening getRekeningbyIban(String iban){
-
         List<Rekening> rekeningen = new ArrayList<>();
         rekeningen.addAll(priverekeningDAO.getAllByIban(iban));
         rekeningen.addAll(bedrijfsrekeningDAO.getAllByIban(iban));
@@ -68,10 +63,11 @@ public class AccountService {
         List<Klant> alleklanten = new ArrayList<>();
         alleklanten.addAll(particuliereklanten);
         alleklanten.addAll(bedrijfsklanten);
+        if (alleklanten.isEmpty()){
+            return null;
+        }
         return alleklanten.get(0);
     }
-
-
 
     // methode om rekening op te slaan. Met check of het om een bedrijf of particulier gaat.
     public void saveNewAccountNumber(Rekening rekening, Klant ingelogde) {

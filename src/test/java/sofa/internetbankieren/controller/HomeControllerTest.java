@@ -22,8 +22,6 @@ class HomeControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    // even wat probeersels
-
     @Test
     void startHandler() {
         try {
