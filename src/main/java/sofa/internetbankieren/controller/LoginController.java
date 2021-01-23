@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sofa.internetbankieren.backing_bean.LoginFormBackingBean;
-import sofa.internetbankieren.model.*;
 import sofa.internetbankieren.service.CustomerService;
 
 import java.util.List;

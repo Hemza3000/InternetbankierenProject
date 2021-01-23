@@ -2,9 +2,7 @@ package sofa.internetbankieren.service;
 
 import org.springframework.stereotype.Service;
 import sofa.internetbankieren.model.*;
-import sofa.internetbankieren.repository.BedrijfDAO;
 import sofa.internetbankieren.repository.BedrijfsrekeningDAO;
-import sofa.internetbankieren.repository.ParticulierDAO;
 import sofa.internetbankieren.repository.PriverekeningDAO;
 
 import java.util.ArrayList;
@@ -20,15 +18,10 @@ public class AccountService {
     private static final int MAX_TRANSACTIES = 10; // lengte transactieoverzicht
     private PriverekeningDAO priverekeningDAO;
     private BedrijfsrekeningDAO bedrijfsrekeningDAO;
-    private ParticulierDAO particulierDAO;
-    private BedrijfDAO bedrijfDAO;
 
-    public AccountService(PriverekeningDAO priverekeningDAO, BedrijfsrekeningDAO bedrijfsrekeningDAO,
-                          ParticulierDAO particulierDAO, BedrijfDAO bedrijfDAO) {
+    public AccountService(PriverekeningDAO priverekeningDAO, BedrijfsrekeningDAO bedrijfsrekeningDAO) {
         this.priverekeningDAO = priverekeningDAO;
         this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
-        this.particulierDAO = particulierDAO;
-        this.bedrijfDAO = bedrijfDAO;
     }
 
     public String createRandomIBAN() {

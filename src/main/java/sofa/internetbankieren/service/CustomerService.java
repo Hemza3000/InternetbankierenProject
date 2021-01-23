@@ -44,7 +44,7 @@ public class CustomerService {
     }
 
     // gemaakt door Hemza
-    public Klant getKlantbyGebruikersnaamWachtwoord (String gebruikersnaam, String wachtwoord){
+    public List<Klant> getKlantenbyGebruikersnaamWachtwoord (String gebruikersnaam, String wachtwoord){
         List<Particulier> particuliereklanten =
                 particulierDAO.getOneByGebruikersnaamWachtwoord(gebruikersnaam, wachtwoord);
         List<Bedrijf> bedrijfsklanten =
@@ -52,6 +52,6 @@ public class CustomerService {
         List<Klant> alleklanten = new ArrayList<>();
         alleklanten.addAll(particuliereklanten);
         alleklanten.addAll(bedrijfsklanten);
-        return alleklanten.get(0);
+        return alleklanten;
     }
 }
