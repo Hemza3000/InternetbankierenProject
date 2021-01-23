@@ -35,7 +35,8 @@ public abstract class Klant {
         this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
     }
 
-    public Klant() {
+    public Klant(BedrijfsrekeningDAO bedrijfsrekeningDAO) {
+        this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
     }
 
     // toegevoegd door Wendy

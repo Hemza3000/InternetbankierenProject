@@ -12,7 +12,7 @@ import sofa.internetbankieren.service.AccountService;
  * @author Hemza Lasri
  */
 @Controller
-@SessionAttributes("ingelogde")
+@SessionAttributes("klant")
 public class LoginController {
     private final ParticulierDAO particulierDAO;
     private final BedrijfDAO bedrijfDAO;
@@ -39,7 +39,7 @@ public class LoginController {
         if(inlogger == null){ // Geen klant met deze inloggegevens
             return "foutingelogd";
         } else{
-        model.addAttribute("ingelogde", inlogger);
+        model.addAttribute("klant", inlogger);
             return "overview";
         }
     }

@@ -7,26 +7,26 @@
     <meta name="author" content="Wendy Ellens, Wichert Tjerkstra">
 </head>
 <body>
-<h1>Welkom <span th:text="${ingelogde.getNaam()}"></span></h1>
+<h1>Welkom <span th:text="${klant.getNaam()}"></span></h1>
 <h2>Je SOFA-rekeningen</h2>
-<p th:if="${ingelogde.getRekeningen.isEmpty()}">Er zijn geen rekeningen om weer te geven.</p>
-<p th:if="${ingelogde.getRekeningen.isEmpty()}">Klik <a href="/newAccountNumberPage">hier</a> om een nieuwe rekening te
+<p th:if="${klant.getRekeningen.isEmpty()}">Er zijn geen rekeningen om weer te geven.</p>
+<p th:if="${klant.getRekeningen.isEmpty()}">Klik <a href="/newAccountNumberPage">hier</a> om een nieuwe rekening te
     open.</p>
-<p th:unless="${ingelogde.getRekeningen.isEmpty()}">Klik op een rekeningnummer om een overboeking te doen of je laatste
+<p th:unless="${klant.getRekeningen.isEmpty()}">Klik op een rekeningnummer om een overboeking te doen of je laatste
     transacties te zien.</p>
-<table th:unless="${ingelogde.getRekeningen().isEmpty()}">
+<table th:unless="${klant.getRekeningen().isEmpty()}">
     <tr>
         <th>IBAN</th>
         <th>Ten name van</th>
         <th>Saldo</th>
     </tr>
-    <tr th:each="rekening : ${ingelogde.getRekeningen()}">
+    <tr th:each="rekening : ${klant.getRekeningen()}">
         <td><a th:href="${'/rekening/' + rekening.getIBAN()}" th:text="${rekening.getIBAN()}"></a></td>
         <td th:text="${rekening.tenaamstelling}"></td>
         <td th:text="${#numbers.formatDecimal(rekening.saldo, 1, 2, 'COMMA')}"></td>
     </tr>
 </table>
-<p th:hidden="${ingelogde.rekeningen.isEmpty()}">Klik <a href="/newAccountNumberPage">hier</a> om een extra rekening te
+<p th:hidden="${klant.rekeningen.isEmpty()}">Klik <a href="/newAccountNumberPage">hier</a> om een extra rekening te
     openen.</p>
 <p><a href="/home">Uitloggen</a></p>
 </body>

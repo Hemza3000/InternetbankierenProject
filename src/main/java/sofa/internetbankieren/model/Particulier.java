@@ -5,7 +5,7 @@ package sofa.internetbankieren.model;
  *
  * */
 
-import sofa.internetbankieren.backing_bean.RegisterFormPartBackingBean;
+import org.springframework.format.annotation.DateTimeFormat;
 import sofa.internetbankieren.repository.BedrijfsrekeningDAO;
 import sofa.internetbankieren.repository.PriverekeningDAO;
 
@@ -18,6 +18,7 @@ public class Particulier extends Klant {
     private String voornaam;
     private String tussenvoegsels;
     private String achternaam;
+    @DateTimeFormat(pattern = "yyyy-MM-dd") // toegevoegd door Wendy om geboortedatum te vullen vanaf html-pagina
     private LocalDate geboortedatum;
     private int BSN;
     private List<Integer> bedrijfsrekeningIDs = new ArrayList<>();
@@ -38,9 +39,10 @@ public class Particulier extends Klant {
         this.priverekeningDAO = priverekeningDAO;
     }
 
-
-    public Particulier() {
-            }
+    public Particulier(BedrijfsrekeningDAO bedrijfsrekeningDAO, PriverekeningDAO priverekeningDAO) {
+        super(bedrijfsrekeningDAO);
+        this.priverekeningDAO = priverekeningDAO;
+    }
 
     public Particulier(String voornaam, String voorvoegsels, String achternaam, LocalDate geboortedatum,
                        int bsn, String straat, int huisnummer, String postcode, String woonplaats,
@@ -48,20 +50,6 @@ public class Particulier extends Klant {
      this(0,"", "", straat, huisnummer, postcode, woonplaats, voornaam, voorvoegsels,
              achternaam, geboortedatum, bsn, new ArrayList<>(), new ArrayList<>(), bedrijfsrekeningDAO,
              priverekeningDAO);
-    }
-
-    public Particulier(RegisterFormPartBackingBean registerFormPartBackingBean,
-                       BedrijfsrekeningDAO bedrijfsrekeningDAO, PriverekeningDAO priverekeningDAO) {
-        super(0, "", "", registerFormPartBackingBean.getStraat(),
-                registerFormPartBackingBean.getHuisnummer(), registerFormPartBackingBean.getPostcode(),
-                registerFormPartBackingBean.getWoonplaats(), null, bedrijfsrekeningDAO);
-        this.voornaam = registerFormPartBackingBean.getVoornaam();
-        this.tussenvoegsels = registerFormPartBackingBean.getTussenvoegsels();
-        this.achternaam = registerFormPartBackingBean.getAchternaam();
-        this.geboortedatum = LocalDate.parse(registerFormPartBackingBean.getGeboortedatum());
-        this.BSN = registerFormPartBackingBean.getBSN();
-        this.bedrijfsrekeningIDs = null;
-        this.priverekeningDAO = priverekeningDAO;
     }
 
     // toegevoegd door Wendy

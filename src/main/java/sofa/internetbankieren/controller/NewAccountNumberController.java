@@ -13,7 +13,7 @@ import sofa.internetbankieren.service.AccountService;
  */
 
 @Controller
-@SessionAttributes({"ingelogde", "IBAN"})
+@SessionAttributes({"klant", "IBAN"})
 public class NewAccountNumberController {
     private ParticulierDAO particulierDAO;
     private TransactieDAO transactieDAO;
@@ -27,10 +27,10 @@ public class NewAccountNumberController {
 
     // Toevoegen van rekeningnummers van een ingelogde gebruiker
     @GetMapping("/newAccountNumberPage")
-    public String newAccountNumberPageHandler(Model model, @ModelAttribute(name="ingelogde") Klant ingelogde){
+    public String newAccountNumberPageHandler(Model model, @ModelAttribute(name="klant") Klant ingelogde){
         String newIBAN = accountService.createRandomIBAN();
         model.addAttribute("IBAN", newIBAN);
-        model.addAttribute("ingelogde", ingelogde);
+        model.addAttribute("klant", ingelogde);
         // check of ingelogde is een particulier of een bedrijf.
         boolean bedrijf = false;
         if ( ingelogde instanceof Bedrijf) {
@@ -42,7 +42,7 @@ public class NewAccountNumberController {
     }
 
     @PostMapping("/formNewAccountNumber")
-    public String form(Model model, @ModelAttribute(name="ingelogde") Klant ingelogde, @RequestParam String bsnContactpersoon) {
+    public String form(Model model, @ModelAttribute(name="klant") Klant ingelogde, @RequestParam String bsnContactpersoon) {
         String newIBAN = (String) model.getAttribute("IBAN");
         // registeren van een Priverekening
         if (ingelogde instanceof Particulier) {

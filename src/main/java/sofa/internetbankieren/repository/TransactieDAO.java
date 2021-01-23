@@ -110,7 +110,7 @@ public class TransactieDAO implements GenericDAO<Transactie> {
             ps.setInt(5, transactie.getRekening().getIdRekening());
             ps.setNull(6, Types.INTEGER);
         }
-        else {
+        else if (transactie.getRekening() instanceof Priverekening) {
             ps.setNull(5, Types.INTEGER);
             ps.setInt(6, transactie.getRekening().getIdRekening());
         }

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * @author Taco Jongkind & Hemza Lasri
  */
 @Controller
-@SessionAttributes({"ingelogde", "rekening"})
+@SessionAttributes({"klant", "rekening"})
 
 public class MoneyTransferController {
 
@@ -28,7 +28,7 @@ public class MoneyTransferController {
     }
 
     @GetMapping({"/moneyTransfer"})
-    public String moneyTransferHandler(Model model, @ModelAttribute(name = "ingelogde") Klant ingelogde, @ModelAttribute(name = "rekening") Rekening rekening) {
+    public String moneyTransferHandler(Model model, @ModelAttribute(name = "klant") Klant ingelogde, @ModelAttribute(name = "rekening") Rekening rekening) {
         MoneyTransferBackingBean moneyTransferBackingbean = new MoneyTransferBackingBean(0, "", "");
         model.addAttribute("MoneyTransferBackingbean", moneyTransferBackingbean);
         model.addAttribute("saldoOntoereikend", false);
