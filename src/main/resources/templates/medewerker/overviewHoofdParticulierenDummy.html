@@ -1,11 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.com" >
 <head>
     <meta charset="UTF-8">
     <title>Overzichtspagina Hoofd Particulieren</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
 </head>
 <body>
+<a class="pull-left" href="#"><img src="/assets/img/favicon.ico"></a>
 <h1>Welkom Hoofd Particulieren!</h1>
+<br>
 <h2>Op deze pagina komen alle overzichten van particuliere klanten te staan</h2>
+<br>
+<p>Terug naar de <a href="/home">homepage</a></p> </p>
+<footer class="bg-light fixed-bottom py-3">
+    <div class="container"><div class="small text-center text-muted">Copyright © SOFA N.V. <a href="#disclaimer">disclaimer</a> |
+        <a href="#privacy">privacy & cookies</a> - SOFA Bank Amsterdam 2020 </div></div>
+</footer>
 </body>
 </html>

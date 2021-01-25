@@ -26,7 +26,7 @@ public class RegistrationController {
 
     // Zoals aangegeven door de PO, is het hoofd MKB (medewerker 2) altijd de accountmanager.
     public final static int ID_ACCOUNTMANAGER = 2;
-    private final ParticulierDAO particulierDAO;
+    //private final ParticulierDAO particulierDAO;
     private final BedrijfDAO bedrijfDAO;
     private final MedewerkerDAO medewerkerDAO;
     private final BedrijfsrekeningDAO bedrijfsrekeningDAO;
