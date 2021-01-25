@@ -17,26 +17,27 @@
     <h1>Nog even en je hebt je account... </h1>
     <p>Stap 4/4</p>
     <p>Maak hieronder je gebruikersnaam en wachtwoord aan</p>
+    <br>
 
     <form class="row" form action="storeLogin" id="storeLogin" method="post" th:object="${klant}"
           onsubmit="return validatie()">
 
-        <div class="form-group col-3"></div>
-        <div class="form-group col-3">
+        <div class="form-group col-2"></div>
+        <div class="form-group col-4">
 
             <label for="username_field">Gebruikersnaam</label>
             <input type="text" class="form-control" id="username_field" th:field="*{gebruikersnaam}" required/></td>
-            <field th:if="${fieldExists}">
-                <td style='color:darkred'>Gebruikersnaam bestaat al: kies een andere gebruikersnaam</field>
+            <tr th:if="${fieldExists}">
+                <field style='color:red'>Gebruikersnaam bestaat al: kies een andere gebruikersnaam</field>
         </div>
 
-        <div class="form-group col-3">
+        <div class="form-group col-4">
             <label for="password_field">Password</label>
             <input type="password" class="form-control" id="password_field" th:field="*{wachtwoord}" required/></td>
             <field id="passwordFalse"></field>
         </div>
 
-        <div class="form-group col-3"></div>
+        <div class="form-group col-2"></div>
 
         <div class="form-group col-md-12">
             <button type="submit" name="OK" class="btn btn-primary btn-md">OK</button>
