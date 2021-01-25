@@ -6,32 +6,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Overzichtspagina</title>
     <meta name="author" content="Wendy Ellens, Wichert Tjerkstra">
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
 </head>
 
 <body th:object="${klant}">
-<h1>Welkom <span th:text="*{naam}"></span></h1>
-<h2>Je SOFA-rekeningen</h2>
-<p th:if="*{rekeningen.isEmpty()}">Er zijn geen rekeningen om weer te geven.</p>
-<p th:if="*{rekeningen.isEmpty()}">Klik <a href="/newAccountNumberPage">hier</a> om een nieuwe rekening te
-    open.</p>
-<p th:unless="*{rekeningen.isEmpty()}">Klik op een rekeningnummer om een overboeking te doen of je laatste
-    transacties te zien.</p>
+<div th:insert="fragments/navBar :: navBar"></div>
+<div class="jumbotron vertical-center">
+    <div class="container" style="padding-top: 100px;">
+        <h1 class="text-center">Welkom <span th:text="*{naam}"></span></h1>
+        <div class="row">
+            <div class="col-md">
+            </div>
+            <div class="col-md-8">
+                <h2>Je SOFA-rekeningen</h2>
+                <p th:if="*{rekeningen.isEmpty()}">Er zijn geen rekeningen om weer te geven.</p>
+                <p th:if="*{rekeningen.isEmpty()}">Klik <a href="/newAccountNumberPage">hier</a> om een nieuwe rekening te
+                    open.</p>
+                <p th:unless="*{rekeningen.isEmpty()}">Klik op een rekeningnummer om een overboeking te doen of je laatste
+                    transacties te zien.</p>
 
-<table th:unless="*{rekeningen.isEmpty()}">
-    <tr>
-        <th>IBAN</th>
-        <th>Ten name van</th>
-        <th>Saldo</th>
-    </tr>
-    <tr th:each="rekening : *{rekeningen}">
-        <td><a th:href="${'/rekening/' + rekening.IBAN}" th:text="${rekening.IBAN}"></a></td>
-        <td th:text="${rekening.tenaamstelling}"></td>
-        <td th:text="${#numbers.formatDecimal(rekening.saldo, 1, 2, 'COMMA')}"></td>
-    </tr>
-</table>
+                <table th:unless="*{rekeningen.isEmpty()}">
+                    <tr>
+                        <th>IBAN</th>
+                        <th>Ten name van</th>
+                        <th>Saldo</th>
+                    </tr>
+                    <tr th:each="rekening : *{rekeningen}">
+                        <td><a th:href="${'/rekening/' + rekening.IBAN}" th:text="${rekening.IBAN}"></a></td>
+                        <td th:text="${rekening.tenaamstelling}"></td>
+                        <td th:text="${#numbers.formatDecimal(rekening.saldo, 1, 2, 'COMMA')}"></td>
+                    </tr>
+                </table>
 
-<p th:hidden="*{rekeningen.isEmpty()}">Klik <a href="/newAccountNumberPage">hier</a> om een extra rekening te
-    openen.</p>
-<p><a href="/home">Uitloggen</a></p>
+                <p th:hidden="*{rekeningen.isEmpty()}">Klik <a href="/newAccountNumberPage">hier</a> om een extra rekening te
+                    openen.</p>
+                <p><a href="/home">Uitloggen</a></p>
+
+            </div>
+            <div class="col-md">
+            </div>
+        </div>
+
 </body>
 </html>

@@ -164,95 +164,95 @@ create table if not exists `internet_bankieren`.`transactie`
     engine = innodb
     default charset = utf8mb4
     collate = utf8mb4_general_ci;
-
-INSERT INTO `internet_bankieren`.`medewerker` (`gebruikersnaam`, `wachtwoord`, `rol`, `voornaam`, `tussenvoegsels`,
-                                               `achternaam`)
-VALUES ('Huub', 'geheim', 'HOOFD_PARTICULIEREN', 'Huub', 'van', 'Thienen');
-INSERT INTO `internet_bankieren`.`medewerker` (`gebruikersnaam`, `wachtwoord`, `rol`, `voornaam`, `achternaam`)
-VALUES ('Michel', 'geheim', 'HOOFD_MKB', 'Michel', 'Oey');
-INSERT INTO `internet_bankieren`.`medewerker` (`gebruikersnaam`, `wachtwoord`, `rol`, `voornaam`, `tussenvoegsels`,
-                                               `achternaam`)
-VALUES ('Remi', 'geheim', 'ACCOUNTMANAGER', 'Remi', 'de', 'Boer');
-INSERT INTO `internet_bankieren`.`particulier` (`gebruikersnaam`, `wachtwoord`, `voornaam`, `achternaam`, `bsn`,
-                                                `geboortedatum`, `straat`, `huisnummer`, `postcode`, `woonplaats`)
-VALUES ('Wendy', 'geheim', 'Wendy', 'Ellens', '1', '19841217', 'Simon Stevinweg', '83', '1222 SN', 'Hilversum');
-INSERT INTO `internet_bankieren`.`bedrijf` (`idaccountmanager`, `gebruikersnaam`, `wachtwoord`, `bedrijfsnaam`,
-                                            `kvknummer`, `sector`, `btwnummer`, `straat`, `huisnummer`, `postcode`,
-                                            `woonplaats`)
-VALUES ('2', 'SOFA', 'geheim', 'SOFA', '1', 'HANDEL_EN_DIENSTVERLENING', '1', 'Geldstraat', '1', '1111 AA',
-        'Amsterdam');
-INSERT INTO `internet_bankieren`.`priverekening` (`idrekeninghouder`, `iban`, `saldo`)
-VALUES ('1', '1', '0');
-INSERT INTO `internet_bankieren`.`priverekening` (`idrekeninghouder`, `iban`, `saldo`)
-VALUES ('1', '2', '10');
-INSERT INTO `internet_bankieren`.`bedrijfsrekening` (`idbedrijf`, `idcontactpersoon`, `iban`, `saldo`)
-VALUES ('1', '1', '3', '0');
-INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
-                                               `idbedrijfsrekening`)
-VALUES ('5', 'van Sofa naar Wendy 1', '20201222', '0', '1');
-INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
-                                               `idpriverekening`)
-VALUES ('5', 'van Sofa naar Wendy 1', '20201222', '1', '1');
-INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
-                                               `idbedrijfsrekening`)
-VALUES ('1', 'van Sofa naar Wendy 2', '20201223', '0', '1');
-INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
-                                               `idpriverekening`)
-VALUES ('1', 'van Sofa naar Wendy 2', '20201223', '1', '1');
-INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
-                                               `idbedrijfsrekening`)
-VALUES ('5', 'van Sofa naar Wendy 3', '2020-12-24T08:34:09', '0', '1');
-INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
-                                               `idpriverekening`)
-VALUES ('5', 'van Sofa naar Wendy 3', '2020-12-24T08:34:09', '1', '1');
-INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
-                                               `idpriverekening`)
-VALUES ('5', 'van Wendy naar Sofa 1', '2020-12-24T10:34:09', '0', '1');
-INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
-                                               `idbedrijfsrekening`)
-VALUES ('5', 'van Wendy naar Sofa 1', '2020-12-24T10:34:09', '1', '1');
-INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
-                                               `idbedrijfsrekening`)
-VALUES ('1', 'van Sofa naar Wendy 4', '20201225', '0', '1');
-INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
-                                               `idpriverekening`)
-VALUES ('1', 'van Sofa naar Wendy 4', '20201225', '1', '1');
-INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
-                                               `idbedrijfsrekening`)
-VALUES ('5', 'van Sofa naar Wendy 5', '20201226', '0', '1');
-INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
-                                               `idpriverekening`)
-VALUES ('5', 'van Sofa naar Wendy 5', '20201226', '1', '1');
-INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
-                                               `idpriverekening`)
-VALUES ('5', 'van Wendy naar Sofa 2', '20201227', '0', '1');
-INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
-                                               `idbedrijfsrekening`)
-VALUES ('5', 'van Wendy naar Sofa 2', '20201227', '1', '1');
-INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
-                                               `idpriverekening`)
-VALUES ('5', 'van Wendy naar Sofa 3', '20201228', '0', '1');
-INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
-                                               `idbedrijfsrekening`)
-VALUES ('5', 'van Wendy naar Sofa 3', '20201228', '1', '1');
-INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
-                                               `idpriverekening`)
-VALUES ('10', 'van Wendy naar Sofa 4', '20201229', '0', '1');
-INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
-                                               `idbedrijfsrekening`)
-VALUES ('10', 'van Wendy naar Sofa 4', '20201229', '1', '1');
-INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
-                                               `idpriverekening`)
-VALUES ('5', 'van Wendy naar Sofa 5', '20201230', '0', '1');
-INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
-                                               `idbedrijfsrekening`)
-VALUES ('5', 'van Wendy naar Sofa 5', '20201230', '1', '1');
-INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
-                                               `idbedrijfsrekening`)
-VALUES ('5', 'van Sofa naar Wendy 5', '20201231', '0', '1');
-INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
-                                               `idpriverekening`)
-VALUES ('5', 'van Sofa naar Wendy 5', '20201231', '1', '1');
+#
+# INSERT INTO `internet_bankieren`.`medewerker` (`gebruikersnaam`, `wachtwoord`, `rol`, `voornaam`, `tussenvoegsels`,
+#                                                `achternaam`)
+# VALUES ('Huub', 'geheim', 'HOOFD_PARTICULIEREN', 'Huub', 'van', 'Thienen');
+# INSERT INTO `internet_bankieren`.`medewerker` (`gebruikersnaam`, `wachtwoord`, `rol`, `voornaam`, `achternaam`)
+# VALUES ('Michel', 'geheim', 'HOOFD_MKB', 'Michel', 'Oey');
+# INSERT INTO `internet_bankieren`.`medewerker` (`gebruikersnaam`, `wachtwoord`, `rol`, `voornaam`, `tussenvoegsels`,
+#                                                `achternaam`)
+# VALUES ('Remi', 'geheim', 'ACCOUNTMANAGER', 'Remi', 'de', 'Boer');
+# INSERT INTO `internet_bankieren`.`particulier` (`gebruikersnaam`, `wachtwoord`, `voornaam`, `achternaam`, `bsn`,
+#                                                 `geboortedatum`, `straat`, `huisnummer`, `postcode`, `woonplaats`)
+# VALUES ('Wendy', 'geheim', 'Wendy', 'Ellens', '1', '19841217', 'Simon Stevinweg', '83', '1222 SN', 'Hilversum');
+# INSERT INTO `internet_bankieren`.`bedrijf` (`idaccountmanager`, `gebruikersnaam`, `wachtwoord`, `bedrijfsnaam`,
+#                                             `kvknummer`, `sector`, `btwnummer`, `straat`, `huisnummer`, `postcode`,
+#                                             `woonplaats`)
+# VALUES ('2', 'SOFA', 'geheim', 'SOFA', '1', 'HANDEL_EN_DIENSTVERLENING', '1', 'Geldstraat', '1', '1111 AA',
+#         'Amsterdam');
+# INSERT INTO `internet_bankieren`.`priverekening` (`idrekeninghouder`, `iban`, `saldo`)
+# VALUES ('1', '1', '0');
+# INSERT INTO `internet_bankieren`.`priverekening` (`idrekeninghouder`, `iban`, `saldo`)
+# VALUES ('1', '2', '10');
+# INSERT INTO `internet_bankieren`.`bedrijfsrekening` (`idbedrijf`, `idcontactpersoon`, `iban`, `saldo`)
+# VALUES ('1', '1', '3', '0');
+# INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
+#                                                `idbedrijfsrekening`)
+# VALUES ('5', 'van Sofa naar Wendy 1', '20201222', '0', '1');
+# INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
+#                                                `idpriverekening`)
+# VALUES ('5', 'van Sofa naar Wendy 1', '20201222', '1', '1');
+# INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
+#                                                `idbedrijfsrekening`)
+# VALUES ('1', 'van Sofa naar Wendy 2', '20201223', '0', '1');
+# INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
+#                                                `idpriverekening`)
+# VALUES ('1', 'van Sofa naar Wendy 2', '20201223', '1', '1');
+# INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
+#                                                `idbedrijfsrekening`)
+# VALUES ('5', 'van Sofa naar Wendy 3', '2020-12-24T08:34:09', '0', '1');
+# INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
+#                                                `idpriverekening`)
+# VALUES ('5', 'van Sofa naar Wendy 3', '2020-12-24T08:34:09', '1', '1');
+# INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
+#                                                `idpriverekening`)
+# VALUES ('5', 'van Wendy naar Sofa 1', '2020-12-24T10:34:09', '0', '1');
+# INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
+#                                                `idbedrijfsrekening`)
+# VALUES ('5', 'van Wendy naar Sofa 1', '2020-12-24T10:34:09', '1', '1');
+# INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
+#                                                `idbedrijfsrekening`)
+# VALUES ('1', 'van Sofa naar Wendy 4', '20201225', '0', '1');
+# INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
+#                                                `idpriverekening`)
+# VALUES ('1', 'van Sofa naar Wendy 4', '20201225', '1', '1');
+# INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
+#                                                `idbedrijfsrekening`)
+# VALUES ('5', 'van Sofa naar Wendy 5', '20201226', '0', '1');
+# INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
+#                                                `idpriverekening`)
+# VALUES ('5', 'van Sofa naar Wendy 5', '20201226', '1', '1');
+# INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
+#                                                `idpriverekening`)
+# VALUES ('5', 'van Wendy naar Sofa 2', '20201227', '0', '1');
+# INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
+#                                                `idbedrijfsrekening`)
+# VALUES ('5', 'van Wendy naar Sofa 2', '20201227', '1', '1');
+# INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
+#                                                `idpriverekening`)
+# VALUES ('5', 'van Wendy naar Sofa 3', '20201228', '0', '1');
+# INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
+#                                                `idbedrijfsrekening`)
+# VALUES ('5', 'van Wendy naar Sofa 3', '20201228', '1', '1');
+# INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
+#                                                `idpriverekening`)
+# VALUES ('10', 'van Wendy naar Sofa 4', '20201229', '0', '1');
+# INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
+#                                                `idbedrijfsrekening`)
+# VALUES ('10', 'van Wendy naar Sofa 4', '20201229', '1', '1');
+# INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
+#                                                `idpriverekening`)
+# VALUES ('5', 'van Wendy naar Sofa 5', '20201230', '0', '1');
+# INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
+#                                                `idbedrijfsrekening`)
+# VALUES ('5', 'van Wendy naar Sofa 5', '20201230', '1', '1');
+# INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
+#                                                `idbedrijfsrekening`)
+# VALUES ('5', 'van Sofa naar Wendy 5', '20201231', '0', '1');
+# INSERT INTO `internet_bankieren`.`transactie` (`bedrag`, `transactiebeschrijving`, `datum`, `bijschrijving`,
+#                                                `idpriverekening`)
+# VALUES ('5', 'van Sofa naar Wendy 5', '20201231', '1', '1');
 
 
 set sql_mode = @old_sql_mode;
