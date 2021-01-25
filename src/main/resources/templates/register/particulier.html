@@ -1,77 +1,102 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org" >
+<html lang="en" xmlns:th="http://www.thymeleaf.com" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Sofa - registreren</title>
     <meta name="author" content="Wichert Tjerkstra, Hemza Lasri">
-    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
-<!--
+
 <div th:insert="fragments/navBar :: navBar"></div>
--->
-<!--<div class="container" style="padding-top: 100px;" >-->
-<h1>Registreer je hier als particuliere klant</h1>
-<p>Stap 2/4</p>
-<p>Vul hieronder je persoonlijke gegevens in</p>
 
-<form name="particulierForm" action="register" method="post" th:object="${klant}" onsubmit="return validateForm()">
-    <table>
-        <tr>
+<div class="container justify-content-center" style="padding-top: 100px;">
+
+    <h3>Registreer je hier als particuliere klant</h3>
+    <p>Stap 2/4</p>
+    <p><em>Vul hieronder je persoonlijke gegevens in</em></p>
+
+
+    <form class="row" form name="particulierForm" action="register_particulier" method="post"
+          th:object="${backingBean}"
+          onsubmit="return validateForm()">
+
+        <div class="form-group col-md-3">
             <td><label for="First_name">Voornaam</label></td>
-            <td><input type="text" th:field="*{voornaam}" required/></td>
-        </tr>
-        <tr>
-            <td><label for="Prefix">Tussenvoegsels</label></td>
-            <td><input type="text" name="Prefix" th:field="*{tussenvoegsels}" /></td>
-        </tr>
-        <tr>
-            <td><label for="Last_name">Achternaam</label></td>
-            <td><input type="text" name="Last_name" th:field="*{achternaam}" required/></td>
-        </tr>
-        <tr>
-            <td><label for="Birthday">Geboortedatum</label></td>
-            <td><input type="date" th:field="*{geboortedatum}"name="Birthday" required/></td>
-        </tr>
-        <tr>
-            <td><label for="BSN">Burgerservicenummer</label></td>
-            <td><input type="text" th:field="*{BSN}" idname="BSN" required/></td>
-        </tr>
-        <tr th:if="${fieldExists}">
-            <td></td>
-            <td style='color:red'>Er is al een geregistreerde klant met dit BSN</td>
-        </tr>
-        <tr>
-            <td><label for="Postal_code">Postcode</label></td>
-            <td><input type="text" id="pc_field" th:field="*{postcode}" name="Postal_code" required/></td>
-        </tr>
-        <tr>
-            <td><label for="House_number">Huisnummer</label></td>
-            <td><input type="text" id="nr_field" th:field="*{huisnummer}" name="House_number" required/></td>
-        </tr>
-        <tr>
-            <td><label for="Street">Straat</label></td>
-            <td><input type="text" id="street_field" th:field="*{straat}" name="Street" readonly/></td>
-        </tr>
-        <tr>
-            <td><label for="City">Woonplaats</label></td>
-            <td><input type="text" id="city_field" th:field="*{woonplaats}" name="City" readonly/></td>
-        </tr>
-        <td></td>
-        <td><input type="submit" name="OK" value="OK"><input type="reset" name="reset" value="Reset"></td>
+            <td><input type="text" class="form-control" th:field="*{voornaam}" required/></td>
+        </div>
 
-        </tr>
-    </table>
-</form>
-<p>Terug naar de <a href="/home">homepage</a></p> </p>
-<!--</div>
-<div th:insert="fragments/footer :: footer"></div>-->
+        <div class="form-group col-md-2">
+            <td><label for="Prefix">Tussenvoegsels</label></td>
+            <td><input type="text" class="form-control" name="Prefix" th:field="*{tussenvoegsels}"/></td>
+        </div>
+
+
+        <div class="form-group col-md-4">
+            <td><label for="Last_name">Achternaam</label></td>
+            <td><input type="text" class="form-control" name="Last_name" th:field="*{achternaam}" required/></td>
+        </div>
+
+        <div class="form-group col md-3">
+            <td><label for="Birthday">Geboortedatum</label></td>
+            <td><input type="date" class="form-control" th:field="*{geboortedatum}" name="Birthday" required/></td>
+        </div>
+
+
+        <div class="form-group col-md-6">
+            <td><label for="BSN">Burgerservicenummer</label></td>
+            <td><input type="text" class="form-control" th:field="*{BSN}" idname="BSN" required/></td>
+            <tr th:if="${BsnExists}">
+                <field style='color:darkred'>Er is al een geregistreerde klant met dit BSN</field>
+        </div>
+
+        <div class="form-group col-md-4">
+            <td><label for="Postal_code">Postcode</label></td>
+            <td><input type="text" class="form-control" id="pc_field" th:field="*{postcode}" name="Postal_code"
+                       required/></td>
+        </div>
+
+        <div class="form-group col-md-2">
+
+            <td><label for="House_number">Huisnummer</label></td>
+            <td><input type="text" class="form-control" id="nr_field" th:field="*{huisnummer}" name="House_number"
+                       required/>
+            </td>
+        </div>
+
+        <div class="form-group col-md-6">
+
+            <td><label for="Street">Straat</label></td>
+            <td><input type="text" class="form-control" id="street_field" th:field="*{straat}" name="Street"
+                       readonly/></td>
+        </div>
+
+        <div class="form-group col-md-6">
+
+            <td><label for="City">Woonplaats</label></td>
+            <td><input type="text" class="form-control" id="city_field" th:field="*{woonplaats}" name="City"
+                       readonly/></td>
+        </div>
+
+        <div class="form-group col-md-12">
+            <button type="submit" name="OK" class="btn btn-primary btn-md">OK</button>
+            <button type="reset" name="reset" class="btn btn-primary btn-md">Reset</button>
+        </div>
+
+
+        <div class="form-group col-md-12">
+            <p>Terug naar de <a href="/home">homepage</a></p> </p>
+        </div>
+
+    </form>
+</div>
+<div th:insert="fragments/footer :: footer"></div>
+
 <script>
     // toegevoegd door Wichert
     // voegt automatisch straat + woonplaats in bij het invullen van Postcode en huisnummer
     document.getElementById('pc_field').addEventListener('focusout', checkForAddressPart)
     document.getElementById('nr_field').addEventListener('focusout', checkForAddressPart)
-
 
     function checkForAddressPart() {
         let regex = new RegExp(/^[1-9][0-9]{3}[\s]?[A-Za-z]{2}$/i);
@@ -93,7 +118,7 @@
         }
     }
 
-    function processAddress(data){
+    function processAddress(data) {
         console.log(data)
         let addressPart = data
         document.getElementById('street_field').value = addressPart.street
@@ -104,7 +129,7 @@
     function validateForm() {
         let bsn = document.forms['particulierForm']['BSN'].value;
         let regex = /^\d{9}$/;
-        if ( regex.test(bsn) == false ) {
+        if (regex.test(bsn) == false) {
             alert('voer een geldig burgerservicenummer in')
             return false;
         }
