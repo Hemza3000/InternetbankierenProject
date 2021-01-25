@@ -1,44 +1,56 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sofa - registreren</title>
-    <meta name="author" content="Wendy Ellens">
+    <meta name="author" content="Wichert Tjerkstra, Wendy Ellens">
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 
 <body>
-<h1>Nog even en je hebt je account... </h1>
-<p>Stap 4/4</p>
-<p>Maak hieronder je gebruikersnaam en wachtwoord aan</p>
 
-<form action="storeLogin" id="storeLogin" method="post" th:object="${klant}" onsubmit="return validatie()">
-    <table>
-        <tr>
-            <td><label for="username_field">Gebruikersnaam</label></td>
-            <td><input type="text" id="username_field" th:field="*{gebruikersnaam}" required/></td>
-        </tr>
-        <tr th:if="${doesExist}">
-            <td></td>
-            <td style='color:red'>Gebruikersnaam bestaat al: kies een andere gebruikersnaam</td>
-        </tr>
-        <tr>
-            <td><label for="password_field">Password</label></td>
-            <td><input type="password" id="password_field" th:field="*{wachtwoord}" required/></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td id="passwordFalse"></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><input type="submit" name="OK" value="OK"><input type="reset" name="reset" value="Reset"></td>
-        </tr>
-    </table>
-</form>
+<div th:insert="fragments/navBar :: navBar"></div>
 
-<p>Terug naar de <a href="/home">homepage</a></p>
+<div class="container justify-content-center" style="padding-top: 100px;">
+
+    <h1>Nog even en je hebt je account... </h1>
+    <p>Stap 4/4</p>
+    <p>Maak hieronder je gebruikersnaam en wachtwoord aan</p>
+    <br>
+
+    <form class="row" form action="storeLogin" id="storeLogin" method="post" th:object="${klant}"
+          onsubmit="return validatie()">
+
+        <div class="form-group col-2"></div>
+        <div class="form-group col-4">
+
+            <label for="username_field">Gebruikersnaam</label>
+            <input type="text" class="form-control" id="username_field" th:field="*{gebruikersnaam}" required/></td>
+            <tr th:if="${fieldExists}">
+                <field style='color:red'>Gebruikersnaam bestaat al: kies een andere gebruikersnaam</field>
+        </div>
+
+        <div class="form-group col-4">
+            <label for="password_field">Password</label>
+            <input type="password" class="form-control" id="password_field" th:field="*{wachtwoord}" required/></td>
+            <field id="passwordFalse"></field>
+        </div>
+
+        <div class="form-group col-2"></div>
+
+        <div class="form-group col-md-12">
+            <button type="submit" name="OK" class="btn btn-primary btn-md">OK</button>
+            <button type="reset" name="reset" class="btn btn-primary btn-md">Reset</button>
+        </div>
+
+        <div class="form-group col-md-12">
+            <p>Terug naar de <a href="/home">homepage</a></p> </p>
+        </div>
+
+    </form>
+</div>
+<div th:insert="fragments/footer :: footer"></div>
 
 <script>
     // Toegevoegd door Hemza
@@ -47,8 +59,8 @@
     function validatie() {
         let wachtwoord = document.forms['storeLogin']['password_field'].value;
         var regex = new RegExp("^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})");
-        if (regex.test(wachtwoord) == false ) {
-            document.getElementById("passwordFalse").innerHTML = '<span style=\'color:#ff0000\'>Uw wachtwoord moet minstens 6 karakters hebben, een cijfer, een speciaal teken* en een hoofdletter bevatten! \n <br> *Toegestane tekens: ! @ # $ % ^ & * </span>';
+        if (regex.test(wachtwoord) === false) {
+            document.getElementById("passwordFalse").innerHTML = '<span style=\'color:#ff0000\'>Uw wachtwoord moet minstens 6 karakters hebben, een cijfer, een speciaal teken* en een hoofdletter bevatten!<br> <br>Toegestane tekens: ! @ # $ % ^ & * </span>';
             return false;
         } else {
             document.getElementById("passwordFalse").innerHTML = '';

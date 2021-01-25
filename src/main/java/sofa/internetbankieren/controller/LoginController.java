@@ -4,9 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sofa.internetbankieren.backing_bean.LoginFormBackingBean;
-import sofa.internetbankieren.model.*;
-import sofa.internetbankieren.repository.*;
-import sofa.internetbankieren.service.AccountService;
+import sofa.internetbankieren.service.CustomerService;
 
 import java.util.List;
 
@@ -14,17 +12,13 @@ import java.util.List;
  * @author Hemza Lasri
  */
 @Controller
-@SessionAttributes("ingelogde")
+@SessionAttributes("klant")
 public class LoginController {
-    private final ParticulierDAO particulierDAO;
-    private final BedrijfDAO bedrijfDAO;
-    private AccountService accountService;
+    private CustomerService customerService;
 
-
-    public LoginController(ParticulierDAO particulierDAO, BedrijfDAO bedrijfDAO, AccountService accountService) {
-        this.particulierDAO = particulierDAO;
-        this.bedrijfDAO = bedrijfDAO;
-        this.accountService = accountService;
+    public LoginController(CustomerService customerService) {
+        super();
+        this.customerService = customerService;
     }
 
     @GetMapping("/login")
@@ -36,11 +30,11 @@ public class LoginController {
 
     @PostMapping("/overzicht")
     public String postInlogForm(Model model, @ModelAttribute LoginFormBackingBean dummy) {
-        List inloggerslijst = accountService.getKlantenbyGebruikersnaamWachtwoord(dummy.getUserName(), dummy.getPassword());
+        List inloggerslijst = customerService.getKlantenbyGebruikersnaamWachtwoord(dummy.getUserName(), dummy.getPassword());
         if(inloggerslijst.isEmpty()){ // Geen klant met deze inloggegevens
             return "foutingelogd";
         } else{
-        model.addAttribute("ingelogde", inloggerslijst.get(0));
+        model.addAttribute("klant", inloggerslijst.get(0));
             return "overview";
         }
     }
