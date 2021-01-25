@@ -15,64 +15,60 @@
 <p>Stap 3/4</p>
 <p>Controleer hieronder of je gegevens kloppen.</p>
 
-<form class="row" form action="registerLogin" method="post" th:object="${backingBean}">
+<form class="row" form action="confirm" method="post" th:object="${klant}">
 
     <div class="form-group col-md-3">
-            <td><label for="First_name">Voornaam</label></td>
-            <td><input id="First_name" class="form-control" th:field="*{voornaam}" name="First_name" required/></td>
+            <label for="First_name">Voornaam</label>
+            <input id="First_name" class="form-control" th:field="*{voornaam}" name="First_name" required/>
     </div>
 
     <div class="form-group col-md-2">
-            <td><label for="Prefix">Voorvoegsels</label></td>
-            <td><input id="Prefix" class="form-control" th:field="*{tussenvoegsels}"name="Prefix" /></td>
+            <label for="Prefix">Voorvoegsels</label>
+            <input id="Prefix" class="form-control" th:field="*{tussenvoegsels}"name="Prefix" />
             </div>
 
     <div class="form-group col-md-4">
-            <td><label for="Last_name">Achternaam</label></td>
-            <td><input id="Last_name" class="form-control" th:field="*{achternaam}"name="Last_name" required/></td>
+            <label for="Last_name">Achternaam</label>
+            <input id="Last_name" class="form-control" th:field="*{achternaam}"name="Last_name" required/>
     </div>
 
     <div class="form-group col md-3">
-    <td><label for="Birthday">Geboortedatum</label></td>
-            <td><input id="Birthday" class="form-control" th:field="*{geboortedatum}" name="Birthday" required></td>
+    <label for="Birthday">Geboortedatum</label>
+            <input id="Birthday" class="form-control" th:field="*{geboortedatum}" name="Birthday" required>
     </div>
 
             <div class="form-group col-md-6">
-            <td><label for="BSN">Burgerservicenummer</label></td>
-            <td><input id="BSN" class="form-control" th:field="*{BSN}"name="BSN" required/></td>
-            <tr th:if="${BsnExists}">
-            <field style='color:darkred'>Er is al een geregistreerde klant met dit BSN</field>
+            <label for="BSN">Burgerservicenummer</label>
+            <input id="BSN" class="form-control" th:field="*{BSN}"name="BSN" required/>
+            <field th:if="${fieldExists}" style='color:darkred'>Er is al een geregistreerde klant met dit BSN</field>
             </div>
 
         <div class="form-group col-md-4">
-            <td><label for="Postal_code">Postcode</label></td>
-            <td><input id="Postal_code" class="form-control" th:field="*{postcode}"name="Postal_code" required/></td>
+            <label for="Postal_code">Postcode</label>
+            <input id="Postal_code" class="form-control" th:field="*{postcode}"name="Postal_code" required/>
         </div>
-
 
         <div class="form-group col-md-2">
-            <td><label for="House_number">Huisnummer</label></td>
-            <td><input id="House_number" th:field="*{huisnummer}" name="Street" required/></td>
+            <label for="House_number">Huisnummer</label>
+            <input id="House_number" th:field="*{huisnummer}" name="Street" required/>
         </div>
 
         <div class="form-group col-md-6">
-            <td><label for="Street">Straat</label></td>
-            <td><input id="Street" class="form-control" th:field="*{straat}"name="Street" readonly/></td>
+            <label for="Street">Straat</label>
+            <input id="Street" class="form-control" th:field="*{straat}"name="Street" readonly/>
         </div>
-
 
         <div class="form-group col-md-6">
-        <td><label for="City">Woonplaats</label></td>
-            <td><input id="City" class="form-control" th:field="*{woonplaats}"name="City" readonly/></td>
+        <label for="City">Woonplaats</label>
+            <input id="City" class="form-control" th:field="*{woonplaats}"name="City" readonly/>
         </div>
-
 
     <div class="form-group col-md-12">
         <button type="submit" name="OK" class="btn btn-primary btn-md">Bevestigen</button>
     </div>
 
         <div class="form-group col-md-12">
-            <p>Terug naar de <a href="/home">homepage</a></p> </p>
+            <p>Terug naar de <a href="/home">homepage</a></p>
         </div>
 
 </form>

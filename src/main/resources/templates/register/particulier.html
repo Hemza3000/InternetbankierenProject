@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.com" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Sofa - registreren</title>
@@ -17,65 +17,64 @@
     <p><em>Vul hieronder je persoonlijke gegevens in</em></p>
 
 
-    <form class="row" form name="particulierForm" action="register_particulier" method="post"
-          th:object="${backingBean}"
+    <form class="row" form name="particulierForm" action="register" method="post"
+          th:object="${klant}"
           onsubmit="return validateForm()">
 
         <div class="form-group col-md-3">
-            <td><label for="First_name">Voornaam</label></td>
-            <td><input type="text" class="form-control" th:field="*{voornaam}" required/></td>
+            <label for="First_name">Voornaam</label>
+            <input type="text" class="form-control" th:field="*{voornaam}" required/>
         </div>
 
         <div class="form-group col-md-2">
-            <td><label for="Prefix">Tussenvoegsels</label></td>
-            <td><input type="text" class="form-control" name="Prefix" th:field="*{tussenvoegsels}"/></td>
+            <label for="Prefix">Tussenvoegsels</label>
+            <input type="text" class="form-control" name="Prefix" th:field="*{tussenvoegsels}"/>
         </div>
 
-
         <div class="form-group col-md-4">
-            <td><label for="Last_name">Achternaam</label></td>
-            <td><input type="text" class="form-control" name="Last_name" th:field="*{achternaam}" required/></td>
+            <label for="Last_name">Achternaam</label>
+            <input type="text" class="form-control" name="Last_name" th:field="*{achternaam}" required/>
         </div>
 
         <div class="form-group col md-3">
-            <td><label for="Birthday">Geboortedatum</label></td>
-            <td><input type="date" class="form-control" th:field="*{geboortedatum}" name="Birthday" required/></td>
+             <label for="Birthday">Geboortedatum</label>
+            <input type="date" class="form-control" th:field="*{geboortedatum}" name="Birthday" required/>
         </div>
 
 
         <div class="form-group col-md-6">
-            <td><label for="BSN">Burgerservicenummer</label></td>
-            <td><input type="text" class="form-control" th:field="*{BSN}" idname="BSN" required/></td>
-            <tr th:if="${BsnExists}">
+            <label for="BSN">Burgerservicenummer</label>
+            <input type="text" class="form-control" th:field="*{BSN}" idname="BSN" required/>
+            <tr th:if="${fieldExists}">
                 <field style='color:darkred'>Er is al een geregistreerde klant met dit BSN</field>
         </div>
 
         <div class="form-group col-md-4">
-            <td><label for="Postal_code">Postcode</label></td>
-            <td><input type="text" class="form-control" id="pc_field" th:field="*{postcode}" name="Postal_code"
-                       required/></td>
+            <label for="Postal_code">Postcode</label>
+            <input type="text" class="form-control" id="pc_field" th:field="*{postcode}" name="Postal_code"
+                       required/>
         </div>
 
         <div class="form-group col-md-2">
 
-            <td><label for="House_number">Huisnummer</label></td>
-            <td><input type="text" class="form-control" id="nr_field" th:field="*{huisnummer}" name="House_number"
+            <label for="House_number">Huisnummer</label>
+            <input type="text" class="form-control" id="nr_field" th:field="*{huisnummer}" name="House_number"
                        required/>
-            </td>
+
         </div>
 
         <div class="form-group col-md-6">
 
-            <td><label for="Street">Straat</label></td>
-            <td><input type="text" class="form-control" id="street_field" th:field="*{straat}" name="Street"
-                       readonly/></td>
+            <label for="Street">Straat</label>
+            <input type="text" class="form-control" id="street_field" th:field="*{straat}" name="Street"
+                       readonly/>
         </div>
 
         <div class="form-group col-md-6">
 
-            <td><label for="City">Woonplaats</label></td>
-            <td><input type="text" class="form-control" id="city_field" th:field="*{woonplaats}" name="City"
-                       readonly/></td>
+            <label for="City">Woonplaats</label>
+            <input type="text" class="form-control" id="city_field" th:field="*{woonplaats}" name="City"
+                       readonly/>
         </div>
 
         <div class="form-group col-md-12">
