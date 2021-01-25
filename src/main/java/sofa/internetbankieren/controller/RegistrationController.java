@@ -99,7 +99,7 @@ public class RegistrationController {
     }
 
     // Stap 3: verwerken eventuele wijzigingen in klantgegevens na controle door klant
-    @PostMapping("/confirmParticulier")
+    @PostMapping("/registerLogin")
     public String confirmHandler(@ModelAttribute RegisterFormPartBackingBean backingBean, Model model) {
         // toegevoegd door Wendy
         // validatie voor unieke BSN
@@ -113,7 +113,7 @@ public class RegistrationController {
         LoginFormBackingBean usernameForm = new LoginFormBackingBean("","");
         model.addAttribute("doesExist", false);
         model.addAttribute("usernameForm", usernameForm);
-        return "register/registerUsername";
+        return "register/registerLogin";
     }
 
     // Stap 4: verwerken ingevoerde logingegevens
@@ -124,7 +124,7 @@ public class RegistrationController {
         if (!registerService.checkUniqueUsername(usernameForm.getUserName())) {
             model.addAttribute("usernameForm", usernameForm);
             model.addAttribute("doesExist", true);
-            return "register/registerUsername";
+            return "register/registerLogin";
         }
         klant.setGebruikersnaam(usernameForm.getUserName());
         klant.setWachtwoord(usernameForm.getPassword());
