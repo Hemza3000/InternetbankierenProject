@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<html lang="en" xmlns:th="http://www.thymeleaf.com" >
 <head>
     <meta charset="UTF-8">
     <title>SOFA - Overboeken</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
 </head>
-<body>
+<body th:object="${rekening}">
+<a class="pull-left" href="#"><img src="/assets/img/favicon.ico"></a>
 <h1>Overboeken</h1>
+<h3>Saldo: <span th:text="*{#numbers.formatDecimal(saldo, 1, 2, 'COMMA')}"></span> euro</h3>
 <p> Geef hieronder een geldige IBAN rekening op van de begunstigde
     en het over te boeken bedrag: </p><br>
 <form name="moneyTransfer" action="moneyTransfer" method="post" th:object="${MoneyTransferBackingbean}" onsubmit="msg()">
@@ -20,7 +23,7 @@
         </tr>
         <tr>
             <td><label for="Bedrag">Bedrag in Euro</label></td>
-            <td><input type="number" id="bedrag" name="bedrag" step="any" th:field="*{bedrag}" placeholder="0,00" required/></td>
+            <td><input type="number" id="bedrag" name="bedrag" step="any" th:field="*{bedrag}" placeholder="0,00" oninput="check(this)" required/></td>
         </tr>
         <tr th:if="${saldoOntoereikend}">
             <td></td>
@@ -38,5 +41,19 @@
 
 </tr>
 <p>Terug naar uw <a href="/overzicht">overzichtspagina</a></p> </p>
+<footer class="bg-light fixed-bottom py-3">
+    <div class="container"><div class="small text-center text-muted">Copyright © SOFA N.V. <a href="#disclaimer">disclaimer</a> |
+        <a href="#privacy">privacy & cookies</a> - SOFA Bank Amsterdam 2020 </div></div>
+</footer>
+<script>
+    function check(input) {
+        if (input.value <= 0) {
+            input.setCustomValidity('Vul een positief bedrag in.');
+        } else {
+            // Als de input positief is -- reset the error message
+            input.setCustomValidity('');
+        }
+    }
+</script>
 </body>
 </html>
