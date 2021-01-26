@@ -6,37 +6,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rekeningpagina</title>
     <meta name="author" content="Wendy Ellens">
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
 </head>
 
 <body th:object="${rekening}">
-<h1>Transactieoverzicht</h1>
-<h2>IBAN: <span th:text="*{IBAN}"></span>, ten name van <span th:text="*{tenaamstelling}"></span></h2>
-<p th:text="${#temporals.format(nu, 'dd-MM-yyyy, HH:mm')}"></p>
-<h2>Saldo: <span th:text="*{#numbers.formatDecimal(saldo, 1, 2, 'COMMA')}"></span> euro</h2>
-<p th:if="*{getTransacties().isEmpty()}">Er zijn geen transacties om weer te geven</p>
+<div th:insert="fragments/navBar :: navBar"></div>
+<div class="container pb-5" style="padding-top: 100px;">
 
-<table th:unless="*{getTransacties().isEmpty()}">
-    <tr>Laatste bij- en afschrijvingen</tr>
-    <tr>
-        <th>Datum</th>
-        <th>+/-</th>
-        <th>Bedrag</th>
-        <th>Omschrijving</th>
-        <th>Tegenrekening</th>
-        <th>Ten name van</th>
-    </tr>
-    <tr th:each="transactie : ${transacties}">
-        <td th:text="${#temporals.format(transactie.datum, 'dd-MM-yyyy')}"></td>
-        <td th:text="${transactie.bijschrijving} ? '+' : '-'"></td>
-        <td th:text="${#numbers.formatDecimal(transactie.bedrag, 1, 2, 'COMMA')}"></td>
-        <td th:text="${transactie.omschrijving}"></td>
-        <td th:text="${transactie.tegenRekening.IBAN}"></td>
-        <td th:text="${transactie.tegenRekening.tenaamstelling}"
-    </tr>
-</table>
+    <h1 style='color:#f4623a' class="text-center pb-4">
+        <span th:text="*{tenaamstelling}"></span> - <span th:text="*{IBAN}"></span></h1>
 
-<p>Klik <a href="/moneyTransfer">hier</a> om een bedrag over te boeken</p>
-<p>Klik <a href="/overzicht">hier</a> om terug te gaan naar het overzicht van je rekeningen</p>
-<p><a href="/home">Uitloggen</a></p>
+    <div class="row">
+        <div class="col-md"></div>
+
+        <div class="col-md-10">
+            <h2> Transactieoverzicht</h2>
+            <p th:text="${#temporals.format(nu, 'dd-MM-yyyy, HH:mm')}"></p>
+            <h4>Saldo: <span th:text="*{#numbers.formatDecimal(saldo, 1, 2, 'COMMA')}"></span> euro</h4>
+
+            <div class="pt-4 pb-4">
+                <p th:if="*{getTransacties().isEmpty()}">Er zijn geen transacties om weer te geven</p>
+                <p th:unless="*{getTransacties().isEmpty()}">Je laatste bij- en afschrijvingen</p>
+            </div>
+
+            <table class="table" th:unless="*{getTransacties().isEmpty()}">
+                <tr>
+                    <th>Datum</th>
+                    <th>+/-</th>
+                    <th>Bedrag</th>
+                    <th>Omschrijving</th>
+                    <th>Tegenrekening</th>
+                    <th>Ten name van</th>
+                </tr>
+                <tr th:each="transactie : ${transacties}">
+                    <td th:text="${#temporals.format(transactie.datum, 'dd-MM-yyyy')}"></td>
+                    <td th:text="${transactie.bijschrijving} ? '+' : '-'"></td>
+                    <td th:text="${#numbers.formatDecimal(transactie.bedrag, 1, 2, 'COMMA')}"></td>
+                    <td th:text="${transactie.omschrijving}"></td>
+                    <td th:text="${transactie.tegenRekening.IBAN}"></td>
+                    <td th:text="${transactie.tegenRekening.tenaamstelling}"></td>
+                </tr>
+            </table>
+
+            <p class="pb-5">
+                <a class="btn btn-primary" href="/moneyTransfer" role="button">Geld overmaken</a>
+                <a class="btn btn-primary" href="/overzicht" role="button">Terug naar rekeningen</a>
+                <a class="btn btn-primary" href="/home" role="button">Uitloggen</a>
+            </p>
+<!--            <p>Klik <a href="/moneyTransfer">hier</a> om een bedrag over te boeken</p>-->
+<!--            <p>Klik <a href="/overzicht">hier</a> om terug te gaan naar het overzicht van je rekeningen</p>-->
+<!--            <p><a href="/home">Uitloggen</a></p>-->
+        </div>
+
+        <div class="col-md"></div>
+    </div>
+
+</div>
+<div th:insert="fragments/footer :: footer"></div>
 </body>
 </html>

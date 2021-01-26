@@ -175,7 +175,10 @@ create table if not exists `internet_bankieren`.`transactie`
 # VALUES ('Remi', 'geheim', 'ACCOUNTMANAGER', 'Remi', 'de', 'Boer');
 # INSERT INTO `internet_bankieren`.`particulier` (`gebruikersnaam`, `wachtwoord`, `voornaam`, `achternaam`, `bsn`,
 #                                                 `geboortedatum`, `straat`, `huisnummer`, `postcode`, `woonplaats`)
-# VALUES ('Wendy', 'geheim', 'Wendy', 'Ellens', '1', '19841217', 'Simon Stevinweg', '83', '1222 SN', 'Hilversum');
+# VALUES ('Wendy', 'geheim', 'Wendy', 'Ellens', 'NL55SOFA38660268103', '19841217', 'Simon Stevinweg', '83', '1222 SN', 'Hilversum');
+# INSERT INTO `internet_bankieren`.`particulier` (`gebruikersnaam`, `wachtwoord`, `voornaam`, `achternaam`, `bsn`,
+#                                                 `geboortedatum`, `straat`, `huisnummer`, `postcode`, `woonplaats`)
+# VALUES ('Hemza', 'geheim', 'Hemza', 'Lasri', 'NL93SOFA73224306121', '19881231', 'Recht Boomssloot', '14', '1011 EA', 'Amsterdam');
 # INSERT INTO `internet_bankieren`.`bedrijf` (`idaccountmanager`, `gebruikersnaam`, `wachtwoord`, `bedrijfsnaam`,
 #                                             `kvknummer`, `sector`, `btwnummer`, `straat`, `huisnummer`, `postcode`,
 #                                             `woonplaats`)
