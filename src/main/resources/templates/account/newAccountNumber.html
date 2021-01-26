@@ -8,13 +8,12 @@
 </head>
 <body>
 <div th:insert="fragments/navBar :: navBar"></div>
-<div class="jumbotron vertical-center">
-    <div class="container" style="padding-top: 100px;">
-        <h3 class="text-center mb-3">Open hier een nieuw rekeningnummer</h3>
+
+<div class="container pb-5" style="padding-top: 100px;">
         <div class="row">
-            <div class="col-md-2">
-            </div>
-            <div class="col-md">
+            <div class="col-md"></div>
+            <div class="col-md-6">
+                <h3 class="pb-4">Open hier een nieuw rekeningnummer</h3>
                 <p class="mb-0">Controleer de gegevens en bevestig onderaan de pagina voor het openen van een nieuwe
                     rekening.</p>
                 <p class="mb-1" th:if="${isBedrijf}">Voor het openen van een bedrijfsrekening is de achternaam en
@@ -49,16 +48,18 @@
                                     href="/voorwaarden">voorwaarden</a> </label></td>
                         </tr>
                         <tr>
-                        <td><input type="submit" class="btn btn-primary mr-2" value="bevestig"><a
-                                class="btn btn-outline-primary" href="/overzicht" role="button">Terug naar rekeningen</a></td>
+                            <td><input type="submit" class="btn btn-primary mr-2" value="bevestig"><a
+                                    class="btn btn-outline-primary" href="/overzicht" role="button">Terug naar
+                                rekeningen</a></td>
                         </tr>
                     </table>
                 </form>
             </div>
+            <div class="col-md">
+            </div>
         </div>
         <p class="mt-5">Terug naar het <a href="/home">homepage</a></p>
     </div>
-</div>
 
 <div th:insert="fragments/footer :: footer"></div>
 <script>
