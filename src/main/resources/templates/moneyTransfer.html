@@ -8,10 +8,10 @@
 
 <body th:object="${rekening}">
 
-<div th:insert="fragments/navBar :: navBar"></div>
+<div th:insert="fragments/navBarIngelogd :: navBar"></div>
 
 
-<div class="container" style="padding-top: 100px;">
+<div class="container" style="padding-top: 125px;margin-top: 30px;padding-bottom: 100px;">
 
     <div class="row">
 
@@ -40,7 +40,7 @@
                     <tr>
                         <td><label for="tegenrekeningIban">Tegenrekening</label></td>
                         <td><input type="text" class="form-control" id="tegenrekeningIban" name="tegenrekeningIban"
-                                   th:field="*{tegenrekening}" placeholder="NL06SOFA0123456789" required/></td>
+                                   th:field="*{tegenrekening}" placeholder="NL06SOFA0123456789" required oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/></td>
                     </tr>
 
                     <tr>
@@ -54,19 +54,18 @@
                     </tr>
                     <tr th:if="${saldoOntoereikend}">
                         <td></td>
-                        <td><font color="red">Uw saldo is te laag voor deze overboeking. Voer een kleiner bedrag
-                            in.</font></td>
+                        <td><font color="red">Onvoldoende saldo op je SOFA-rekening.</font></td>
                     <tr>
                     <tr th:if="${bedragValidatie}">
                         <td></td>
-                        <td><font color="red">Het over te maken bedrag moet hoger zijn dan 0 euro.</font></td>
+                        <td><font color="red">Bedrag moet hoger zijn dan 0 euro.</font></td>
                     </tr>
 
 
                     <tr>
                         <td><label for="Omschrijving">Omschrijving</label></td>
                         <td><input type="text" class="form-control" id="omschrijving" th:field="*{omschrijving}"
-                                   placeholder="Omschrijving" required
+                                   placeholder="Omschrijving"
                                    oninvalid="this.setCustomValidity('Dit veld is verplicht.')"
                                    oninput="setCustomValidity('')"/></td>
                     </tr>
