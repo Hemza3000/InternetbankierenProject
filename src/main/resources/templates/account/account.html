@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <meta charset="UTF-8">
@@ -10,9 +10,10 @@
 </head>
 
 <body th:object="${rekening}">
-<div th:insert="fragments/navBar :: navBar"></div>
+<div th:insert="fragments/navBarIngelogd :: navBar"></div>
 
-<div class="container pb-5" style="padding-top: 125px;">
+<div class="container pb-5"  style="padding-top:125px;margin-top: 50px;">
+
     <div class="row">
 
         <div class="col-md"></div>
