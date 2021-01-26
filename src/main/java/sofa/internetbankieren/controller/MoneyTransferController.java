@@ -32,6 +32,7 @@ public class MoneyTransferController {
         MoneyTransferBackingBean moneyTransferBackingbean = new MoneyTransferBackingBean(0, "", "");
         model.addAttribute("MoneyTransferBackingbean", moneyTransferBackingbean);
         model.addAttribute("saldoOntoereikend", false);
+        model.addAttribute("bedragValidatie", false);
         return "moneyTransfer";
     }
 
@@ -40,21 +41,27 @@ public class MoneyTransferController {
 
         Rekening tegenrekening = accountService.getRekeningbyIban(backingbean.getTegenrekening());
         Rekening mijnRekening = (Rekening) model.getAttribute("rekening");
-        double bedrag = backingbean.getBedrag();
-        double eigenSaldo = mijnRekening.getSaldo();
-        double tegenrekeningSaldo = tegenrekening.getSaldo();
-        Transactie nieuweTransactie = new Transactie(0, mijnRekening, bedrag, LocalDateTime.now(), backingbean.getOmschrijving(), tegenrekening);
+        Transactie nieuweTransactie = new Transactie(0, mijnRekening, backingbean.getBedrag(), LocalDateTime.now(), backingbean.getOmschrijving(), tegenrekening);
 
-        if (!moneyTransferService.validatieSaldo(mijnRekening, tegenrekening, bedrag, eigenSaldo, tegenrekeningSaldo)) {
+        //todo veel dubbele code, hoe op te lossen??@#$@$!
+
+        if (!moneyTransferService.validatieBedrag(backingbean.getBedrag())){ // toont melding 'bedrag moet hoger zijn dan 0'
+            model.addAttribute("bedragValidatie", true);
+            MoneyTransferBackingBean moneyTransferBackingbean = new MoneyTransferBackingBean(0, "", "");
+            model.addAttribute("MoneyTransferBackingbean", moneyTransferBackingbean);
+            return "moneyTransfer";
+        }
+
+        if (!moneyTransferService.validatieSaldo(mijnRekening, tegenrekening, backingbean.getBedrag(), mijnRekening.getSaldo(), tegenrekening.getSaldo())) {// toont melding saldo te laag
             model.addAttribute("saldoOntoereikend", true);
             MoneyTransferBackingBean moneyTransferBackingbean = new MoneyTransferBackingBean(0, "", "");
             model.addAttribute("MoneyTransferBackingbean", moneyTransferBackingbean);
             return "moneyTransfer";
         }
+
         moneyTransferService.slaTransactieOp(nieuweTransactie);
         moneyTransferService.updateRekeningen(mijnRekening, tegenrekening);
         model.addAttribute("transacties", accountService.geefTransactieHistorie(mijnRekening));
-
         return "account/account";
     }
 }
