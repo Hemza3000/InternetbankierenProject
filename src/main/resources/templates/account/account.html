@@ -11,55 +11,56 @@
 
 <body th:object="${rekening}">
 <div th:insert="fragments/navBar :: navBar"></div>
+
 <div class="container pb-5" style="padding-top: 100px;">
-
-    <h1 style='color:#f4623a' class="text-center pb-4">
-        <span th:text="*{tenaamstelling}"></span> - <span th:text="*{IBAN}"></span></h1>
-
     <div class="row">
+
         <div class="col-md"></div>
 
         <div class="col-md-10">
-            <h2> Transactieoverzicht</h2>
-            <p th:text="${#temporals.format(nu, 'dd-MM-yyyy, HH:mm')}"></p>
-            <h4>Saldo: <span th:text="*{#numbers.formatDecimal(saldo, 1, 2, 'COMMA')}"></span> euro</h4>
 
-            <div class="pt-4 pb-4">
+            <h3 class="pb-4"><span th:text="*{tenaamstelling}"></span> - <span th:text="*{IBAN}"></span></h3>
+
+            <h4> Transactieoverzicht</h4>
+
+            <p th:text="${#temporals.format(nu, 'dd-MM-yyyy, HH:mm')}"></p>
+
+            <h5>Saldo: <span th:text="*{#numbers.formatDecimal(saldo, 1, 2, 'COMMA')}"></span> euro</h5>
+
+            <div class="py-4">
                 <p th:if="*{getTransacties().isEmpty()}">Er zijn geen transacties om weer te geven</p>
                 <p th:unless="*{getTransacties().isEmpty()}">Je laatste bij- en afschrijvingen</p>
             </div>
 
             <table class="table" th:unless="*{getTransacties().isEmpty()}">
                 <tr>
-                    <th>Datum</th>
-                    <th>+/-</th>
-                    <th>Bedrag</th>
-                    <th>Omschrijving</th>
-                    <th>Tegenrekening</th>
-                    <th>Ten name van</th>
+                    <th style='color:#f4623a'>Datum</th>
+                    <th style='color:#f4623a' class="text-center">+/-</th>
+                    <th style='color:#f4623a' class="text-right">Bedrag</th>
+                    <th style='color:#f4623a'>Omschrijving</th>
+                    <th style='color:#f4623a'>Tegenrekening</th>
+                    <th style='color:#f4623a'>Ten name van</th>
                 </tr>
                 <tr th:each="transactie : ${transacties}">
                     <td th:text="${#temporals.format(transactie.datum, 'dd-MM-yyyy')}"></td>
-                    <td th:text="${transactie.bijschrijving} ? '+' : '-'"></td>
-                    <td th:text="${#numbers.formatDecimal(transactie.bedrag, 1, 2, 'COMMA')}"></td>
+                    <td class="text-center" th:text="${transactie.bijschrijving} ? '+' : '-'"></td>
+                    <td class="text-right pr-4" th:text="${#numbers.formatDecimal(transactie.bedrag, 1, 2, 'COMMA')}"></td>
                     <td th:text="${transactie.omschrijving}"></td>
                     <td th:text="${transactie.tegenRekening.IBAN}"></td>
                     <td th:text="${transactie.tegenRekening.tenaamstelling}"></td>
                 </tr>
             </table>
 
-            <p class="pb-5">
+            <p>
                 <a class="btn btn-primary" href="/moneyTransfer" role="button">Geld overmaken</a>
                 <a class="btn btn-primary" href="/overzicht" role="button">Terug naar rekeningen</a>
-                <a class="btn btn-primary" href="/home" role="button">Uitloggen</a>
             </p>
-<!--            <p>Klik <a href="/moneyTransfer">hier</a> om een bedrag over te boeken</p>-->
-<!--            <p>Klik <a href="/overzicht">hier</a> om terug te gaan naar het overzicht van je rekeningen</p>-->
-<!--            <p><a href="/home">Uitloggen</a></p>-->
         </div>
 
         <div class="col-md"></div>
     </div>
+
+    <p class="py-4">Terug naar de <a href="/home">homepage</a></p>
 
 </div>
 <div th:insert="fragments/footer :: footer"></div>
