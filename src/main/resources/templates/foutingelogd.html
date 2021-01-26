@@ -7,10 +7,18 @@
 </head>
 <body>
 <div th:insert="fragments/navBar :: navBar"></div>
-<h1><p>Ongeldige inloggegevens!</p></h1>
-<h2><p>Maak een keuze: </p></h2>
-<p>Wil je het opnieuw proberen? <a href="/login">Klik dan hier.</a></p>
-<p>Nog geen klant bij Sofa? <a href="/register">Klik hier om je te registreren.</a></p>
-<p>Terug naar de <a href="/home">homepage</a></p>
+<div class="jumbotron vertical-center">
+    <div class="container" style="padding-top: 100px;">
+<h1 class="text-center mb-4"><p>Ongeldige inloggegevens!</p></h1>
+<h2 class="text-center mb-4"><p>Maak een keuze: </p></h2>
+<p class="text-center mb-2">Wil je het opnieuw proberen? <a href="/login">Klik dan hier.</a></p>
+<p class="text-center mb-2">Nog geen klant bij Sofa? <a href="/home#registreer">Klik hier om je te registreren.</a></p>
+<p class="text-center mb-2">Terug naar de <a href="/home">homepage</a></p>
+    </div>
+</div>
+<footer class="bg-light fixed-bottom py-3">
+    <div class="container"><div class="small text-center text-muted">Copyright © SOFA N.V. <a href="#disclaimer">disclaimer</a> |
+        <a href="#privacy">privacy & cookies</a> - SOFA Bank Amsterdam 2020 </div></div>
+</footer>
 </body>
 </html>
