@@ -1,12 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.com" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>SOFA - Overboeken</title>
     <link th:href="@{/css/styles.css}" rel="stylesheet" />
 </head>
+
 <body th:object="${rekening}">
-<a class="pull-left" href="#"><img src="/assets/img/favicon.ico"></a>
+
+<div th:insert="fragments/navBar :: navBar"></div>
+
+<div class="container justify-content-center" style="padding-top: 145px;">
+
 <h1>Overboeken</h1>
 <h3>Saldo: <span th:text="*{#numbers.formatDecimal(saldo, 1, 2, 'COMMA')}"></span> euro</h3>
 <p> Geef hieronder een geldige IBAN rekening op van de begunstigde
@@ -15,45 +20,57 @@
     <table>
         <tr>
             <td><label for="mijnIban">Mijn rekening</label></td>
-            <td type="text" id="mijnIban" name="mijnIban" th:text="${rekening.getIBAN()}" placeholder="NL06SOFA0123456789" required/></td>
+            <td type="text" class="form-control" id="mijnIban" name="mijnIban" th:text="${rekening.getIBAN()}" placeholder="NL06SOFA0123456789" required oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/></td>
         </tr>
         <tr>
             <td><label for="tegenrekeningIban">Tegenrekening</label></td>
-            <td><input type="text" id="tegenrekeningIban" name="tegenrekeningIban" th:field="*{tegenrekening}" placeholder="NL06SOFA0123456789" required/></td>
+            <td><input type="text" class="form-control" id="tegenrekeningIban" name="tegenrekeningIban" th:field="*{tegenrekening}" placeholder="NL06SOFA0123456789" required/></td>
         </tr>
+
+<!--        <tr>-->
+<!--            <td><label for="Ontvanger">Ontvanger</label></td>-->
+<!--            <td><input type="text" class="form-control" id="ontvanger" th:field="*{ontvanger}" placeholder="Wendy Ellens" name="ontvanger" readonly oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/></td>-->
+<!--        </tr>-->
+
         <tr>
             <td><label for="Bedrag">Bedrag in Euro</label></td>
-            <td><input type="number" id="bedrag" name="bedrag" step="any" th:field="*{bedrag}" placeholder="0,00" oninput="check(this)" required/></td>
+            <td><input type="number" class="form-control" id="bedrag" name="bedrag" th:field="*{bedrag}" placeholder="0,00" required oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/></td>
         </tr>
         <tr th:if="${saldoOntoereikend}">
             <td></td>
             <td><font color="red">Uw saldo is te laag voor deze overboeking. Voer een kleiner bedrag in.</font></td>
         <tr>
-            <td><label for="Omschrijving">Omschrijving overboeking</label></td>
-            <td><input type="text" id="omschrijving" th:field="*{omschrijving}" placeholder="Omschrijving" required/></td>
+        <tr th:if="${bedragValidatie}">
+            <td></td>
+            <td><font color="red">Het over te maken bedrag moet hoger zijn dan 0 euro.</font></td>
+       </tr>
+        <tr>
+            <td><label for="Omschrijving">Omschrijving</label></td>
+            <td><input type="text" class="form-control" id="omschrijving" th:field="*{omschrijving}" placeholder="Omschrijving" required oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/></td>
         </tr>
     </table>
     <td><input type="submit" name="OK" value="Bevestigen"></td>
 </form>
-</tr>
-<td></td>
+
 <p>Terug naar uw <a href="javascript:javascript:history.go(-1)">transactieoverzicht</a></p>
 
-</tr>
 <p>Terug naar uw <a href="/overzicht">overzichtspagina</a></p> </p>
-<footer class="bg-light fixed-bottom py-3">
-    <div class="container"><div class="small text-center text-muted">Copyright © SOFA N.V. <a href="#disclaimer">disclaimer</a> |
-        <a href="#privacy">privacy & cookies</a> - SOFA Bank Amsterdam 2020 </div></div>
-</footer>
-<script>
-    function check(input) {
-        if (input.value <= 0) {
-            input.setCustomValidity('Vul een positief bedrag in.');
-        } else {
-            // Als de input positief is -- reset the error message
-            input.setCustomValidity('');
-        }
-    }
-</script>
+</div>
+
+<div th:insert="fragments/footer :: footer"></div>
+
+<!--<script>-->
+<!--    function check(input) {-->
+<!--        if (input.value <= 0) {-->
+<!--            input.setCustomValidity('Vul een positief bedrag in.');-->
+<!--        } else if (input.length == 0) {-->
+<!--            input.setCustomValidity('TEST')-->
+<!--         }else {-->
+<!--            // Als de input positief is &#45;&#45; reset the error message-->
+<!--            input.setCustomValidity('');-->
+<!--        }-->
+<!--    }-->
+<!--</script>-->
+
 </body>
 </html>

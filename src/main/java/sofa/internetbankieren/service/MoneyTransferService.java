@@ -22,17 +22,23 @@ public class MoneyTransferService {
         this.transactieDAO = transactieDAO;
     }
 
-    //todo --  wetten van Morgan?
-
     public boolean validatieSaldo(Rekening mijnRekening, Rekening tegenrekening, double bedrag, double eigenSaldo, double tegenrekeningSaldo) {
 
-        if (mijnRekening.getSaldo() < bedrag || bedrag <= 0 ) {
+        if (mijnRekening.getSaldo() < bedrag) {
             return false;
         } else {
             mijnRekening.setSaldo(eigenSaldo - bedrag);
             tegenrekening.setSaldo(tegenrekeningSaldo + bedrag);
             return true;
         }
+    }
+
+    //todo één regel van maken
+    public boolean validatieBedrag(double bedrag) {
+        if (bedrag <= 0) {
+        return false;
+    } else
+        return true;
     }
 
     public void updateRekeningen (Rekening mijnRekening, Rekening tegenrekening ) {
