@@ -17,12 +17,6 @@ public class HomeController {
 
     @GetMapping({"/", "/home"})
     public String startHandler() {
-        return "home-bootstrap";
-    }
-
-    // tijdelijk TODO later weg halen
-    @GetMapping("/boot")
-    public String boot(){
         return "home";
     }
 
