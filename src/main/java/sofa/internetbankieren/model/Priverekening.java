@@ -49,7 +49,6 @@ public class Priverekening extends Rekening{
         return super.getTransactieDAO().getAllByIDPriverekening(super.getIdRekening());
     }
 
-    // TODO 7/12 bepalen wat de toString nodig heeft
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();

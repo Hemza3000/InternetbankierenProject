@@ -109,7 +109,7 @@ public class BedrijfsrekeningDAO implements GenericDAO<Bedrijfsrekening> {
                 return ps;
             }
         }, keyHolder);
-        bedrijfsrekening.setIdRekening(keyHolder.getKey().intValue());   // TODO wil jij dit uitleggen wat dit doet?
+        bedrijfsrekening.setIdRekening(keyHolder.getKey().intValue());
     }
 
 

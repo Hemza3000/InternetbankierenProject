@@ -60,7 +60,6 @@ public class Bedrijfsrekening extends Rekening {
         return super.getTransactieDAO().getAllByIDBedrijfsrekening(super.getIdRekening());
     }
 
-    // TODO 7/12 wat hebben we nodig in de toString?
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();

@@ -70,7 +70,6 @@ public abstract class Rekening {
         this.transactieDAO = transactieDAO;
     }
 
-    // TODO 7/12 wat hebben we nodig in de toString?
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
