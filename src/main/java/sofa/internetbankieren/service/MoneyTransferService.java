@@ -35,10 +35,7 @@ public class MoneyTransferService {
 
     //todo één regel van maken
     public boolean validatieBedrag(double bedrag) {
-        if (bedrag <= 0) {
-        return false;
-    } else
-        return true;
+        return bedrag > 0;
     }
 
     public void updateRekeningen (Rekening mijnRekening, Rekening tegenrekening ) {
