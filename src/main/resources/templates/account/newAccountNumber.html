@@ -1,46 +1,66 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="author" content="Wichert Tjerkstra">
     <title>Nieuw rekeningnummer openen</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
+<div th:insert="fragments/navBar :: navBar"></div>
+<div class="jumbotron vertical-center">
+    <div class="container" style="padding-top: 100px;">
+        <h3 class="text-center mb-3">Open hier een nieuw rekeningnummer</h3>
+        <div class="row">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md">
+                <p class="mb-0">Controleer de gegevens en bevestig onderaan de pagina voor het openen van een nieuwe
+                    rekening.</p>
+                <p class="mb-1" th:if="${isBedrijf}">Voor het openen van een bedrijfsrekening is de achternaam en
+                    bsn van de
+                    contactpersoon verplicht.</p>
+                <form action="formNewAccountNumber" method="post" class="mt-4">
+                    <table>
+                        <tr class="mb-0">
+                            <td><label for="accountName">Op naam van</label>
+                            <td id="accountName" th:text="${klant.getNaam()}"></td>
+                        </tr>
+                        <tr class="mb-0">
+                            <td><label for="newIBAN">Nieuw rekeningnummer</label></td>
+                            <td th:text="${IBAN}" id="newIBAN" name="newIBAN"></td>
+                        </tr>
+                        <tr th:hidden="${!isBedrijf}">
+                            <td><label for="NaamContactpersoon">Naam contactpersoon</label></td>
+                            <td><input class="form-control" id="NaamContactpersoon" name="NaamContactpersoon"></td>
+                        </tr>
+                        <tr th:hidden="${!isBedrijf}">
+                            <td><label for="bsnContactpersoon">BSN contactpersoon</label></td>
+                            <td><input class="form-control" type="text" id="bsnContactpersoon" name="bsnContactpersoon"
+                                       value=""></td>
+                        </tr>
+                        <tr th:if="${!doesExist}">
+                            <td></td>
+                            <td><font color="red">BSN komt niet overeen met gegevens. Probeer opnieuw</font></td>
+                        </tr>
+                        <tr>
+                            <td><input id="akkoord" type="checkbox" class="form-check-label btn-xl mr-2"
+                                       required><label> ik ga akkoord met de <a
+                                    href="/voorwaarden">voorwaarden</a> </label></td>
+                        </tr>
+                        <tr>
+                        <td><input type="submit" class="btn btn-primary mr-2" value="bevestig"><a
+                                class="btn btn-outline-primary" href="/overzicht" role="button">Terug naar rekeningen</a></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+        <p class="mt-5">Terug naar het <a href="/home">homepage</a></p>
+    </div>
+</div>
 
-<h1>Open hier een nieuw rekeningnummer</h1>
-<p>Controleer de gegevens en bevestig onderaan de pagina voor het openen van een nieuwe rekening.</p>
-<p th:if="${isBedrijf}">Voor het openen van een bedrijfsrekening is de achternaam en bsn van de contactpersoon verplicht.</p>
-
-<form action="formNewAccountNumber" method="post">
-<table>
-    <tr>
-        <td><label for="accountName" >Op naam van</label>
-        <td id="accountName" th:text="${klant.getNaam()}"></td>
-    </tr>
-    <tr>
-        <td><label for="newIBAN">Nieuw rekeningnummer</label></td>
-        <td th:text="${IBAN}" id="newIBAN" name="newIBAN"></td>
-    </tr>
-    <tr th:hidden="${!isBedrijf}">
-        <td><label for="NaamContactpersoon">Naam contactpersoon</label></td>
-        <td><input id="NaamContactpersoon" name="NaamContactpersoon"></td>
-    </tr>
-    <tr th:hidden="${!isBedrijf}">
-        <td><label for="bsnContactpersoon">BSN contactpersoon</label></td>
-        <td><input type="text" id="bsnContactpersoon" name="bsnContactpersoon" value=""></td>
-    </tr>
-    <tr th:if="${!doesExist}">
-        <td></td>
-        <td><font color="red">BSN komt niet overeen met gegevens. Probeer opnieuw</font></td>
-    </tr>
-    <tr>
-        <td><input id="akkoord" type="checkbox" required><label> ik ga akkoord met de <a href="/voorwaarden">voorwaarden</a> </label></td>
-    </tr>
-        <td></td>
-        <td><input type="submit" name="OK" value="bevestig"></td>
-</table>
-</form>
-<p>Terug naar het <a href="/overzicht">rekeningoverzicht</a></p>
+<div th:insert="fragments/footer :: footer"></div>
 <script>
     function msg() {
         alert('Rekening is toegevoegd');
