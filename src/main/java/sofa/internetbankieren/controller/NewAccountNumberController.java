@@ -43,7 +43,7 @@ public class NewAccountNumberController {
         }
         model.addAttribute("isBedrijf", bedrijf);
         model.addAttribute("doesExist", true);
-        return "account/newAccountNumber";
+        return "account/newAccountNumber-bootstrap";
     }
 
     @PostMapping("/formNewAccountNumber")

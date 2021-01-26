@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <style>
@@ -20,6 +20,7 @@
         }
     </style>
     <title>SOFA Bank</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
 </head>
 <body>
 <h1>Lees hier onze voorwaarden</h1>
@@ -111,7 +112,7 @@
 </div>
 
 
-<button onclick="goBack()">Ga terug</button>
+<button class="btn btn-primary btn-xl js-scroll-trigger justify-content-center" onclick="goBack()">Ga terug</button>
 <script>
     function goBack() {
         window.history.back();
