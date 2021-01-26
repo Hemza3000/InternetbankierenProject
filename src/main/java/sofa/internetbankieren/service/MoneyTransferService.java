@@ -22,23 +22,20 @@ public class MoneyTransferService {
         this.transactieDAO = transactieDAO;
     }
 
-    public boolean validatieSaldo(Rekening mijnRekening, Rekening tegenrekening, double bedrag, double eigenSaldo, double tegenrekeningSaldo) {
+    public boolean validatieSaldo(Rekening mijnRekening, Rekening tegenrekening, double bedrag) {
 
         if (mijnRekening.getSaldo() < bedrag) {
             return false;
         } else {
-            mijnRekening.setSaldo(eigenSaldo - bedrag);
-            tegenrekening.setSaldo(tegenrekeningSaldo + bedrag);
+            mijnRekening.setSaldo(mijnRekening.getSaldo() - bedrag);
+            tegenrekening.setSaldo(tegenrekening.getSaldo() + bedrag);
             return true;
         }
     }
 
     //todo één regel van maken
     public boolean validatieBedrag(double bedrag) {
-        if (bedrag <= 0) {
-        return false;
-    } else
-        return true;
+        return bedrag > 0;
     }
 
     public void updateRekeningen (Rekening mijnRekening, Rekening tegenrekening ) {

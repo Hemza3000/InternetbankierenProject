@@ -6,57 +6,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sofa - registreren</title>
     <meta name="author" content="Wendy Ellens">
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 
 <body>
-<h1>Registreer je hier als zakelijke klant</h1>
-<p>Stap 2/4</p>
-<p>Vul hieronder de bedrijfsgegevens in</p>
+<div th:insert="fragments/navBar :: navBar"></div>
 
-<form action="register" method="post" th:object="${klant}" onsubmit="return validateBedrijf()">
-    <table>
-        <tr>
-            <td><label for="name_field"> Bedrijfsnaam</label></td>
-            <td><input type="text" id="name_field" th:field="*{bedrijfsnaam}" required/></td>
-        </tr>
-        <tr>
-            <td><label for="sector_field"> Sector</label></td>
-            <td><select id="sector_field" name="sector">
+<div class="container justify-content-center" style="padding-top: 125px;">
+
+    <h3>Registreer je hier als zakelijke klant</h3>
+    <p>Stap 1/3</p>
+    <p><em>Vul hieronder je bedrijfsgegevens in</em></p>
+
+    <form class="row" action="register" method="post" th:object="${klant}" onsubmit="return validateBedrijf()">
+
+        <div class="form-group col-md-8">
+            <label for="name_field"> Bedrijfsnaam</label>
+            <input type="text" class="form-control" id="name_field" th:field="*{bedrijfsnaam}" required
+                   oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="sector_field"> Sector</label>
+            <select class="form-control" id="sector_field" name="sector">
                 <option th:each="sectorOpt : ${T(sofa.internetbankieren.model.Sector).values()}"
                         th:value="${sectorOpt}" th:text="${sectorOpt.naam}"></option>
-            </select></td>
-        </tr>
-        <tr>
-            <td><label for="kvk_field"> KVK nummer</label></td>
-            <td><input type="text" id="kvk_field" th:field="*{KVKNummer}" required/></td>
-        </tr>
-        <tr>
-            <td><label for="btw_field"> BTW nummer</label></td>
-            <td><input type="text" id="btw_field" th:field="*{BTWNummer}" required/></td>
-        </tr>
-        <tr>
-            <td><label for="pc_field"> Postcode</label></td>
-            <td><input type="text" id="pc_field" th:field="*{postcode}" required/></td>
-        </tr>
-        <tr>
-            <td><label for="nr_field">Huisnummer</label></td>
-            <td><input type="text" id="nr_field" th:field="*{huisnummer}" required/></td>
-        </tr>
-        <tr>
-            <td><label for="street_field">Straat</label></td>
-            <td><input type="text" id="street_field" th:field="*{straat}" required/></td>
-        </tr>
-        <tr>
-            <td><label for="city_field">Woonplaats</label></td>
-            <td><input type="text" id="city_field" th:field="*{woonplaats}" required/></td>
-        </tr>
-        <tr>
-        <td></td>
-        <td><input type="submit" value="OK"><input type="reset" value="Reset"></td>
-        </tr>
-    </table>
-</form>
-<p>Terug naar de <a href="/home">homepage</a></p>
+            </select>
+        </div>
+
+        <div class="form-group col-md-3">
+            <label for="kvk_field"> KVK nummer</label>
+            <input type="text" class="form-control" id="kvk_field" th:field="*{KVKNummer}" required
+                   oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/>
+        </div>
+
+        <div class="form-group col md-3">
+            <label for="btw_field"> BTW nummer</label>
+            <input type="text" class="form-control" id="btw_field" th:field="*{BTWNummer}" required
+                   oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/>
+        </div>
+
+
+        <div class="form-group col-md-4">
+            <label for="pc_field"> Postcode</label>
+            <input type="text" class="form-control" id="pc_field" th:field="*{postcode}" required
+                   oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/>
+        </div>
+
+        <div class="form-group col-md-2">
+            <label for="nr_field">Huisnummer</label>
+            <input type="text" class="form-control" id="nr_field" th:field="*{huisnummer}" required
+                   oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="street_field">Straat</label>
+            <input type="text" class="form-control" id="street_field" th:field="*{straat}" required
+                   oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="city_field">Woonplaats</label>
+            <input type="text" class="form-control" id="city_field" th:field="*{woonplaats}" required
+                   oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/>
+        </div>
+
+        <div class="form-group col-md-12">
+            <button type="submit" name="OK" class="btn btn-primary btn-md">OK</button>
+            <button type="reset" name="reset" class="btn btn-primary btn-md">Reset</button>
+        </div>
+
+        <div class="form-group col-md-12">
+            <p>Terug naar de <a href="/home">homepage</a></p>
+        </div>
+
+    </form>
+</div>
+<div th:insert="fragments/footer :: footer"></div>
 
 <script>
     // toegevoegd door Wichert
@@ -84,7 +110,7 @@
         }
     }
 
-    function processAddress(data){
+    function processAddress(data) {
         console.log(data)
         let addressPart = data
         document.getElementById('street_field').value = addressPart.street

@@ -52,7 +52,7 @@ public class MoneyTransferController {
             return "moneyTransfer";
         }
 
-        if (!moneyTransferService.validatieSaldo(mijnRekening, tegenrekening, backingbean.getBedrag(), mijnRekening.getSaldo(), tegenrekening.getSaldo())) {// toont melding saldo te laag
+        if (!moneyTransferService.validatieSaldo(mijnRekening, tegenrekening, backingbean.getBedrag())) {// toont melding saldo te laag
             model.addAttribute("saldoOntoereikend", true);
             MoneyTransferBackingBean moneyTransferBackingbean = new MoneyTransferBackingBean(0, "", "");
             model.addAttribute("MoneyTransferBackingbean", moneyTransferBackingbean);

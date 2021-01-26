@@ -6,58 +6,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sofa - registreren</title>
     <meta name="author" content="Wendy Ellens">
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 
-<body>
-<h1>Registreer je hier als zakelijke klant</h1>
-<p>Stap 3/4</p>
-<p>Controleer hieronder of je gegevens kloppen.</p>
+<body class="pb-5">
+<div th:insert="fragments/navBar :: navBar"></div>
 
-<form action="confirm" method="post" th:object="${klant}" onsubmit="return validateBedrijf()">
-    <table>
-        <tr>
-            <td><label for="name_field"> Bedrijfsnaam</label></td>
-            <td><input type="text" id="name_field" th:field="*{bedrijfsnaam}" required/></td>
-        </tr>
-        <tr>
-            <td><label for="sector_field"> Sector</label></td>
-            <td><select id="sector_field" name="sector">
-                <option th:each="sectorOpt : ${T(sofa.internetbankieren.model.Sector).values()}"
-                        th:value="${sectorOpt}" th:text="${sectorOpt.naam}"
-                        th:selected="${sectorOpt==klant.sector}"></option>
-            </select></td>
-        </tr>
-        <tr>
-            <td><label for="kvk_field"> KVK nummer</label></td>
-            <td><input type="text" id="kvk_field" th:field="*{KVKNummer}" required/></td>
-        </tr>
-        <tr>
-            <td><label for="btw_field"> BTW nummer</label></td>
-            <td><input type="text" id="btw_field" th:field="*{BTWNummer}" required/></td>
-        </tr>
-        <tr>
-            <td><label for="pc_field"> Postcode</label></td>
-            <td><input type="text" id="pc_field" th:field="*{postcode}" name="Postal_code" required/></td>
-        </tr>
-        <tr>
-            <td><label for="nr_field">Huisnummer</label></td>
-            <td><input type="text" id="nr_field" th:field="*{huisnummer}" required/></td>
-        </tr>
-        <tr>
-            <td><label for="street_field">Straat</label></td>
-            <td><input type="text" id="street_field" th:field="*{straat}" name="Street" required/></td>
-        </tr>
-        <tr>
-            <td><label for="city_field">Woonplaats</label></td>
-            <td><input type="text" id="city_field" th:field="*{woonplaats}" name="City" required/></td>
-        </tr>
-        <tr>
-        <td></td>
-        <td><input type="submit" value="Bevestigen"></td>
-        </tr>
-    </table>
+<div class="container justify-content-center" style="padding-top: 125px;">
+
+    <h3>Registreer je hier als zakelijke klant</h3>
+    <p>Stap 2/3</p>
+    <p><em>Controleer hieronder of je gegevens kloppen</em></p>
+
+<form class="row" action="confirm" method="post" th:object="${klant}" onsubmit="return validateBedrijf()">
+
+    <div class="form-group col-md-8">
+        <label for="name_field"> Bedrijfsnaam</label>
+        <input type="text" class="form-control" id="name_field" th:field="*{bedrijfsnaam}" required
+               oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/>
+    </div>
+
+    <div class="form-group col-md-4">
+        <label for="sector_field"> Sector</label>
+        <select class="form-control" id="sector_field" name="sector">
+            <option th:each="sectorOpt : ${T(sofa.internetbankieren.model.Sector).values()}"
+                    th:value="${sectorOpt}" th:text="${sectorOpt.naam}"
+                    th:selected="${sectorOpt==klant.sector}"></option>
+        </select>
+    </div>
+
+    <div class="form-group col-md-3">
+        <label for="kvk_field"> KVK-nummer</label>
+        <input type="text" class="form-control" id="kvk_field" th:field="*{KVKNummer}" required
+               oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/>
+    </div>
+
+    <div class="form-group col md-3">
+        <label for="btw_field"> BTW-nummer</label>
+        <input type="text" class="form-control" id="btw_field" th:field="*{BTWNummer}" required
+               oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/>
+    </div>
+
+
+    <div class="form-group col-md-4">
+        <label for="pc_field"> Postcode</label>
+        <input type="text" class="form-control" id="pc_field" th:field="*{postcode}" required
+               oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/>
+    </div>
+
+    <div class="form-group col-md-2">
+        <label for="nr_field"> Huisnummer</label>
+        <input type="text" class="form-control" id="nr_field" th:field="*{huisnummer}" required
+               oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/>
+    </div>
+
+    <div class="form-group col-md-6">
+        <label for="street_field"> Straat</label>
+        <input type="text" class="form-control" id="street_field" th:field="*{straat}" required
+               oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/>
+    </div>
+
+    <div class="form-group col-md-6">
+        <label for="city_field"> Woonplaats</label>
+        <input type="text" class="form-control" id="city_field" th:field="*{woonplaats}" required
+               oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/>
+    </div>
+
+    <div class="form-group col-md-12">
+        <button type="submit" name="OK" class="btn btn-primary btn-md">OK</button>
+    </div>
+
+    <div class="form-group col-md-12">
+        <p>Terug naar de <a href="/home">homepage</a></p>
+    </div>
+
 </form>
-<p>Terug naar de <a href="/home">homepage</a></p>
+</div>
+<div th:insert="fragments/footer :: footer"></div>
 
 <script>
     // toegevoegd door Wichert
@@ -116,57 +141,6 @@
         //     fetch(`http://apilayer.net/api/validate?access_key=${key}&vat_number=${kvk}`)
         //         .then(response => response.json())
         //         .then (json => processResponse(json))
-        // }
-        // Controle of het BTW-nummer in gebruik is m.b.v. de database van de Europese Commissie.
-        // Todo werkt dit ook? Dan kan de functie processResponse weg
-        // else {
-        //     let key = '9e401e60a123e3125372ac83e026fc15';
-        //     fetch(`http://apilayer.net/api/validate?access_key=${key}&vat_number=${kvk}`)
-        //         .then(response => response.json())
-        //         .then(json => {
-        //             if (json.valid) {
-        //                 alert('Voer een geldig BTW-nummer in')
-        //                 return false;
-        //             }
-        //         })
-        // }
-    }
-
-    // todo functie verwijderen
-    function processResponse(data){
-        if (data.valid) {
-            alert('Voer een geldig BTW-nummer in')
-            return false;
-        }
-    }
-</script>
-</body>
-</html>
-
-    // Controleert de KvK- en BTW-nummers
-    function validateBedrijf() {
-        // Het KvK-nummer moet uit 8 cijfers bestaan.
-        const kvk = document.getElementById('kvk_field').value;
-        const regexKvk = /^\d{8}$/; // /^[0-9]{8}$/
-        if ( regexKvk.test(kvk) === false ) {
-            alert('Voer een geldig KvK-nummer in')
-            return false;
-        }
-
-        // Het BTW-nummer moet er zo uitzien: landcode NL, 9 cijfers, letter B, en een controlegetal van 2 cijfers.
-        const btw = document.getElementById('btw_field').value;
-        const regexBtw = /^NL[0-9]{9}B[0-9]{2}$/;
-        if ( regexBtw.test(btw) === false ) {
-            alert('Voer een geldig BTW-nummer in')
-            return false;
-        }
-        // Controle of het BTW-nummer in gebruik is m.b.v. de database van de Europese Commissie.
-        // Todo later toevoegen, nu niet in gebruik om look-ups te besparen (na 100x betalen)
-        // else {
-        //     let key = '9e401e60a123e3125372ac83e026fc15';
-        //     fetch(`http://apilayer.net/api/validate?access_key=${key}&vat_number=${kvk}`)
-        //         .then(response => response.json())
-        //         .then(json => processResponse(json))
         // }
         // Controle of het BTW-nummer in gebruik is m.b.v. de database van de Europese Commissie.
         // Todo werkt dit ook? Dan kan de functie processResponse weg

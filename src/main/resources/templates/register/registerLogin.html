@@ -12,12 +12,11 @@
 
 <div th:insert="fragments/navBar :: navBar"></div>
 
-<div class="container justify-content-center" style="padding-top: 100px;">
+<div class="container justify-content-center" style="padding-top: 125px;">
 
-    <h1>Nog even en je hebt je account... </h1>
+    <h3>Nog even en je hebt je account... </h3>
     <p>Stap 3/3</p>
-    <p>Maak hieronder je gebruikersnaam en wachtwoord aan</p>
-    <br>
+    <p><em>Maak hieronder een gebruikersnaam en wachtwoord aan</em></p>
 
     <form class="row" form action="storeLogin" id="storeLogin" method="post" th:object="${klant}"
           onsubmit="return validatie()">
@@ -39,10 +38,12 @@
 
         <div class="form-group col-2"></div>
 
-        <div class="form-group col-md-12">
+        <div class="form-group col-2"></div>
+        <div class="form-group col-md-8">
             <button type="submit" name="OK" class="btn btn-primary btn-md">OK</button>
             <button type="reset" name="reset" class="btn btn-primary btn-md">Reset</button>
         </div>
+        <div class="form-group col-2"></div>
 
         <div class="form-group col-md-12">
             <p>Terug naar de <a href="/home">homepage</a></p> </p>
