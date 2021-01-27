@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Sofa - registreren</title>
+    <title>SOFA - registreren</title>
     <meta name="author" content="Wichert Tjerkstra, Hemza Lasri">
     <link th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
@@ -45,8 +45,9 @@
         <div class="form-group col-md-6">
             <label for="BSN">Burgerservicenummer</label>
             <input type="text" class="form-control" th:field="*{BSN}" idname="BSN" required/>
-            <tr th:if="${fieldExists}">
-                <field style='color:red'>Er is al een geregistreerde klant met dit BSN</field>
+            <field id="bsn_incorrect"></field>
+            <field th:if="${fieldExists}" style='color:red'>
+                Er is al een geregistreerde klant met dit burgerservicenummer</field>
         </div>
 
         <div class="form-group col-md-4">
@@ -129,9 +130,11 @@
         let bsn = document.forms['particulierForm']['BSN'].value;
         let regex = /^\d{9}$/;
         if (regex.test(bsn) == false) {
-            alert('voer een geldig burgerservicenummer in')
+            document.getElementById('bsn_incorrect').innerHTML = '' +
+                '<span style=\'color:red\'>Het burgerservicenummer moet uit 9 cijfers bestaan</span>';
             return false;
         }
+        else document.getElementById('bsn_incorrect').innerHTML = '';
     }
 </script>
 </body>

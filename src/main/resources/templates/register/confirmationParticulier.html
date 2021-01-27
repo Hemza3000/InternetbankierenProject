@@ -11,12 +11,12 @@
 
 <div class="container justify-content-center" style="padding-top: 125px;margin-top: 50px;">
 
-<h3>Controleer uw gegevens:</h3>
+<h3>Controleer je gegevens:</h3>
 <p>Stap 2/3</p>
-<p><em>Controleer en wijzig indien nodig uw persoonlijke gegevens</em></p>
+<p><em>Controleer en wijzig indien nodig je gegevens</em></p>
 
 
-    <form class="row" form action="confirm" method="post" th:object="${klant}">
+    <form class="row" form action="confirm" method="post" th:object="${klant}" onsubmit="return validateForm()">
 
     <div class="form-group col-md-3">
             <label for="First_name">Voornaam</label>
@@ -41,7 +41,7 @@
             <div class="form-group col-md-6">
             <label for="BSN">Burgerservicenummer</label>
             <input id="BSN" class="form-control" th:field="*{BSN}"name="BSN" required/>
-            <field th:if="${fieldExists}" style='color:darkred'>Er is al een geregistreerde klant met dit BSN</field>
+            <field th:if="${fieldExists}" style='color:red'>Er is al een geregistreerde klant met dit BSN</field>
             </div>
 
         <div class="form-group col-md-4">
@@ -107,6 +107,16 @@
         let addressPart = data
         document.getElementById('street_field').value = addressPart.street
         document.getElementById('city_field').value = addressPart.city
+    }
+
+    // controleert of een BSN uit 9 getallen bestaat
+    function validateForm() {
+        let bsn = document.getElementById('BSN').value;
+        let regex = /^\d{9}$/;
+        if (regex.test(bsn) == false) {
+            alert('voer een geldig burgerservicenummer in')
+            return false;
+        }
     }
 
 </script>
