@@ -18,7 +18,8 @@
             <p class="mb-1" th:if="${isBedrijf}">Voor het openen van een bedrijfsrekening is de achternaam en
                 bsn van de
                 contactpersoon verplicht.</p>
-            <form action="formNewAccountNumber" id="formNewAccountNumber" method="post" class="mt-4" onsubmit="return validatieBSN()">
+            <form action="formNewAccountNumber" id="formNewAccountNumber" method="post" class="mt-4"
+                  onsubmit="return validatieBSN()">
                 <table>
                     <tr class="mb-0">
                         <td><label for="accountName">Op naam van</label>
@@ -39,23 +40,25 @@
                     </tr>
                     <tr>
                         <td></td>
-                        <td><field id="BsnFalse"></field></td>
+                        <td>
+                            <field id="BsnFalse"></field>
+                        </td>
                     </tr>
                     <tr th:if="${!doesExist}">
                         <td></td>
                         <td><font color="red">BSN komt niet overeen met gegevens</font></td>
                     </tr>
                     <tr>
-                        <td><input id="akkoord" type="checkbox" class="form-check-label btn-xl mr-2"
-                                   required><label> ik ga akkoord met de <a
+                        <td><input id="akkoord" type="checkbox" class="form-check-label btn-xl mr-1"
+                                   required><label class="mr-1"> ik ga akkoord met de <a
                                 href="/voorwaarden">voorwaarden</a> </label></td>
                     </tr>
                     <tr>
-                        <td><input type="submit" class="btn btn-primary mr-2" value="Bevestig"><a
-                                class="btn btn-outline-primary" href="/overzicht" role="button">Terug naar
-                            rekeningen</a></td>
+                        <td><input type="submit" class="btn btn-primary" value="Bevestig">
+                            <a class="btn btn-outline-primary" href="/overzicht" role="button">Terug naar
+                            rekeningen</a>
+                        </td>
                     </tr>
-
                 </table>
             </form>
         </div>
@@ -77,7 +80,8 @@
                 return false;
             } else {
                 document.getElementById("BsnFalse").innerHTML = '';
-            }}
+            }
+        }
     }
 
     function msg() {
