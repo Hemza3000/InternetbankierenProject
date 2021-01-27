@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rekeningpagina</title>
+    <title>SOFA - Transactieoverzicht</title>
     <meta name="author" content="Wendy Ellens">
     <link th:href="@{/css/styles.css}" rel="stylesheet" />
 </head>
@@ -31,7 +31,7 @@
             <h5>Saldo: <span th:text="*{#numbers.formatDecimal(saldo, 1, 2, 'COMMA')}"></span> euro</h5>
 
             <div class="py-4">
-                <p th:if="*{getTransacties().isEmpty()}">Er zijn geen transacties om weer te geven</p>
+                <p th:if="*{getTransacties().isEmpty()}"><em> Er zijn geen transacties om weer te geven</em></p>
                 <p th:unless="*{getTransacties().isEmpty()}">Je laatste bij- en afschrijvingen</p>
             </div>
 
@@ -56,7 +56,7 @@
 
             <p>
                 <a class="btn btn-primary" href="/moneyTransfer" role="button">Geld overmaken</a>
-                <a class="btn btn-primary" href="/overzicht" role="button">Terug naar rekeningen</a>
+                <a class="btn btn-primary" href="/overzicht" role="button">Rekeningoverzicht</a>
             </p>
         </div>
 
