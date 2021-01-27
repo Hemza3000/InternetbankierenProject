@@ -11,7 +11,7 @@
 
 <div class="container justify-content-center" style="padding-top: 125px;">
 
-<h1>Registreer je hier als particuliere klant</h1>
+<h3>Registreer je hier als particuliere klant</h3>
 <p>Stap 2/3</p>
 <p><em>Controleer hieronder of je gegevens kloppen</em></p>
 
@@ -40,7 +40,7 @@
             <div class="form-group col-md-6">
             <label for="BSN">Burgerservicenummer</label>
             <input id="BSN" class="form-control" th:field="*{BSN}"name="BSN" required/>
-            <field th:if="${fieldExists}" style='color:darkred'>Er is al een geregistreerde klant met dit BSN</field>
+            <field th:if="${fieldExists}" style='color:red'>Er is al een geregistreerde klant met dit BSN</field>
             </div>
 
         <div class="form-group col-md-4">
