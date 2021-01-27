@@ -33,14 +33,14 @@
                     <tr>
                         <td><label for="mijnIban">Mijn rekening</label></td>
                         <td type="text" class="form-control" id="mijnIban" name="mijnIban"
-                            th:text="${rekening.getIBAN()}" placeholder="NL06SOFA0123456789" required/>
+                            th:text="${rekening.getIBAN()}" required/>
                         </td>
                     </tr>
 
                     <tr>
                         <td><label for="tegenrekeningIban">Tegenrekening</label></td>
                         <td><input type="text" class="form-control" id="tegenrekeningIban" name="tegenrekeningIban"
-                                   th:field="*{tegenrekening}" placeholder="NL06SOFA0123456789" required oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/></td>
+                                   th:field="*{tegenrekening}" placeholder="IBAN" required oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/></td>
                     </tr>
 
                     <tr>
@@ -72,6 +72,9 @@
                 </table>
                 <br>
                 <button type="submit" name="OK" class="btn btn-primary btn-md">Bevestigen</button>
+                    <a class="btn btn-outline-primary" href="javascript:javascript:history.go(-1)" role="button">Transactieoverzicht</a>
+                    <a class="btn btn-outline-primary" href="/overzicht" role="button">Rekeningoverzicht</a>
+
                 </div>
             </form>
         </div>
@@ -80,8 +83,6 @@
      </div>
     <br>
     <br>
-    <a class="btn btn-primary" href="/overzicht" role="button">Rekeningoverzicht</a>
-    <a class="btn btn-primary" href="javascript:javascript:history.go(-1)" role="button">Transactieoverzicht</a>
 </div>
 
 <div th:insert="fragments/footer :: footer"></div>
