@@ -1,13 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welkom bij de SOFA BANK</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
+<div th:insert="fragments/navBarZonderRegistreerKnop :: navBar"></div>
 <body>
-<h1>Je registratie is gelukt! Welkom bij de SOFA Bank</h1>
-<p>Maak een keuze: </p>
-<p>Vraag direct een rekeningnummer aan <a href="/newAccountNumberPage">klik dan hier.</a></p>
-<p>Wil je inloggen <a href="/login">klik dan hier.</a></p>
+
+<div class="container" style="padding-top: 125px;">
+    <div class="row">
+
+        <div class="col-md"></div>
+
+        <div class="col-md-10">
+            <h3 class="pb-4">Je registratie is gelukt! Welkom bij de SOFA Bank</h3>
+            <p>Maak hieronder een keuze.
+                Je kunt direct inloggen of je maakt een rekeningnummer aan: </p>
+            <a class="btn btn-primary" href="/newAccountNumberPage"
+                                                      role="button">Nieuw rekeningnummer</a>
+            <a class="btn btn-primary" href="/login" role="button">Inloggen</a>
+        </div>
+
+
+        </div>
+    <p class="py-4">Terug naar de <a href="/home">homepage</a></p>
+</div>
+
+        <div th:insert="fragments/footer :: footer"></div>
+
 </body>
 </html>

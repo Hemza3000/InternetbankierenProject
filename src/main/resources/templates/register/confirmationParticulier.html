@@ -7,15 +7,16 @@
     <link th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
-<div th:insert="fragments/navBar :: navBar"></div>
+<div th:insert="fragments/navBarZonderRegistreerKnop :: navBar"></div>
 
-<div class="container justify-content-center" style="padding-top: 125px;">
+<div class="container justify-content-center" style="padding-top: 125px;margin-top: 50px;">
 
-<h3>Registreer je hier als particuliere klant</h3>
+<h3>Controleer uw gegevens:</h3>
 <p>Stap 2/3</p>
-<p><em>Controleer hieronder of je gegevens kloppen</em></p>
+<p><em>Controleer en wijzig indien nodig uw persoonlijke gegevens</em></p>
 
-<form class="row" form action="confirm" method="post" th:object="${klant}">
+
+    <form class="row" form action="confirm" method="post" th:object="${klant}">
 
     <div class="form-group col-md-3">
             <label for="First_name">Voornaam</label>
