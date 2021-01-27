@@ -7354,7 +7354,7 @@ button.bg-dark:focus {
   right: 0;
   left: 0;
   z-index: 1030;
-  background-color: white;
+  background-color: #fdf4f2;
 }
 
 .fixed-bottom {
@@ -10040,7 +10040,7 @@ hr.light {
 }
 @media (min-width: 992px) {
   #mainNav {
-    box-shadow: none;
+    box-shadow: orange;
     background-color: transparent;
   }
   #mainNav .navbar-brand {
