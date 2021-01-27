@@ -16,7 +16,7 @@
 <p><em>Controleer en wijzig indien nodig uw persoonlijke gegevens</em></p>
 
 
-    <form class="row" form action="confirm" method="post" th:object="${klant}">
+    <form class="row" form action="confirm" method="post" th:object="${klant}" onsubmit="return validateForm()">
 
     <div class="form-group col-md-3">
             <label for="First_name">Voornaam</label>
@@ -107,6 +107,16 @@
         let addressPart = data
         document.getElementById('street_field').value = addressPart.street
         document.getElementById('city_field').value = addressPart.city
+    }
+
+    // controleert of een BSN uit 9 getallen bestaat
+    function validateForm() {
+        let bsn = document.getElementById('BSN').value;
+        let regex = /^\d{9}$/;
+        if (regex.test(bsn) == false) {
+            alert('voer een geldig burgerservicenummer in')
+            return false;
+        }
     }
 
 </script>
