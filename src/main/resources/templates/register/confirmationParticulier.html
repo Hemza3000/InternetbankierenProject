@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.com" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>SOFA - registreren</title>
@@ -11,38 +11,40 @@
 
 <div class="container justify-content-center" style="padding-top: 125px;margin-top: 50px;">
 
-<h3>Controleer je gegevens:</h3>
-<p>Stap 2/3</p>
-<p><em>Controleer en wijzig indien nodig je gegevens</em></p>
+    <h3>Controleer je gegevens:</h3>
+    <p>Stap 2/3</p>
+    <p><em>Controleer en wijzig je gegevens als dat nodig is</em></p>
 
 
-    <form class="row" form action="confirm" method="post" th:object="${klant}" onsubmit="return validateForm()">
+    <form class="row" form action="confirm" method="post" th:object="${klant}">
 
-    <div class="form-group col-md-3">
+        <div class="form-group col-md-3">
             <label for="First_name">Voornaam</label>
             <input id="First_name" class="form-control" th:field="*{voornaam}" name="First_name" required/>
-    </div>
+        </div>
 
-    <div class="form-group col-md-2">
+        <div class="form-group col-md-2">
             <label for="Prefix">Voorvoegsels</label>
             <input id="Prefix" class="form-control" th:field="*{tussenvoegsels}"name="Prefix" />
-            </div>
+        </div>
 
-    <div class="form-group col-md-4">
+        <div class="form-group col-md-4">
             <label for="Last_name">Achternaam</label>
             <input id="Last_name" class="form-control" th:field="*{achternaam}"name="Last_name" required/>
-    </div>
+        </div>
 
-    <div class="form-group col md-3">
-    <label for="Birthday">Geboortedatum</label>
+        <div class="form-group col md-3">
+            <label for="Birthday">Geboortedatum</label>
             <input id="Birthday" class="form-control" th:field="*{geboortedatum}" name="Birthday" required>
-    </div>
+        </div>
 
-            <div class="form-group col-md-6">
+        <div class="form-group col-md-6">
             <label for="BSN">Burgerservicenummer</label>
             <input id="BSN" class="form-control" th:field="*{BSN}"name="BSN" required/>
-            <field th:if="${fieldExists}" style='color:red'>Er is al een geregistreerde klant met dit BSN</field>
-            </div>
+            <field id="bsn_incorrect"></field>
+            <field th:if="${fieldExists}" style='color:red'>
+                Er is al een geregistreerde klant met dit burgerservicenummer</field>
+        </div>
 
         <div class="form-group col-md-4">
             <label for="Postal_code">Postcode</label>
@@ -60,19 +62,19 @@
         </div>
 
         <div class="form-group col-md-6">
-        <label for="City">Woonplaats</label>
+            <label for="City">Woonplaats</label>
             <input id="City" class="form-control" th:field="*{woonplaats}"name="City" readonly/>
         </div>
 
-    <div class="form-group col-md-12">
-        <button type="submit" name="OK" class="btn btn-primary btn-md">Bevestigen</button>
-    </div>
+        <div class="form-group col-md-12">
+            <button type="submit" name="OK" class="btn btn-primary btn-md">Bevestigen</button>
+        </div>
 
         <div class="form-group col-md-12">
             <p>Terug naar de <a href="/home">homepage</a></p>
         </div>
 
-</form>
+    </form>
 </div>
 <div th:insert="fragments/footer :: footer"></div>
 
@@ -110,13 +112,16 @@
     }
 
     // controleert of een BSN uit 9 getallen bestaat
-    function validateForm() {
+    document.getElementById('BSN').addEventListener("focusout", validateBSN);
+    function validateBSN() {
         let bsn = document.getElementById('BSN').value;
         let regex = /^\d{9}$/;
         if (regex.test(bsn) == false) {
-            alert('voer een geldig burgerservicenummer in')
+            document.getElementById('bsn_incorrect').innerHTML = '' +
+                '<span style=\'color:red\'>Het burgerservicenummer moet uit 9 cijfers bestaan</span>';
             return false;
         }
+        else document.getElementById('bsn_incorrect').innerHTML = '';
     }
 
 </script>
