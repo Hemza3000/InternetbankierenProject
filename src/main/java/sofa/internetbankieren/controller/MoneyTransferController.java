@@ -29,21 +29,31 @@ public class MoneyTransferController {
 
     @GetMapping({"/moneyTransfer"})
     public String moneyTransferHandler(Model model, @ModelAttribute(name = "klant") Klant ingelogde, @ModelAttribute(name = "rekening") Rekening rekening) {
-        MoneyTransferBackingBean moneyTransferBackingbean = new MoneyTransferBackingBean(0, "", "");
+        MoneyTransferBackingBean moneyTransferBackingbean = new MoneyTransferBackingBean(0.00, "", "");
         model.addAttribute("MoneyTransferBackingbean", moneyTransferBackingbean);
         model.addAttribute("saldoOntoereikend", false);
         model.addAttribute("bedragValidatie", false);
+        model.addAttribute("ibanvalidatie", false);
         return "moneyTransfer";
     }
 
     @PostMapping("/moneyTransfer")
     public String moneyTransferHandler2(@ModelAttribute MoneyTransferBackingBean backingbean, Model model) {
 
-        Rekening tegenrekening = accountService.getRekeningbyIban(backingbean.getTegenrekening());
-        Rekening mijnRekening = (Rekening) model.getAttribute("rekening");
-        Transactie nieuweTransactie = new Transactie(0, mijnRekening, backingbean.getBedrag(), LocalDateTime.now(), backingbean.getOmschrijving(), tegenrekening);
-
         //todo veel dubbele code, hoe op te lossen??@#$@$!
+
+        //initiële check, als iban/tegenrekeningnummer niet bestaat kun je niet verder
+
+        if (accountService.checkUniqueIBAN(backingbean.getTegenrekening())){
+            model.addAttribute("ibanvalidatie", true);
+            MoneyTransferBackingBean moneyTransferBackingbean = new MoneyTransferBackingBean(0, "", "");
+            model.addAttribute("MoneyTransferBackingbean", moneyTransferBackingbean);
+            return "moneyTransfer";
+        }
+
+        Rekening mijnRekening = (Rekening) model.getAttribute("rekening");
+        Rekening tegenrekening = accountService.getRekeningbyIban(backingbean.getTegenrekening());
+        Transactie nieuweTransactie = new Transactie(0, mijnRekening, backingbean.getBedrag(), LocalDateTime.now(), backingbean.getOmschrijving(), tegenrekening);
 
         if (!moneyTransferService.validatieBedrag(backingbean.getBedrag())){ // toont melding 'bedrag moet hoger zijn dan 0'
             model.addAttribute("bedragValidatie", true);
