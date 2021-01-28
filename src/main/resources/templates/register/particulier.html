@@ -19,7 +19,7 @@
 
     <form class="row" form name="particulierForm" action="register" method="post"
           th:object="${klant}"
-          onsubmit="return !!(validateForm() & birthyearCheck())">
+          onsubmit="return birthyearCheck()">
 
         <div class="form-group col-md-3">
             <label for="First_name">Voornaam</label>
@@ -45,7 +45,7 @@
 
         <div class="form-group col-md-6">
             <label for="BSN">Burgerservicenummer</label>
-            <input type="text" class="form-control" th:field="*{BSN}" idname="BSN" required/>
+            <input id="BSN" type="text" class="form-control" th:field="*{BSN}" name="BSN" required/>
             <field id="bsn_incorrect"></field>
             <field th:if="${fieldExists}" style='color:red'>
                 Er is al een geregistreerde klant met dit burgerservicenummer</field>
@@ -128,8 +128,9 @@
     }
 
     // controleert of een BSN uit 9 getallen bestaat
-    function validateForm() {
-        let bsn = document.forms['particulierForm']['BSN'].value;
+    document.getElementById("BSN").addEventListener("focusout", validateBSN);
+    function validateBSN() {
+        let bsn = document.getElementById("BSN").value;
         let regex = /^\d{9}$/;
         if (regex.test(bsn) == false) {
             document.getElementById('bsn_incorrect').innerHTML = '' +
