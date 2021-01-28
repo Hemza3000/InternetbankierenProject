@@ -19,7 +19,7 @@
 
     <form class="row" form name="particulierForm" action="register" method="post"
           th:object="${klant}"
-          onsubmit="return validateForm()">
+          onsubmit="return !!(validateForm() & birthyearCheck())">
 
         <div class="form-group col-md-3">
             <label for="First_name">Voornaam</label>
@@ -39,6 +39,7 @@
         <div class="form-group col md-3">
              <label for="Birthday">Geboortedatum</label>
             <input type="date" class="form-control" th:field="*{geboortedatum}" name="Birthday" id="Birthday" required oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/>
+            <field id="BirthdayFalse"></field>
         </div>
 
 
@@ -97,6 +98,7 @@
     // voegt automatisch straat + woonplaats in bij het invullen van Postcode en huisnummer
     document.getElementById('pc_field').addEventListener('focusout', checkForAddressPart)
     document.getElementById('nr_field').addEventListener('focusout', checkForAddressPart)
+    document.getElementById('Birthday').addEventListener('focusout', birthyearCheck)
 
     function checkForAddressPart() {
         let regex = new RegExp(/^[1-9][0-9]{3}[\s]?[A-Za-z]{2}$/i);
@@ -136,6 +138,23 @@
         }
         else document.getElementById('bsn_incorrect').innerHTML = '';
     }
+
+    function birthyearCheck() {
+        let birthday = document.forms['particulierForm']['Birthday'].value;
+        let parts = birthday.split("-");
+        let birthyear = parts[0];
+        let dateMinimal = new Date().getFullYear() - 16;
+        let dateMax = new Date().getFullYear() - 118;
+
+        if ( birthyear < dateMax || birthyear > dateMinimal ) {
+            document.getElementById('BirthdayFalse').innerHTML = '' +
+                '<span style=\'color:red\'>Ongeldige leeftijd. Registreren alleen mogelijk vanaf 16 jaar</span>';
+            return false;
+        }
+        else document.getElementById('BirthdayFalse').innerHTML = '';
+    }
+
+
 </script>
 </body>
 </html>
