@@ -152,6 +152,33 @@
         }
     }
 
+    // Toegevoegd door Hemza
+    document.getElementById("password_field").addEventListener("focusout", validatie);
+    document.getElementById("password_check").addEventListener("focusout", passwordCheck);
+
+    function validatie() {
+        let wachtwoord = document.getElementById('password_field').value;
+        var regex = new RegExp("^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})");
+        if (regex.test(wachtwoord) === false) {
+            document.getElementById("passwordFalse").innerHTML = '<span style=\'color:#ff0000\'>Je wachtwoord moet minstens 6 karakters hebben, een cijfer, een speciaal teken en een hoofdletter bevatten!<br> <br>Toegestane tekens: ! @ # $ % ^ & * </span>';
+            return false;
+        } else {
+            document.getElementById("passwordFalse").innerHTML = ''
+        }
+    }
+
+    function passwordCheck() {
+        let password1 = document.getElementById('password_field').value;
+        let password2 = document.getElementById('password_check').value;
+
+        if (password1 !== password2 ) {
+            document.getElementById("passwordCheck").innerHTML = '' +
+                '<span style=\'color:#ff0000\'>Wachtwoord komt niet overeen</span>';
+            return false;
+        } else {
+            document.getElementById("passwordCheck").innerHTML = '';
+        }
+    }
 
 </script>
 </body>
