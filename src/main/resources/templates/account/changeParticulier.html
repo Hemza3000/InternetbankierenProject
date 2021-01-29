@@ -40,10 +40,7 @@
 
         <div class="form-group col-md-6">
             <label for="BSN">Burgerservicenummer</label>
-            <input id="BSN" type="text" class="form-control" th:field="*{BSN}" name="BSN" required/>
-            <field id="bsn_incorrect"></field>
-            <field th:if="${fieldExists}" style='color:red'>
-                Er is al een geregistreerde klant met dit burgerservicenummer</field>
+            <input id="BSN" type="text" class="form-control" th:field="*{BSN}" name="BSN" readonly/>
         </div>
 
         <div class="form-group col-md-4">
@@ -73,8 +70,7 @@
         </div>
         <div class="form-group col-md-12">
             <button type="submit" name="OK" class="btn btn-primary btn-md">Bevestigen</button>
-<!--            <button type="button" class="btn btn-primary btn-md">Rekeningoverzicht</button>-->
-            <a class="btn btn-primary" href="/overzicht" type="button">Rekeningoverzicht</a>
+            <a class="btn btn-outline-primary" href="/overzicht" type="button">Rekeningoverzicht</a>
         </div>
 
         <div class="form-group col-md-12">
@@ -116,19 +112,6 @@
         let addressPart = data
         document.getElementById('street_field').value = addressPart.street
         document.getElementById('city_field').value = addressPart.city
-    }
-
-    // controleert of een BSN uit 9 getallen bestaat
-    document.getElementById('BSN').addEventListener("focusout", validateBSN);
-    function validateBSN() {
-        let bsn = document.getElementById('BSN').value;
-        let regex = /^\d{9}$/;
-        if (regex.test(bsn) == false) {
-            document.getElementById('bsn_incorrect').innerHTML = '' +
-                '<span style=\'color:red\'>Het burgerservicenummer moet uit 9 cijfers bestaan</span>';
-            return false;
-        }
-        else document.getElementById('bsn_incorrect').innerHTML = '';
     }
 
     function birthyearCheck() {

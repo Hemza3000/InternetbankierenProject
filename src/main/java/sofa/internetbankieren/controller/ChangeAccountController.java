@@ -25,7 +25,6 @@ public class ChangeAccountController {
     @GetMapping("/changeAccount")
     public String getOverview(Model model) {
         Klant klant = (Klant) model.getAttribute("klant");
-        model.addAttribute("fieldExists", false);
         if (klant instanceof Particulier) {
             return "account/changeParticulier";
         }
@@ -36,24 +35,13 @@ public class ChangeAccountController {
     @PostMapping("/confirmChanges")
     public String confirmNewClient(@ModelAttribute("klant") Klant klant, Model model) {
         model.addAttribute("klant", klant);
-
-        // Controleert of er in de database al een particuliere klant met dit BSN is
-        if (klant instanceof Particulier && customerService.doesBsnExist(((Particulier) klant).getBSN())) {
-            model.addAttribute("fieldExists", true);
+        if (klant instanceof Particulier) {
             return "account/changeParticulier";
         }
-
         customerService.changeCustomer(klant);
         return "overview";
     }
 
-    //done todo knop terug naar rekeningoverzicht - wijzigingen niet bewaren in sessie
-    //done todo alert gegevens gewijzigd
-    //todo gebruikersnaam & wachtwoord wijzigbaar maken
-    //todo controle uniciteit gebruikersnaam
-    //belangrijk! todo controle uniciteit BSN - mag wel gelijk aan deze klant
-    //done Particulier: straat + woonplaats automatisch (Bedrijf werkt wel)
-    //done BSN-regex (Regexen Bedrijf werken wel)
-    //done leeftijdscontrole
-    //todo bevestingspagina ipv alert, anders ook bij uniciteitsfoutmelding
+    //todo alert gegevens gewijzigd - stylen
+    //todo wachtwoord wijzigbaar maken (gebruikersnaam niet)
 }
