@@ -19,7 +19,7 @@
 
     <form class="row" form name="particulierForm" action="register" method="post"
           th:object="${klant}"
-          onsubmit="return validateBSN()">
+          onsubmit="return validateParticulier()">
 
         <div class="form-group col-md-3">
             <label for="First_name">Voornaam</label>
@@ -99,7 +99,7 @@
     document.getElementById('pc_field').addEventListener('focusout', checkForAddressPart)
     document.getElementById('nr_field').addEventListener('focusout', checkForAddressPart)
     document.getElementById('Birthday').addEventListener('focusout', birthyearCheck)
-    document.getElementById("BSN").addEventListener("focusout", validateBSN);
+    document.getElementById("BSN").addEventListener("focusout", validateParticulier);
 
     function checkForAddressPart() {
         let regex = new RegExp(/^[1-9][0-9]{3}[\s]?[A-Za-z]{2}$/i);
@@ -129,7 +129,7 @@
     }
 
     // controleert of een BSN uit 9 getallen bestaat
-    function validateBSN() {
+    function validateParticulier() {
         let bsn = document.getElementById("BSN").value;
         let regex = /^\d{9}$/;
         if (regex.test(bsn) == false) {
@@ -137,8 +137,23 @@
                 '<span style=\'color:red\'>Het burgerservicenummer moet uit 9 cijfers bestaan</span>';
             return false;
         }
-        else document.getElementById('bsn_incorrect').innerHTML = '';
+        document.getElementById('bsn_incorrect').innerHTML = '';
+        // birthday check;
+        let birthday = document.forms['particulierForm']['Birthday'].value;
+        let parts = birthday.split("-");
+        let birthyear = parts[0];
+        let dateMinimal = new Date().getFullYear() - 16;
+        let dateMax = new Date().getFullYear() - 118;
+
+        if ( birthyear < dateMax || birthyear > dateMinimal ) {
+            document.getElementById('BirthdayFalse').innerHTML = '' +
+                '<span style=\'color:red\'>Ongeldige leeftijd. Registreren alleen mogelijk vanaf 16 jaar</span>';
+            return false;
+        }
+        else document.getElementById('BirthdayFalse').innerHTML = '';
+
     }
+
 
     function birthyearCheck() {
         let birthday = document.forms['particulierForm']['Birthday'].value;
@@ -154,6 +169,11 @@
         }
         else document.getElementById('BirthdayFalse').innerHTML = '';
     }
+
+
+
+
+
 
     function validateFunction(){
         let validation = true;
