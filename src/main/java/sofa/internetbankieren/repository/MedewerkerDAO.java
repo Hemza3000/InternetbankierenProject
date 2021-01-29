@@ -96,7 +96,6 @@ public class MedewerkerDAO implements GenericDAO<Medewerker>{
                 resultSet.getString("tussenvoegsels"),
                 resultSet.getString("achternaam"),
                 Medewerker.Rol.valueOf(resultSet.getString("rol")),
-                // TODO IllegalArgumentException afvangen?
                 bedrijfDAO.getAllIDsByIdAccountmanager(resultSet.getInt("personeelsnummer")),
                 bedrijfDAO
             );
