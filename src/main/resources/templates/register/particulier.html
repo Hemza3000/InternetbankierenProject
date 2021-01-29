@@ -19,7 +19,7 @@
 
     <form class="row" form name="particulierForm" action="register" method="post"
           th:object="${klant}"
-          onsubmit="return birthyearCheck()">
+          onsubmit="return validateBSN()">
 
         <div class="form-group col-md-3">
             <label for="First_name">Voornaam</label>
@@ -99,6 +99,7 @@
     document.getElementById('pc_field').addEventListener('focusout', checkForAddressPart)
     document.getElementById('nr_field').addEventListener('focusout', checkForAddressPart)
     document.getElementById('Birthday').addEventListener('focusout', birthyearCheck)
+    document.getElementById("BSN").addEventListener("focusout", validateBSN);
 
     function checkForAddressPart() {
         let regex = new RegExp(/^[1-9][0-9]{3}[\s]?[A-Za-z]{2}$/i);
@@ -128,7 +129,6 @@
     }
 
     // controleert of een BSN uit 9 getallen bestaat
-    document.getElementById("BSN").addEventListener("focusout", validateBSN);
     function validateBSN() {
         let bsn = document.getElementById("BSN").value;
         let regex = /^\d{9}$/;
@@ -157,9 +157,10 @@
 
     function validateFunction(){
         let validation = true;
-        validation &= validateForm();
+        validation &= validateBSN();
         validation &= birthyearCheck();
         return validation;
+
     }
 
 </script>
