@@ -22,6 +22,7 @@
                 <div class="form-outline mb-1">
                     <input type="password" id="Wachtwoord" class="form-control" th:field="*{password}"
                            name="Wachtwoord" placeholder="Wachtwoord" required/>
+                    <input type="checkbox" onclick="myFunction()"> Toon wachtwoord
                 </div>
                 <div class="col mb-0 ">
                     <div class="col">
@@ -45,5 +46,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
 <script th:src="@{/js/scripts.js}"></script>
+<script>
+    function myFunction() {
+        var x = document.getElementById("Wachtwoord");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>
 </body>
 </html>
