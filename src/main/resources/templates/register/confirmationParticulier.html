@@ -16,34 +16,31 @@
     <p><em>Controleer en wijzig je gegevens als dat nodig is</em></p>
 
 
-    <form class="row" form action="confirm" method="post" th:object="${klant}"
-          onsubmit="return birthyearCheck()">
+    <form class="row" form action="confirm" method="post" th:object="${klant}">
 
         <div class="form-group col-md-3">
             <label for="First_name">Voornaam</label>
-            <input type="text" class="form-control" th:field="*{voornaam}" required oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/>
+            <input id="First_name" class="form-control" th:field="*{voornaam}" name="First_name" required/>
         </div>
 
         <div class="form-group col-md-2">
-            <label for="Prefix">Tussenvoegsels</label>
-            <input type="text" class="form-control" name="Prefix" th:field="*{tussenvoegsels}"/>
+            <label for="Prefix">Voorvoegsels</label>
+            <input id="Prefix" class="form-control" th:field="*{tussenvoegsels}"name="Prefix" />
         </div>
 
         <div class="form-group col-md-4">
             <label for="Last_name">Achternaam</label>
-            <input type="text" class="form-control" name="Last_name" th:field="*{achternaam}" required oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/>
+            <input id="Last_name" class="form-control" th:field="*{achternaam}"name="Last_name" required/>
         </div>
 
         <div class="form-group col md-3">
             <label for="Birthday">Geboortedatum</label>
-            <input type="date" class="form-control" th:field="*{geboortedatum}" name="Birthday" id="Birthday" required oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/>
-            <field id="BirthdayFalse"></field>
+            <input id="Birthday" class="form-control" th:field="*{geboortedatum}" name="Birthday" required>
         </div>
-
 
         <div class="form-group col-md-6">
             <label for="BSN">Burgerservicenummer</label>
-            <input id="BSN" type="text" class="form-control" th:field="*{BSN}" name="BSN" required/>
+            <input id="BSN" class="form-control" th:field="*{BSN}"name="BSN" required/>
             <field id="bsn_incorrect"></field>
             <field th:if="${fieldExists}" style='color:red'>
                 Er is al een geregistreerde klant met dit burgerservicenummer</field>
@@ -51,35 +48,26 @@
 
         <div class="form-group col-md-4">
             <label for="Postal_code">Postcode</label>
-            <input type="text" class="form-control" id="pc_field" th:field="*{postcode}" name="Postal_code"
-                   required oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/>
+            <input id="Postal_code" class="form-control" th:field="*{postcode}"name="Postal_code" required readonly/>
         </div>
 
         <div class="form-group col-md-2">
-
             <label for="House_number">Huisnummer</label>
-            <input type="text" class="form-control" id="nr_field" th:field="*{huisnummer}" name="House_number"
-                   required oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/>
-
+            <input id="House_number" class="form-control" th:field="*{huisnummer}" name="Street" required readonly/>
         </div>
 
         <div class="form-group col-md-6">
-
             <label for="Street">Straat</label>
-            <input type="text" class="form-control" id="street_field" th:field="*{straat}" name="Street"
-                   required oninvalid="this.setCustomValidity('Dit veld is verplicht.')" onloadeddata="setCustomValidity('')"/>
+            <input id="Street" class="form-control" th:field="*{straat}"name="Street" readonly/>
         </div>
 
         <div class="form-group col-md-6">
-
             <label for="City">Woonplaats</label>
-            <input type="text" class="form-control" id="city_field" th:field="*{woonplaats}" name="City"
-                   required oninvalid="this.setCustomValidity('Dit veld is verplicht.')" onloadeddata="setCustomValidity('')"/>
+            <input id="City" class="form-control" th:field="*{woonplaats}"name="City" readonly/>
         </div>
 
         <div class="form-group col-md-12">
-            <button type="submit" name="OK" class="btn btn-primary btn-md">OK</button>
-            <button type="reset" name="reset" class="btn btn-primary btn-md">Reset</button>
+            <button type="submit" name="OK" class="btn btn-primary btn-md">Bevestigen</button>
         </div>
 
         <div class="form-group col-md-12">
@@ -135,22 +123,6 @@
         }
         else document.getElementById('bsn_incorrect').innerHTML = '';
     }
-
-    function birthyearCheck() {
-        let birthday = document.getElementById('Birthday') .value;
-        let parts = birthday.split("-");
-        let birthyear = parts[0];
-        let dateMinimal = new Date().getFullYear() - 16;
-        let dateMax = new Date().getFullYear() - 118;
-
-        if ( birthyear < dateMax || birthyear > dateMinimal ) {
-            document.getElementById('BirthdayFalse').innerHTML = '' +
-                '<span style=\'color:red\'>Ongeldige leeftijd. Registreren alleen mogelijk vanaf 16 jaar</span>';
-            return false;
-        }
-        else document.getElementById('BirthdayFalse').innerHTML = '';
-    }
-
 
 </script>
 </body>
