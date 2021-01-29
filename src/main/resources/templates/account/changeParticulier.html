@@ -2,21 +2,18 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>SOFA - registreren</title>
+    <title>SOFA - gegevens wijzigen</title>
     <meta name="author" content="Wichert Tjerkstra">
     <link th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
-<div th:insert="fragments/navBarZonderRegistreerKnop :: navBar"></div>
+<div th:insert="fragments/navBarIngelogd :: navBar"></div>
 
 <div class="container justify-content-center" style="padding-top: 125px;margin-top: 50px;">
 
-    <h3>Controleer je gegevens:</h3>
-    <p>Stap 2/3</p>
-    <p><em>Controleer en wijzig je gegevens als dat nodig is</em></p>
+    <h3>Wijzig je gegevens:</h3>
 
-
-    <form class="row" form action="confirm" method="post" th:object="${klant}"
+    <form class="row" form action="confirmChanges" method="post" th:object="${klant}"
           onsubmit="return birthyearCheck()">
 
         <div class="form-group col-md-3">
@@ -56,11 +53,9 @@
         </div>
 
         <div class="form-group col-md-2">
-
             <label for="House_number">Huisnummer</label>
             <input type="text" class="form-control" id="nr_field" th:field="*{huisnummer}" name="House_number"
                    required oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/>
-
         </div>
 
         <div class="form-group col-md-6">
@@ -76,10 +71,10 @@
             <input type="text" class="form-control" id="city_field" th:field="*{woonplaats}" name="City"
                    required oninvalid="this.setCustomValidity('Dit veld is verplicht.')" onloadeddata="setCustomValidity('')"/>
         </div>
-
         <div class="form-group col-md-12">
-            <button type="submit" name="OK" class="btn btn-primary btn-md">OK</button>
-            <button type="reset" name="reset" class="btn btn-primary btn-md">Reset</button>
+            <button type="submit" name="OK" class="btn btn-primary btn-md">Bevestigen</button>
+<!--            <button type="button" class="btn btn-primary btn-md">Rekeningoverzicht</button>-->
+            <a class="btn btn-primary" href="/overzicht" type="button">Rekeningoverzicht</a>
         </div>
 
         <div class="form-group col-md-12">
@@ -137,7 +132,7 @@
     }
 
     function birthyearCheck() {
-        let birthday = document.getElementById('Birthday') .value;
+        let birthday = document.getElementById('Birthday').value;
         let parts = birthday.split("-");
         let birthyear = parts[0];
         let dateMinimal = new Date().getFullYear() - 16;
@@ -148,7 +143,10 @@
                 '<span style=\'color:red\'>Ongeldige leeftijd. Registreren alleen mogelijk vanaf 16 jaar</span>';
             return false;
         }
-        else document.getElementById('BirthdayFalse').innerHTML = '';
+        else {
+            document.getElementById('BirthdayFalse').innerHTML = '';
+            alert('Je persoonlijke gegevens zijn gewijzigd')
+        }
     }
 
 
