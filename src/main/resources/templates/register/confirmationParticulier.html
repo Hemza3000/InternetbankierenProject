@@ -16,7 +16,7 @@
     <p><em>Controleer en wijzig je gegevens als dat nodig is</em></p>
 
 
-    <form class="row" action="confirm" method="post" th:object="${klant}" onsubmit="return validateParticulierCon()">
+    <form class="row" action="confirm" name="particulierConfirm" method="post" th:object="${klant}" onsubmit="return validateParticulierCon()">
 
         <div class="form-group col-md-3">
             <label for="First_name">Voornaam</label>
@@ -35,7 +35,7 @@
 
         <div class="form-group col md-3">
             <label for="BirthdayCon">Geboortedatum</label>
-            <input class="form-control" th:field="*{geboortedatum}" name="BirthdayCon" id="BirthdayCon" required>
+            <input class="form-control" th:field="*{geboortedatum}" name="BirthdayCon" id="BirthdayCon" type="date" required>
             <field id="BirthdayFalse2"></field>
         </div>
 
@@ -126,7 +126,7 @@
         document.getElementById('bsn_incorrect').innerHTML = '';
 
         // birthday check;
-        let birthday = document.forms['confirm']['BirthdayCon'].value;
+        let birthday = document.forms['particulierConfirm']['BirthdayCon'].value;
         let parts = birthday.split("-");
         let birthyear = parts[0];
         let dateMinimal = new Date().getFullYear() - 16;
@@ -142,7 +142,7 @@
     }
 
     function birthyearCheck() {
-        let birthday = document.forms['confirm']['BirthdayCon'].value;
+        let birthday = document.forms['particulierConfirm']['BirthdayCon'].value;
         let parts = birthday.split("-");
         let birthyear = parts[0];
         let dateMinimal = new Date().getFullYear() - 16;

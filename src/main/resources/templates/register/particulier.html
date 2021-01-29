@@ -154,7 +154,6 @@
 
     }
 
-
     function birthyearCheck() {
         let birthday = document.forms['particulierForm']['Birthday'].value;
         let parts = birthday.split("-");
@@ -169,20 +168,6 @@
         }
         else document.getElementById('BirthdayFalse').innerHTML = '';
     }
-
-
-
-
-
-
-    function validateFunction(){
-        let validation = true;
-        validation &= validateBSN();
-        validation &= birthyearCheck();
-        return validation;
-
-    }
-
 </script>
 </body>
 </html>
