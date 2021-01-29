@@ -16,7 +16,7 @@
     <p><em>Controleer en wijzig je gegevens als dat nodig is</em></p>
 
 
-    <form class="row" form action="confirm" method="post" th:object="${klant}">
+    <form class="row" action="confirm" method="post" th:object="${klant}" onsubmit="return validateParticulierCon()">
 
         <div class="form-group col-md-3">
             <label for="First_name">Voornaam</label>
@@ -34,8 +34,9 @@
         </div>
 
         <div class="form-group col md-3">
-            <label for="Birthday">Geboortedatum</label>
-            <input id="Birthday" class="form-control" th:field="*{geboortedatum}" name="Birthday" required>
+            <label for="BirthdayCon">Geboortedatum</label>
+            <input class="form-control" th:field="*{geboortedatum}" name="BirthdayCon" id="BirthdayCon" required>
+            <field id="BirthdayFalse2"></field>
         </div>
 
         <div class="form-group col-md-6">
@@ -48,12 +49,12 @@
 
         <div class="form-group col-md-4">
             <label for="Postal_code">Postcode</label>
-            <input id="Postal_code" class="form-control" th:field="*{postcode}"name="Postal_code" required readonly/>
+            <input id="Postal_code" class="form-control" th:field="*{postcode}"name="Postal_code" required/>
         </div>
 
         <div class="form-group col-md-2">
             <label for="House_number">Huisnummer</label>
-            <input id="House_number" class="form-control" th:field="*{huisnummer}" name="Street" required readonly/>
+            <input id="House_number" class="form-control" th:field="*{huisnummer}" name="Street" required/>
         </div>
 
         <div class="form-group col-md-6">
@@ -83,6 +84,8 @@
     // voegt automatisch straat + woonplaats in bij het invullen van Postcode en huisnummer
     document.getElementById('pc_field').addEventListener('focusout', checkForAddressPart)
     document.getElementById('nr_field').addEventListener('focusout', checkForAddressPart)
+    document.getElementById('BirthdayCon').addEventListener('focusout', birthyearCheck)
+    document.getElementById("BSN").addEventListener("focusout", validateParticulierCon);
 
     function checkForAddressPart() {
         let regex = new RegExp(/^[1-9][0-9]{3}[\s]?[A-Za-z]{2}$/i);
@@ -112,16 +115,45 @@
     }
 
     // controleert of een BSN uit 9 getallen bestaat
-    document.getElementById('BSN').addEventListener("focusout", validateBSN);
-    function validateBSN() {
-        let bsn = document.getElementById('BSN').value;
+    function validateParticulierCon() {
+        let bsn = document.getElementById("BSN").value;
         let regex = /^\d{9}$/;
         if (regex.test(bsn) == false) {
             document.getElementById('bsn_incorrect').innerHTML = '' +
                 '<span style=\'color:red\'>Het burgerservicenummer moet uit 9 cijfers bestaan</span>';
             return false;
         }
-        else document.getElementById('bsn_incorrect').innerHTML = '';
+        document.getElementById('bsn_incorrect').innerHTML = '';
+
+        // birthday check;
+        let birthday = document.forms['confirm']['BirthdayCon'].value;
+        let parts = birthday.split("-");
+        let birthyear = parts[0];
+        let dateMinimal = new Date().getFullYear() - 16;
+        let dateMax = new Date().getFullYear() - 118;
+
+        if ( birthyear < dateMax || birthyear > dateMinimal ) {
+            document.getElementById('BirthdayFalse2').innerHTML = '' +
+                '<span style=\'color:red\'>Ongeldige leeftijd. Registreren alleen mogelijk vanaf 16 jaar</span>';
+            return false;
+        }
+        else document.getElementById('BirthdayFalse2').innerHTML = '';
+
+    }
+
+    function birthyearCheck() {
+        let birthday = document.forms['confirm']['BirthdayCon'].value;
+        let parts = birthday.split("-");
+        let birthyear = parts[0];
+        let dateMinimal = new Date().getFullYear() - 16;
+        let dateMax = new Date().getFullYear() - 118;
+
+        if ( birthyear < dateMax || birthyear > dateMinimal ) {
+            document.getElementById('BirthdayFalse2').innerHTML = '' +
+                '<span style=\'color:red\'>Ongeldige leeftijd. Registreren alleen mogelijk vanaf 16 jaar</span>';
+            return false;
+        }
+        else document.getElementById('BirthdayFalse2').innerHTML = '';
     }
 
 </script>
