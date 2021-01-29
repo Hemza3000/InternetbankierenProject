@@ -43,6 +43,15 @@ public class CustomerService {
         }
     }
 
+    public void changeCustomer(Klant klant) {
+        if (klant instanceof Particulier) {
+            particulierDAO.updateOne((Particulier) klant);
+        }
+        else if (klant instanceof Bedrijf) {
+            bedrijfDAO.updateOne((Bedrijf) klant);
+        }
+    }
+
     // gemaakt door Hemza
     public List<Klant> getKlantenbyGebruikersnaamWachtwoord (String gebruikersnaam, String wachtwoord){
         List<Particulier> particuliereklanten =

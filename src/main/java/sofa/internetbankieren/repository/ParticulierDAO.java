@@ -108,11 +108,13 @@ public class ParticulierDAO {
         return jdbcTemplate.update("update particulier set gebruikersnaam=?, wachtwoord=?, voornaam=?, tussenvoegsels=?, achternaam=?, bsn=?," +
                         "geboortedatum=?, straat=?, huisnummer=?, postcode=?, woonplaats=? " +
                         "where idparticulier=?",
+                particulier.getGebruikersnaam(),
+                particulier.getWachtwoord(),
                 particulier.getVoornaam(),
                 particulier.getTussenvoegsels(),
                 particulier.getAchternaam(),
                 particulier.getBSN(),
-                particulier.getGeboortedatum(), //todo Date.valueOf toevoegen? (Wendy)
+                Date.valueOf(particulier.getGeboortedatum()),
                 particulier.getStraat(),
                 particulier.getHuisnummer(),
                 particulier.getPostcode(),

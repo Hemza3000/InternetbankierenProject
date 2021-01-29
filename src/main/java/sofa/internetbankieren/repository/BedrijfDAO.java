@@ -110,9 +110,10 @@ public class BedrijfDAO implements GenericDAO<Bedrijf> {
                 bedrijf.getPostcode(),
                 bedrijf.getWoonplaats(),
                 bedrijf.getBedrijfsnaam(),
-                bedrijf. getKVKNummer(),
-                bedrijf.getSector(),
-                bedrijf.getBTWNummer());
+                bedrijf.getKVKNummer(),
+                bedrijf.getSector().name(),
+                bedrijf.getBTWNummer(),
+                bedrijf.getIdKlant());
     }
 
     //Deletes customer by ID
