@@ -21,36 +21,30 @@
     <form class="row" form action="storeLogin" id="storeLogin" method="post" th:object="${klant}"
           onsubmit="return !!(validatie() & passwordCheck())">
 
-        <div class="form-group col-2"></div>
-        <div class="form-group">
-
+            <div class="form-group col-md-4">
             <label for="username_field">Gebruikersnaam</label>
             <input type="text" class="form-control" id="username_field" th:field="*{gebruikersnaam}" required/></td>
             <tr th:if="${fieldExists}">
                 <field style='color:red'>Gebruikersnaam bestaat al: kies een andere gebruikersnaam</field>
         </div>
 
-        <div class="form-group mr-2">
+        <div class="form-group col-md-4">
             <label for="password_field">Wachtwoord</label>
             <input type="password" class="form-control" id="password_field" th:field="*{wachtwoord}" required/></td>
             <field id="passwordFalse"></field>
         </div>
 
-        <div class="form-group mr-2">
+            <div class="form-group col-md-4">
             <label for="password_check">Herhaal wachtwoord</label>
             <input type="password" class="form-control" id="password_check" required/></td>
             <field id="passwordCheck"></field>
         </div>
 
-
-        <div class="form-group col-2"></div>
-
-        <div class="form-group col-2"></div>
-        <div class="form-group col-md-8">
+        <div class="form-group col-md-12">
             <button type="submit" name="OK" class="btn btn-primary btn-md">OK</button>
             <button type="reset" name="reset" class="btn btn-primary btn-md">Reset</button>
         </div>
-        <div class="form-group col-2"></div>
+
 
         <div class="form-group col-md-12">
             <p>Terug naar de <a href="/home">homepage</a></p> </p>
@@ -82,7 +76,7 @@
         let password1 = document.forms['storeLogin']['password_field'].value;
         let password2 = document.forms['storeLogin']['password_check'].value;
 
-        if (password1 !== password2 ) {
+        if (password1 !== password2) {
             document.getElementById("passwordCheck").innerHTML = '' +
                 '<span style=\'color:#ff0000\'>Wachtwoord komt niet overeen</span>';
             return false;
