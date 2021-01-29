@@ -190,7 +190,7 @@
     document.getElementById("password_check").addEventListener("focusout", passwordCheck);
 
     function validatie() {
-        let wachtwoord = document.forms['storeLogin']['password_field'].value;
+        let wachtwoord = document.getElementById('password_field').value;
         var regex = new RegExp("^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})");
         if (regex.test(wachtwoord) === false) {
             document.getElementById("passwordFalse").innerHTML = '<span style=\'color:#ff0000\'>Je wachtwoord moet minstens 6 karakters hebben, een cijfer, een speciaal teken en een hoofdletter bevatten!<br> <br>Toegestane tekens: ! @ # $ % ^ & * </span>';
@@ -201,8 +201,8 @@
     }
 
     function passwordCheck() {
-        let password1 = document.forms['storeLogin']['password_field'].value;
-        let password2 = document.forms['storeLogin']['password_check'].value;
+        let password1 = document.getElementById('password_field').value;
+        let password2 = document.getElementById('password_check').value;
 
         if (password1 !== password2 ) {
             document.getElementById("passwordCheck").innerHTML = '' +
