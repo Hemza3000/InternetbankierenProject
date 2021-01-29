@@ -20,6 +20,7 @@
                     </div>
                     <div class="form-outline mb-2">
                         <input type="password" id="Wachtwoord" class="form-control" th:field="*{password}" name="Wachtwoord" placeholder="Wachtwoord" required/>
+                        <input type="checkbox" onclick="myFunction()"> Toon wachtwoord
                     </div>
                     <button type="submit" class="btn btn-primary js-scroll-trigger btn-block">Log in</button>
                 </form>
@@ -34,5 +35,15 @@
     </div>
 </div>
 <div th:insert="fragments/footer :: footer"></div>
+<script>
+    function myFunction() {
+        var x = document.getElementById("Wachtwoord");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>
 </body>
 </html>

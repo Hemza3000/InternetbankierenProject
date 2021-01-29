@@ -33,7 +33,7 @@ public class MedewerkerLoginController {
     public String inlogMedewerkerHandler(Model model) {
         LoginFormBackingBean userDummy = new LoginFormBackingBean("", "");
         model.addAttribute("backingBean", userDummy);
-        return "login-medewerker-bootstrap";
+        return "login-medewerker";
     }
 
     @PostMapping("/login-medewerker")
