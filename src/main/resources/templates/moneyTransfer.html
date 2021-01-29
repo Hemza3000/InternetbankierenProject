@@ -20,7 +20,8 @@
         <div class="col-md">
             <h2>Overboeken</h2>
             <br>
-            <h3 style="color:#f4623a;">Saldo: <span th:text="*{#numbers.formatDecimal(saldo, 1, 2, 'COMMA')}"></span> euro</h3>
+            <h3 style="color:#f4623a;">Saldo: <span th:text="*{#numbers.formatDecimal(saldo, 1, 2, 'COMMA')}"></span>
+                euro</h3>
             <p> Geef hieronder een geldige IBAN rekening op van de begunstigde
                 en het over te boeken bedrag: </p><br>
 
@@ -30,48 +31,53 @@
                 <div class="form-group">
                 <table width="800">
 
-                    <tr>
-                        <td><label for="mijnIban">Mijn rekening</label></td>
-                        <td type="text" class="form-control" id="mijnIban" name="mijnIban"
-                            th:text="${rekening.getIBAN()}" required/>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td><label for="mijnIban">Mijn rekening</label></td>
+                            <td type="text" class="form-control" id="mijnIban" name="mijnIban"
+                                th:text="${rekening.getIBAN()}" required/>
+                            </td>
+                        </tr>
 
-                    <tr>
-                        <td><label for="tegenrekeningIban">Tegenrekening</label></td>
-                        <td><input type="text" class="form-control" id="tegenrekeningIban" name="tegenrekeningIban"
-                                   th:field="*{tegenrekening}" placeholder="IBAN" required oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/></td>
-                    </tr>
+                        <tr>
+                            <td><label for="tegenrekeningIban">Tegenrekening</label></td>
+                            <td><input type="text" class="form-control" id="tegenrekeningIban" name="tegenrekeningIban"
+                                       th:field="*{tegenrekening}" placeholder="IBAN" required
+                                       oninvalid="this.setCustomValidity('Dit veld is verplicht.')"
+                                       oninput="setCustomValidity('')"/></td>
+                        </tr>
+                        <tr th:if="${ibanvalidatie}">
+                            <td></td>
+                            <td><font color="red">Voer een geldig rekeningnummer in.</font></td>
+                        <tr>
+                        <tr>
+                            <td><label for="Bedrag">Bedrag in Euro</label></td>
+                            <td>
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">€</div>
+                                    <input type="number" step="any" class="form-control" id="bedrag" name="bedrag"
+                                           th:field="*{bedrag}" placeholder="0.00" required></div>
+                            </td>
+                        </tr>
+                        <tr th:if="${saldoOntoereikend}">
+                            <td></td>
+                            <td><font color="red">Onvoldoende saldo op je SOFA-rekening.</font></td>
+                        <tr>
+                        <tr th:if="${bedragValidatie}">
+                            <td></td>
+                            <td><font color="red">Bedrag moet hoger zijn dan 0 euro.</font></td>
+                        </tr>
 
-                    <tr>
-                        <td><label for="Bedrag">Bedrag in Euro</label></td>
-                        <td>
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">€</div>
-                                <input type="number" step="any" class="form-control" id="bedrag" name="bedrag"
-                                       th:field="*{bedrag}" placeholder="0,00" required/></div>
-                        </td>
-                    </tr>
-                    <tr th:if="${saldoOntoereikend}">
-                        <td></td>
-                        <td><font color="red">Onvoldoende saldo op je SOFA-rekening.</font></td>
-                    <tr>
-                    <tr th:if="${bedragValidatie}">
-                        <td></td>
-                        <td><font color="red">Bedrag moet hoger zijn dan 0 euro.</font></td>
-                    </tr>
 
-
-                    <tr>
-                        <td><label for="Omschrijving">Omschrijving</label></td>
-                        <td><input type="text" class="form-control" id="omschrijving" th:field="*{omschrijving}"
-                                   placeholder="Omschrijving"
-                                   oninvalid="this.setCustomValidity('Dit veld is verplicht.')"
-                                   oninput="setCustomValidity('')"/></td>
-                    </tr>
-                </table>
-                <br>
-                <button type="submit" name="OK" class="btn btn-primary btn-md">Bevestigen</button>
+                        <tr>
+                            <td><label for="Omschrijving">Omschrijving</label></td>
+                            <td><input type="text" class="form-control" id="omschrijving" th:field="*{omschrijving}"
+                                       placeholder="Omschrijving"
+                                       oninvalid="this.setCustomValidity('Dit veld is verplicht.')"
+                                       oninput="setCustomValidity('')"/></td>
+                        </tr>
+                    </table>
+                    <br>
+                    <button type="submit" name="OK" class="btn btn-primary btn-md">Bevestigen</button>
                     <a class="btn btn-outline-primary" href="javascript:javascript:history.go(-1)" role="button">Transactieoverzicht</a>
                     <a class="btn btn-outline-primary" href="/overzicht" role="button">Rekeningoverzicht</a>
 
@@ -80,59 +86,17 @@
         </div>
 
         <div class="col-md"></div>
-     </div>
+        <br>
+        <br>
+        <div class="form-group col-md-12">
+            <p>Terug naar de <a href="/home">homepage</a></p>
+        </div>
+    </div>
     <br>
     <br>
 </div>
 
 <div th:insert="fragments/footer :: footer"></div>
-
-<!--<script>-->
-<!--    function check(input) {-->
-<!--        if (input.value <= 0) {-->
-<!--            input.setCustomValidity('Vul een positief bedrag in.');-->
-<!--        } else if (input.length == 0) {-->
-<!--            input.setCustomValidity('TEST')-->
-<!--         }else {-->
-<!--            // Als de input positief is &#45;&#45; reset the error message-->
-<!--            input.setCustomValidity('');-->
-<!--        }-->
-<!--    }-->
-<!--</script>-->
-
-
-<script>
-    // toegevoegd door Wichert
-    // voegt automatisch straat + woonplaats in bij het invullen van Postcode en huisnummer
-    document.getElementById('ontvanger_field').addEventListener('focusout', vindRekeninghouder)
-
-    function vindRekeninghouder() {
-
-        let pc = document.getElementById('pc_field').value
-        let nr = document.getElementById('nr_field').value
-
-        if (regex.test(pc) && nr) {
-            fetch(`https://postcode.tech/api/v1/postcode?postcode=${pc}&number=${nr}`, {
-                headers: {
-                    'Authorization': 'Bearer b3ba02a8-2796-4225-a4d2-d982ad2d3ec1',
-                },
-            })
-                .then(response => response.json())
-                .then(json => processAddress(json))
-                .catch((error) => {
-                    console.error('foutje', error)
-                });
-        }
-    }
-
-    function processAddress(data) {
-        console.log(data)
-        let addressPart = data
-        document.getElementById('street_field').value = addressPart.street
-        document.getElementById('city_field').value = addressPart.city
-    }
-
-</script>
 
 
 </body>

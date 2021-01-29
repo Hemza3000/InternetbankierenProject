@@ -33,7 +33,6 @@ public class MoneyTransferService {
         }
     }
 
-    //todo één regel van maken
     public boolean validatieBedrag(double bedrag) {
         return bedrag > 0;
     }
