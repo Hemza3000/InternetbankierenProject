@@ -71,8 +71,18 @@
         if (regex.test(wachtwoord) === false) {
             document.getElementById("passwordFalse").innerHTML = '<span style=\'color:#ff0000\'>Je wachtwoord moet minstens 6 karakters hebben, een cijfer, een speciaal teken en een hoofdletter bevatten!<br> <br>Toegestane tekens: ! @ # $ % ^ & * </span>';
             return false;
+        }
+        document.getElementById("passwordFalse").innerHTML = ''
+
+        let password1 = document.forms['storeLogin']['password_field'].value;
+        let password2 = document.forms['storeLogin']['password_check'].value;
+
+        if (password1 !== password2) {
+            document.getElementById("passwordCheck").innerHTML = '' +
+                '<span style=\'color:#ff0000\'>Wachtwoord komt niet overeen</span>';
+            return false;
         } else {
-            document.getElementById("passwordFalse").innerHTML = ''
+            document.getElementById("passwordCheck").innerHTML = '';
         }
     }
 
@@ -80,7 +90,7 @@
         let password1 = document.forms['storeLogin']['password_field'].value;
         let password2 = document.forms['storeLogin']['password_check'].value;
 
-        if (password1 !== password2 ) {
+        if (password1 !== password2) {
             document.getElementById("passwordCheck").innerHTML = '' +
                 '<span style=\'color:#ff0000\'>Wachtwoord komt niet overeen</span>';
             return false;
