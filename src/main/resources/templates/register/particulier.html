@@ -19,8 +19,8 @@
 
     <form class="row" form name="particulierForm" action="register" method="post"
           th:object="${klant}"
-          onsubmit="return !!(validateForm() & birthyearCheck())">
-
+          onsubmit="return validateForm()">
+        <!--return (validateForm() && birthyearCheck())-->
         <div class="form-group col-md-3">
             <label for="First_name">Voornaam</label>
             <input type="text" class="form-control" th:field="*{voornaam}" required oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/>
@@ -154,6 +154,12 @@
         else document.getElementById('BirthdayFalse').innerHTML = '';
     }
 
+    function validateFunction(){
+        let validation = true;
+        validation &= validateForm();
+        validation &= birthyearCheck();
+        return validation;
+    }
 
 </script>
 </body>
