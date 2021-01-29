@@ -35,13 +35,7 @@ public class ChangeAccountController {
     @PostMapping("/confirmChanges")
     public String confirmNewClient(@ModelAttribute("klant") Klant klant, Model model) {
         model.addAttribute("klant", klant);
-        if (klant instanceof Particulier) {
-            return "account/changeParticulier";
-        }
         customerService.changeCustomer(klant);
         return "overview";
     }
-
-    //todo alert gegevens gewijzigd - stylen
-    //todo wachtwoord wijzigbaar maken (gebruikersnaam niet)
 }

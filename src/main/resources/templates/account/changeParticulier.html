@@ -68,6 +68,26 @@
             <input type="text" class="form-control" id="city_field" th:field="*{woonplaats}" name="City"
                    required oninvalid="this.setCustomValidity('Dit veld is verplicht.')" onloadeddata="setCustomValidity('')"/>
         </div>
+
+
+        <div class="form-group col-md-4">
+            <label for="username_field">Gebruikersnaam</label>
+            <input type="text" class="form-control" id="username_field" th:field="*{gebruikersnaam}" readonly/></td>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="password_field">Wachtwoord</label>
+            <input type="password" class="form-control" id="password_field" th:field="*{wachtwoord}" required/></td>
+            <field id="passwordFalse"></field>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="password_check">Herhaal wachtwoord</label>
+            <input type="password" class="form-control" id="password_check" required/></td>
+            <field id="passwordCheck"></field>
+        </div>
+
+
         <div class="form-group col-md-12">
             <button type="submit" name="OK" class="btn btn-primary btn-md">Bevestigen</button>
             <a class="btn btn-outline-primary" href="/overzicht" type="button">Rekeningoverzicht</a>

@@ -118,7 +118,7 @@ public class TransactieDAO implements GenericDAO<Transactie> {
 
     @Override
     public void updateOne(Transactie transactie) {
-        // todo: bij- en afschrijvingen tegelijk updaten
+        // bij- en afschrijvingen worden niet tegelijk geüpdated
         jdbcTemplate.update("update transactie set bedrag = ?, transactiebeschrijving = ?, datum = ?, " +
                         "bijschrijving = ?, idbedrijfsrekening = ?, idpriverekening = ? where idtransactie = ?",
             transactie.getBedrag(),
@@ -156,10 +156,8 @@ public class TransactieDAO implements GenericDAO<Transactie> {
                 resultSet.getBoolean("bijschrijving")
                     ? getRekeningByID(resultSet.getInt("idtransactie") - 1)
                     : getRekeningByID(resultSet.getInt("idtransactie") + 1)
-                // todo controleren of afschrijving inderdaad eerst staat?
             );
             transactie.setBijschrijving(resultSet.getBoolean("bijschrijving"));
-            // todo controleren of bijschrijving 0 of 1 is?
             return transactie;
         }
     }
@@ -183,6 +181,5 @@ public class TransactieDAO implements GenericDAO<Transactie> {
         return resultSet.getInt("idbedrijfsrekening") == 0 ?
                 priverekeningDAO.getOneByID(resultSet.getInt("idpriverekening")) :
                 bedrijfsrekeningDAO.getOneByID(resultSet.getInt("idbedrijfsrekening"));
-        // todo controleren of precies een van beide rekeningvelden is gevuld?
     }
 }
