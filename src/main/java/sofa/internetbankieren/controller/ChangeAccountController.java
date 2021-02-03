@@ -12,6 +12,8 @@ import sofa.internetbankieren.service.CustomerService;
 
 /**
  * @author Wendy Ellens
+ *
+ * Geeft de pagina's om klantgegevens te wijzigen en verwerkt de wijzigingen.
  */
 @Controller
 @SessionAttributes("klant")
@@ -19,11 +21,12 @@ public class ChangeAccountController {
     private final CustomerService customerService;
 
     public ChangeAccountController(CustomerService customerService) {
+        super();
         this.customerService = customerService;
     }
 
     @GetMapping("/changeAccount")
-    public String getOverview(Model model) {
+    public String getChangeAccount(Model model) {
         Klant klant = (Klant) model.getAttribute("klant");
         if (klant instanceof Particulier) {
             return "account/changeParticulier";

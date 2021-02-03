@@ -12,6 +12,9 @@ import java.util.List;
 
 /**
  * @author Wichert Tjerkstra, Wendy Ellens
+ *
+ * Biedt services aan de controllers m.b.t. particuliere en zakelijke klanten.
+ * Communiceert met de desbetreffende DAO's om toegang tot de database te krijgen.
  */
 @Service
 public class CustomerService {
@@ -20,21 +23,21 @@ public class CustomerService {
     private final BedrijfDAO bedrijfDAO;
 
     public CustomerService(ParticulierDAO particulierDAO, BedrijfDAO bedrijfDAO) {
+        super();
         this.particulierDAO = particulierDAO;
         this.bedrijfDAO = bedrijfDAO;
     }
 
-    public boolean checkUniqueUsername(String username) {
-        List<Particulier> particulierList = particulierDAO.getOneByGebruikersnaam(username);
-        List<Bedrijf> bedrijfList = bedrijfDAO.getOneByGebruikersnaam(username);
-        return particulierList.isEmpty() && bedrijfList.isEmpty();
+    public boolean doesUsernameExist(String username) {
+        return !particulierDAO.getOneByGebruikersnaam(username).isEmpty() ||
+                !bedrijfDAO.getOneByGebruikersnaam(username).isEmpty();
     }
 
     public boolean doesBsnExist(int bsn) {
         return !particulierDAO.getOneByBSN(bsn).isEmpty();
     }
 
-    public void storeNewCustomer(Klant klant) {
+    public void storeCustomer(Klant klant) {
         if (klant instanceof Particulier) {
             particulierDAO.storeOne((Particulier) klant);
         }
@@ -54,13 +57,9 @@ public class CustomerService {
 
     // gemaakt door Hemza
     public List<Klant> getKlantenbyGebruikersnaamWachtwoord (String gebruikersnaam, String wachtwoord){
-        List<Particulier> particuliereklanten =
-                particulierDAO.getOneByGebruikersnaamWachtwoord(gebruikersnaam, wachtwoord);
-        List<Bedrijf> bedrijfsklanten =
-                bedrijfDAO.getOneByGebruikersnaamWachtwoord(gebruikersnaam, wachtwoord);
         List<Klant> alleklanten = new ArrayList<>();
-        alleklanten.addAll(particuliereklanten);
-        alleklanten.addAll(bedrijfsklanten);
+        alleklanten.addAll(particulierDAO.getOneByGebruikersnaamWachtwoord(gebruikersnaam, wachtwoord));
+        alleklanten.addAll(bedrijfDAO.getOneByGebruikersnaamWachtwoord(gebruikersnaam, wachtwoord));
         return alleklanten;
     }
 }

@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
 
 /**
  * @author Wendy Ellens
+ *
+ * Geeft de pagina met transacties van de gevraagde rekening.
  */
 @Controller
 @SessionAttributes("rekening")

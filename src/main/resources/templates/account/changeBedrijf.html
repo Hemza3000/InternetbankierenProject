@@ -78,18 +78,18 @@
 
     <div class="form-group col-md-4">
         <label for="username_field">Gebruikersnaam</label>
-        <input type="text" class="form-control" id="username_field" th:field="*{gebruikersnaam}" readonly/></td>
+        <input type="text" class="form-control" id="username_field" th:field="*{gebruikersnaam}" readonly/>
     </div>
 
     <div class="form-group col-md-4">
         <label for="password_field">Wachtwoord</label>
-        <input type="password" class="form-control" id="password_field" th:field="*{wachtwoord}" required/></td>
+        <input type="password" class="form-control" id="password_field" th:field="*{wachtwoord}" required/>
         <field id="passwordFalse"></field>
     </div>
 
     <div class="form-group col-md-4">
         <label for="password_check">Herhaal wachtwoord</label>
-        <input type="password" class="form-control" id="password_check" required/></td>
+        <input type="password" class="form-control" id="password_check" required/>
         <field id="passwordCheck"></field>
     </div>
 
@@ -171,9 +171,9 @@
             fetch(`http://apilayer.net/api/validate?access_key=${key}&vat_number=${btw}`)
                 .then(response => response.json())
                 .then(json => processResponse(json))
-            //     .catch((error) => {
-            //         alert(error);
-            //     })
+                .catch((error) => {
+                    alert(error);
+                })
             ;
         }
     }

@@ -1,6 +1,10 @@
 package sofa.internetbankieren.model;
 
-// toegevoegd door Wendy
+/**
+ * @author Wendy Ellens
+ *
+ * De sectoren waar zakelijke klanten uit kunnen kiezen bij de registratie.
+ */
 public enum Sector{
     GEZONDHEIDSZORG_EN_WELZIJN("Gezondheidszorg en welzijn"),
     HANDEL_EN_DIENSTVERLENING("Handel en dienstverlening"),

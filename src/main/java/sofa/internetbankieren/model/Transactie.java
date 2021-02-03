@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 /**
  * @author Wendy Ellens
  *
- * Modelleert een banktransactie (een bij- of afschrijving)
+ * Modelleert een banktransactie (een bij- of afschrijving).
  */
 public class Transactie implements Comparable<Transactie> {
 
@@ -33,7 +33,7 @@ public class Transactie implements Comparable<Transactie> {
         this(0, verzender, bedrag, datum, omschrijving, ontvanger);
     }
 
-    // Kloon maken
+    // Ondiepe kloon maken
     public Transactie(Transactie andereTransactie) {
         this(andereTransactie.idTransactie, andereTransactie.rekening, andereTransactie.bedrag,
                 andereTransactie.datum, andereTransactie.omschrijving, andereTransactie.tegenRekening);

@@ -171,9 +171,9 @@
             fetch(`http://apilayer.net/api/validate?access_key=${key}&vat_number=${btw}`)
                 .then(response => response.json())
                 .then(json => processResponse(json))
-            //     .catch((error) => {
-            //         alert(error);
-            //     })
+                .catch((error) => {
+                    alert(error);
+                })
             ;
         }
     }

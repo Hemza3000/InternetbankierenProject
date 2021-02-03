@@ -78,15 +78,13 @@ public class RegistrationController {
     // Stap 4: verwerken ingevoerde logingegevens
     @PostMapping("/storeLogin")
     public String confirmLogin(@ModelAttribute("klant") Klant klant, Model model){
-
-        // Controleert of er in de database al klant met deze gebruikersnaam is
-        if (!customerService.checkUniqueUsername(klant.getGebruikersnaam())) {
+        if (customerService.doesUsernameExist(klant.getGebruikersnaam())) {
             model.addAttribute("klant", klant);
             model.addAttribute("fieldExists", true);
             return "register/registerLogin";
         }
 
-        customerService.storeNewCustomer(klant);
+        customerService.storeCustomer(klant);
         model.addAttribute("klant", klant);
         return "register/completed";
     }
