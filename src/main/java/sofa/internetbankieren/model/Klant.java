@@ -39,6 +39,8 @@ public abstract class Klant {
         this.bedrijfsrekeningDAO = bedrijfsrekeningDAO;
     }
 
+    public Klant() { super(); }
+
     // toegevoegd door Wendy
     public abstract String getNaam();
 

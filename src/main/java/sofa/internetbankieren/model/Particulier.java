@@ -44,13 +44,7 @@ public class Particulier extends Klant {
         this.priverekeningDAO = priverekeningDAO;
     }
 
-    public Particulier(String voornaam, String voorvoegsels, String achternaam, LocalDate geboortedatum,
-                       int bsn, String straat, int huisnummer, String postcode, String woonplaats,
-                       BedrijfsrekeningDAO bedrijfsrekeningDAO, PriverekeningDAO priverekeningDAO) {
-     this(0,"", "", straat, huisnummer, postcode, woonplaats, voornaam, voorvoegsels,
-             achternaam, geboortedatum, bsn, new ArrayList<>(), new ArrayList<>(), bedrijfsrekeningDAO,
-             priverekeningDAO);
-    }
+    public Particulier() { super(); }
 
     // toegevoegd door Wendy
     @Override

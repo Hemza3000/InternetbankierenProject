@@ -36,6 +36,8 @@ public class Bedrijf extends Klant {
         this.accountmanager = accountmanager;
     }
 
+    public Bedrijf() { super(); }
+
     // toegevoegd door Wendy
     @Override
     public String getNaam() {

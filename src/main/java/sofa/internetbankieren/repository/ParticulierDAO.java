@@ -104,8 +104,8 @@ public class ParticulierDAO {
         particulier.setIdKlant(keyHolder.getKey().intValue());
     }
     //update one
-    public int updateOne(Particulier particulier) {
-        return jdbcTemplate.update("update particulier set gebruikersnaam=?, wachtwoord=?, voornaam=?, tussenvoegsels=?, achternaam=?, bsn=?," +
+    public void updateOne(Particulier particulier) {
+        jdbcTemplate.update("update particulier set gebruikersnaam=?, wachtwoord=?, voornaam=?, tussenvoegsels=?, achternaam=?, bsn=?," +
                         "geboortedatum=?, straat=?, huisnummer=?, postcode=?, woonplaats=? " +
                         "where idparticulier=?",
                 particulier.getGebruikersnaam(),
