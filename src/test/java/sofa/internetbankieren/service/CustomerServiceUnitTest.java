@@ -15,6 +15,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * @author Wendy Ellens
+ */
 class CustomerServiceUnitTest {
 
     private final ParticulierDAO particulierDAO = Mockito.mock(ParticulierDAO.class);
