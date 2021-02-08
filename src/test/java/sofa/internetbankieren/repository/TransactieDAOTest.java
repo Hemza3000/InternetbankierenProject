@@ -95,15 +95,10 @@ class TransactieDAOTest {
 
     private void storeDbEntries() {
         medewerkerDAO.storeOne(medewerker);
-        System.out.println("Personeelsnummer" + medewerker.getPersoneelsnummer());
         bedrijfDAO.storeOne(bedrijf);
-        System.out.println("IdBedrijf" + bedrijf.getIdKlant());
         particulierDAO.storeOne(particulier);
-        System.out.println("IdParticulier" + particulier.getIdKlant());
         bedrijfsrekeningDAO.storeOne(bedrijfsrekening);
-        System.out.println("IdBedrijfsekening" + bedrijfsrekening.getIdRekening());
         priverekeningDAO.storeOne(priverekening);
-        System.out.println("IdPriverekening" + priverekening.getIdRekening());
     }
 
     private void deleteDbEntries() {

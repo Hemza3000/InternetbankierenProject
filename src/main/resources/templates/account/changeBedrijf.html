@@ -40,14 +40,14 @@
         <label for="kvk_field"> KvK-nummer</label>
         <input type="text" class="form-control" id="kvk_field" th:field="*{KVKNummer}" required
                oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/>
-        <field id="kvk_incorrect"></field>
+        <p id="kvk_incorrect"></p>
     </div>
 
     <div class="form-group col md-3">
         <label for="btw_field"> BTW-nummer</label>
         <input type="text" class="form-control" id="btw_field" th:field="*{BTWNummer}" required
                oninvalid="this.setCustomValidity('Dit veld is verplicht.')" oninput="setCustomValidity('')"/>
-        <field id="btw_incorrect"></field>
+        <p id="btw_incorrect"></p>
     </div>
 
 
@@ -84,13 +84,13 @@
     <div class="form-group col-md-4">
         <label for="password_field">Wachtwoord</label>
         <input type="password" class="form-control" id="password_field" th:field="*{wachtwoord}" required/>
-        <field id="passwordFalse"></field>
+        <p id="passwordFalse"></p>
     </div>
 
     <div class="form-group col-md-4">
         <label for="password_check">Herhaal wachtwoord</label>
         <input type="password" class="form-control" id="password_check" required/>
-        <field id="passwordCheck"></field>
+        <p id="passwordCheck"></p>
     </div>
 
 
@@ -139,6 +139,8 @@
         document.getElementById('street_field').value = addressPart.street
         document.getElementById('city_field').value = addressPart.city
     }
+
+    // Geschreven door Wendy
 
     // Validatie: het KvK-nummer moet uit 8 cijfers bestaan.
     document.getElementById('kvk_field').addEventListener("focusout", validateKvK);

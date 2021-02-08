@@ -26,17 +26,16 @@ public class ChangeAccountController {
     }
 
     @GetMapping("/changeAccount")
-    public String getChangeAccount(Model model) {
+    public String getChangeAccountForm(Model model) {
         Klant klant = (Klant) model.getAttribute("klant");
-        if (klant instanceof Particulier) {
+        if (klant instanceof Particulier)
             return "account/changeParticulier";
-        }
         else
             return "account/changeBedrijf";
     }
 
     @PostMapping("/confirmChanges")
-    public String confirmNewClient(@ModelAttribute("klant") Klant klant, Model model) {
+    public String postChangeAccountForm(@ModelAttribute("klant") Klant klant, Model model) {
         model.addAttribute("klant", klant);
         customerService.changeCustomer(klant);
         return "overview";
